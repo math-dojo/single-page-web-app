@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/math-dojo/single-page-web-app#readme",
   "scripts": {
-    "ng": "ng",
+    "ng": "./node_modules/.bin/ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
