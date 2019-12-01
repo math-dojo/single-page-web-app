@@ -36,7 +36,7 @@ steps:
   displayName: 'Copy Build Artifacts to Blob Storage'
   inputs:
     sourcePath: '$(Build.ArtifactStagingDirectory)'
-    azureSubscription: 5594cd6c-b674-4323-8517-5e859a399468
+    azureSubscription: azure-ad-app-math-dojo-ui-pipeline
     destination: AzureBlob
     storage: 
     containerName: build-artefacts
