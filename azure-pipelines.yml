@@ -22,4 +22,23 @@ steps:
 
 - script: |
     npm run-script build
-  displayName: 'npm install and build'
+  displayName: 'npm build'
+
+- task: CopyFiles@2
+  displayName: 'Copy Build Artifacts to Staging Directory'
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)/dist/single-page-web-app'
+    Contents: |
+      *
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: AzureFileCopy@3
+  displayName: 'Copy Build Artifacts to Blob Storage'
+  inputs:
+    sourcePath: '$(Build.ArtifactStagingDirectory)'
+    azureSubscription: 5594cd6c-b674-4323-8517-5e859a399468
+    destination: AzureBlob
+    storage: 
+    containerName: build-artefacts
+    copyFilesInParallel: true
+    cleanTargetBeforeCopy: true
