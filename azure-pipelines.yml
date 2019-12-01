@@ -41,7 +41,7 @@ steps:
     sourcePath: '$(Build.ArtifactStagingDirectory)'
     azureSubscription: azure-rm-math-dojo-non-prod-web-ui-principal
     destination: AzureBlob
-    storage: 
+    storage: mathdojononprodwebui
     containerName: build-artefacts
     copyFilesInParallel: true
     cleanTargetBeforeCopy: true
