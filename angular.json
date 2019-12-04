@@ -60,8 +60,7 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "baseHref": "./build-artefacts"
+              ]
             }
           }
         },
