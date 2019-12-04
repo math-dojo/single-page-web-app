@@ -42,8 +42,7 @@ steps:
     scriptType: ps
     scriptLocation: inlineScript
     inlineScript: |
-        az account set --subscription 5594cd6c-b674-4323-8517-5e859a399468
-        az storage account create --name mathdojouibuildartefacts$(Build.SourceBranchName) --resource-group math-dojo-hzprod-web-ui
+        az storage account create --name mathdojouibuildartefacts$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui
         az storage blob service-properties update --account-name mathdojouibuildartefacts$(Build.SourceBranchName) --static-website --index-document index.html
         az storage container create --name $web
 
