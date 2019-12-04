@@ -48,7 +48,6 @@ steps:
         }
         
         az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html
-        az storage container create --name \$web
 
 - task: AzureFileCopy@3
   displayName: 'Copy Build Artifacts to Blob Storage'
