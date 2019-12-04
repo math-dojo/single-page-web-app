@@ -8,6 +8,7 @@ trigger:
 - develop
 - release*
 - feature*
+- hotfix*
 
 pool:
   vmImage: 'windows-2019'
