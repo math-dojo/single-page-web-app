@@ -42,9 +42,13 @@ steps:
     scriptType: ps
     scriptLocation: inlineScript
     inlineScript: |
-        az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui
+        $accountNameExists = az storage account check-name --name fizzbuzz --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
+        If ($accountNameExists.nameAvailable) {
+          az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui
+        }
+        
         az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html
-        az storage container create --name $web
+        az storage container create --name \$web
 
 - task: AzureFileCopy@3
   displayName: 'Copy Build Artifacts to Blob Storage'
