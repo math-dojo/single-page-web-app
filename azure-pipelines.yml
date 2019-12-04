@@ -35,13 +35,23 @@ steps:
       *
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
+- task: AzureCLI@2
+  displayName: 'Create Container for Build Artefacts in Storage Account'
+  inputs:
+    azureSubscription: azure-ad-app-math-dojo-ui-pipeline
+    scriptType: ps
+    scriptLocation: inlineScript
+    inlineScript: |
+        az --version
+        az storage container create --name $(Build.SourceBranchName) --public-access blob
+
 - task: AzureFileCopy@3
   displayName: 'Copy Build Artifacts to Blob Storage'
   inputs:
     sourcePath: '$(Build.ArtifactStagingDirectory)'
     azureSubscription: azure-ad-app-math-dojo-ui-pipeline
     destination: AzureBlob
-    storage: mathdojononprodwebui
-    containerName: build-artefacts
+    storage: mathdojouibuildartefacts
+    containerName: '$(Build.SourceBranchName)'
     copyFilesInParallel: true
     cleanTargetBeforeCopy: true
