@@ -42,7 +42,7 @@ steps:
     scriptType: ps
     scriptLocation: inlineScript
     inlineScript: |
-        $accountNameExists = az storage account check-name --name fizzbuzz --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
+        $accountNameExists = az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
         If ($accountNameExists.nameAvailable) {
           az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui
         }
