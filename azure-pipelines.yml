@@ -42,8 +42,10 @@ steps:
     scriptType: ps
     scriptLocation: inlineScript
     inlineScript: |
-        az --version
-        az storage container create --name $(Build.SourceBranchName) --public-access blob
+        az account set --subscription 5594cd6c-b674-4323-8517-5e859a399468
+        az storage account create --name mathdojouibuildartefacts$(Build.SourceBranchName) --resource-group math-dojo-hzprod-web-ui
+        az storage blob service-properties update --account-name mathdojouibuildartefacts$(Build.SourceBranchName) --static-website --index-document index.html
+        az storage container create --name $web
 
 - task: AzureFileCopy@3
   displayName: 'Copy Build Artifacts to Blob Storage'
@@ -51,7 +53,16 @@ steps:
     sourcePath: '$(Build.ArtifactStagingDirectory)'
     azureSubscription: azure-ad-app-math-dojo-ui-pipeline
     destination: AzureBlob
-    storage: mathdojouibuildartefacts
-    containerName: '$(Build.SourceBranchName)'
+    storage: 'mathdojouibuildartefacts$(Build.SourceBranchName)'
+    containerName: $web
     copyFilesInParallel: true
     cleanTargetBeforeCopy: true
+
+- task: AzureCLI@2
+  displayName: 'Show url for stored blob contents'
+  inputs:
+    azureSubscription: azure-ad-app-math-dojo-ui-pipeline
+    scriptType: ps
+    scriptLocation: inlineScript
+    inlineScript: |
+        az storage account show -n mathdojouibuildartefacts$(Build.SourceBranchName) -g math-dojo-hzprod-web-ui --query "primaryEndpoints.web" --output tsv
