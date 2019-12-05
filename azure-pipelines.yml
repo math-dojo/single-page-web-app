@@ -49,6 +49,14 @@ steps:
         $accountNameExists = az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
         If ($accountNameExists.nameAvailable) {
           az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui
+
+          $accountCreated = False
+
+          while(! $accountCreated) {
+            Start-Sleep -Seconds 30
+            $accountCreatedJson = (az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json)
+            $accountCreated = $accountCreatedJson.nameAvailable
+          }
         }
         
         az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html
