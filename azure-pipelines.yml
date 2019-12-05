@@ -6,9 +6,9 @@
 trigger:
 - master
 - develop
-- release*
-- feature*
-- hotfix*
+- rl* # release branches to be built should be named rl[insertSemverHere]
+- ft* # feature branches to be built should be named ft[insertSemverHere]
+- hf* # hotfix branches to be built should be named hf[insertSemverHere]
 
 pool:
   vmImage: 'windows-2019'
