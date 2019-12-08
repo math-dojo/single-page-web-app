@@ -55,14 +55,6 @@ steps:
             Write-Host "An error occurred:"
             Write-Host $_
           }
-
-          $accountCreated = False
-
-          while(! $accountCreated) {
-            Start-Sleep -Seconds 30
-            $accountCreatedJson = (az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json)
-            $accountCreated = $accountCreatedJson.nameAvailable
-          }
         }
         
         az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html
