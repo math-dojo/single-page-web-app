@@ -7,6 +7,17 @@ header .branding .mtdj__logo {
    height: 100%
 }
 
+#primary .content-area .site-main .mtdj__landingpage_card .card{
+   box-shadow: none;
+   border: none;
+}
+
+#primary .content-area .site-main .mtdj__landingpage_card .card .card-header,
+#primary .content-area .site-main .mtdj__landingpage_card .card .card-block
+{
+   border-bottom: none;
+}
+
 #primary .content-area .site-main .mtdj__landingpage_card span{
    color: transparent;
 }
