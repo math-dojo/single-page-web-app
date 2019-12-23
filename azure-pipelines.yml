@@ -28,6 +28,17 @@ steps:
   displayName: 'run unit and integration tests'
 
 - script: |
+    npm run-script e2e
+    npm run-script lint
+  displayName: 'run end-to-end tests and linting'
+  condition: |
+    or(
+      eq(variables['Build.Reason'], 'PullRequest'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+    )
+
+- script: |
     npm run-script build
   displayName: 'npm build'
 
