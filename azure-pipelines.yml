@@ -28,8 +28,7 @@ steps:
   displayName: 'run unit and integration tests'
 
 - script: |
-    echo %CHROMEWEBDRIVER%
-    echo "##vso[task.prependpath]%CHROMEWEBDRIVER%"
+    ./node_modules/.bin/webdriver-manager update --versions.chrome=77.0.3865.40
     npm run-script e2e
     npm run-script lint
   displayName: 'run end-to-end tests and linting'
