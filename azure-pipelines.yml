@@ -29,6 +29,15 @@ steps:
 
 - script: |
     ./node_modules/.bin/webdriver-manager update --versions.chrome=77.0.3865.40
+  displayName: 'add chrome driver to node directory'
+  condition: |
+    or(
+      eq(variables['Build.Reason'], 'PullRequest'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+    )
+
+- script: |
     npm run-script e2e
     npm run-script lint
   displayName: 'run end-to-end tests and linting'
