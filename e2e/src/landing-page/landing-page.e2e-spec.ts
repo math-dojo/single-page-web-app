@@ -8,8 +8,13 @@ describe('LandingPage', () => {
     page = new LandingPage();
   });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
+  it('should display landing page if user navigates to rootpath', () => {
+    page.navigateToRoot();
+    expect(page.getTitleText()).toEqual('Master maths through challenges.');
+  });
+
+  it('should display landing page if user navigates to /home', () => {
+    page.navigateToPath('/home');
     expect(page.getTitleText()).toEqual('Master maths through challenges.');
   });
 
