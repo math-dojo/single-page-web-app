@@ -28,7 +28,7 @@ steps:
   displayName: 'run unit and integration tests'
 
 - script: |
-    echo "$env:CHROMEWEBDRIVER"
+    echo "$env:ChromeWebDriver"
     npm run-script e2e
     npm run-script lint
   displayName: 'run end-to-end tests and linting'
