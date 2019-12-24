@@ -29,7 +29,7 @@ steps:
 
 - script: |
     echo %CHROMEWEBDRIVER%
-    ##vso[task.prependpath]%CHROMEWEBDRIVER%
+    echo "##vso[task.prependpath]%CHROMEWEBDRIVER%"
     npm run-script e2e
     npm run-script lint
   displayName: 'run end-to-end tests and linting'
