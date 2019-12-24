@@ -27,11 +27,8 @@ steps:
     npm test
   displayName: 'run unit and integration tests'
 
-- powershell: |
-   echo "##vso[task.prependpath]$env:CHROMEWEBDRIVER"
-  displayName: Adds ChromeWebDriver for Selenium to PATH
-
 - script: |
+    ##vso[task.prependpath]$env:CHROMEWEBDRIVER
     npm run-script e2e
     npm run-script lint
   displayName: 'run end-to-end tests and linting'
