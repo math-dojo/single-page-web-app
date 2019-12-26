@@ -10,7 +10,7 @@ describe('PageNotFound Page', () => {
 
   it('should display page not found text', () => {
     page.navigateToPath('/i-cant-possibly-exist');
-    expect(page.getPageNotFoundMainText()).toMatch('The Page You Are Looking For Cannot Be Found');
+    expect(page.getPageNotFoundMainText()).toMatch('The page you are looking for cannot be found.');
   });
 
   afterEach(async () => {
