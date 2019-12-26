@@ -25,9 +25,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.newUserSignupForm.value);
-    this.signupNewUser({
-      name: this.newUserSignupForm.get('name').value
-    });
+    this.signupNewUser(this.newUserSignupForm.value);
   }
 
 
