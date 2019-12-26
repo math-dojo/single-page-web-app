@@ -32,6 +32,6 @@ export class LoginComponent implements OnInit {
 
 
   private signupNewUser(newUser) {
-    // this.authentiationService.signupNewUser(newUser);
+    this.authentiationService.signupNewUser(newUser);
   }
 }
