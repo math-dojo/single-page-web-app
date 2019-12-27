@@ -18,6 +18,22 @@ describe('Auth Page', () => {
     expect(page.getFormSubmitButtonText()).toMatch('LOGIN');
   });
 
+  it('should redirect a user who signs up correctly to /dashboard', () => {
+    page.navigateToPath('/auth/signup')
+    .then(() => page.fillSignupFormWithData({
+        name: 'worzel gummidge',
+        password: 'somethingSecret',
+        email: 'scarecrow@tenacrefields.uk'
+      })
+    )
+    .then(() => page.submitSignUpForm())
+    .then(() => {
+      expect(browser.driver.getCurrentUrl()).toMatch(/\/dashboard$/);
+    });
+    
+
+  });
+
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);

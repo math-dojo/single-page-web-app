@@ -7,4 +7,22 @@ export class AuthPage extends Utils{
     return element(by.css('.btn.btn-primary')).getText() as Promise<string>;
   }
 
+  fillSignupFormWithData({
+    name: name,
+    email: email,
+    password: password
+}) {
+  return Promise.all([
+    element(by.name('name')).sendKeys(name),
+    element(by.name('email')).sendKeys(email),
+    element(by.name('password')).sendKeys(password)
+  ]);
+  }
+
+  submitSignUpForm(){
+    return element(by.tagName('form')).submit();
+  }
+
+
+
 }
