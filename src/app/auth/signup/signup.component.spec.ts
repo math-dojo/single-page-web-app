@@ -3,7 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignupComponent } from './signup.component';
 import { ClarityModule } from '@clr/angular';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser'
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -37,7 +39,7 @@ describe('SignupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
-    testAuthServiceSpy = fixture.debugElement.injector.get(AuthenticationService) as any;
+    testAuthServiceSpy = fixture.debugElement.injector.get(AuthenticationService) as AuthenticationServiceSpy;
     fixture.detectChanges();
   });
 
@@ -45,7 +47,22 @@ describe('SignupComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call the authentication service\'s signupNewUser method with the supplied args from the form', () => {
+  it('should call its onSubmit method when the submit button is pressed', () => {
+    spyOn(component, 'onSubmit');
+
+    const signupElement: DebugElement = fixture.debugElement;
+
+    signupElement.triggerEventHandler('submit', null)
+    
+    expect(component.onSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  xit('should call the authentication service\'s signupNewUser method if validation passes', () => {
+    const signupElement: DebugElement = fixture.debugElement;
+    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement
+    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement
+    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement
+
     component.onSubmit();
 
     expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
