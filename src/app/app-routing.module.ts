@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
 
 const routes: Routes = [
-  { path: 'auth/signup', component: LoginComponent },
-  { path: 'auth/login', component: LoginComponent },
-  { path: 'auth', component: LoginComponent },
+  { path: 'auth/signup', component: SignupComponent },
+  { path: 'auth/login', component: SignupComponent },
+  { path: 'auth', component: SignupComponent },
   { path: 'home', component: LandingPageComponent },
   { path: '', component: LandingPageComponent },
   { path: '**', component: PagenotfoundComponent }

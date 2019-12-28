@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { SignupComponent } from './signup.component';
 import { ClarityModule } from '@clr/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('SignupComponent', () => {
+  let component: SignupComponent;
+  let fixture: ComponentFixture<SignupComponent>;
 
   class AuthenticationServiceSpy {
     signupNewUser = jasmine.createSpy('signupNewUser')
@@ -18,13 +18,13 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
+      declarations: [SignupComponent],
       imports: [
         ClarityModule,
         ReactiveFormsModule
       ]
     })
-      .overrideComponent(LoginComponent, {
+      .overrideComponent(SignupComponent, {
         set: {
           providers: [
             { provide: AuthenticationService, useClass: AuthenticationServiceSpy }
@@ -35,7 +35,7 @@ describe('LoginComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
     testAuthServiceSpy = fixture.debugElement.injector.get(AuthenticationService) as any;
     fixture.detectChanges();
@@ -50,4 +50,7 @@ describe('LoginComponent', () => {
 
     expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
   });
+
+  // TODO: Implement this kind of component test for the login or signup
+  // https://angular.io/guide/testing#routing-component
 });
