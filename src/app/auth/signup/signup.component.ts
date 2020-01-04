@@ -10,9 +10,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class SignupComponent implements OnInit {
 
   newUserSignupForm: FormGroup = new FormGroup({
-    name: new FormControl('Some coolname'),
-    email: new FormControl('youandi@com'),
-    password: new FormControl('supersecret')
+    name: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl('')
   });
 
   constructor(private authentiationService: AuthenticationService) {
@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.newUserSignupForm.value);
-    this.signupNewUser(this.newUserSignupForm.value);
+    // this.signupNewUser(this.newUserSignupForm.value);
   }
 
 
