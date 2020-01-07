@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
 
 import { SignupComponent } from './signup.component';
 import { ClarityModule } from '@clr/angular';
@@ -29,7 +29,8 @@ describe('SignupComponent', () => {
       .overrideComponent(SignupComponent, {
         set: {
           providers: [
-            { provide: AuthenticationService, useClass: AuthenticationServiceSpy }
+            { provide: AuthenticationService, useClass: AuthenticationServiceSpy },
+            { provide: ComponentFixtureAutoDetect, useValue: true }
           ]
         }
       })
@@ -51,9 +52,10 @@ describe('SignupComponent', () => {
     spyOn(component, 'onSubmit');
 
     const signupElement: DebugElement = fixture.debugElement;
+    const signupFormElement = signupElement.query(By.css('.mtdj__signupform'))
 
-    signupElement.triggerEventHandler('submit', null)
-    
+    signupFormElement.triggerEventHandler('submit', null)
+
     expect(component.onSubmit).toHaveBeenCalledTimes(1);
   });
 
