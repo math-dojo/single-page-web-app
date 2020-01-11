@@ -3,9 +3,9 @@ import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@a
 import { SignupComponent } from './signup.component';
 import { ClarityModule } from '@clr/angular';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser'
+import { By } from '@angular/platform-browser';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
