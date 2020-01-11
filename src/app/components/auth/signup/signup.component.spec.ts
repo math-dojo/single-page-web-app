@@ -72,4 +72,25 @@ describe('SignupComponent', () => {
 
   // TODO: Implement this kind of component test for the login or signup
   // https://angular.io/guide/testing#routing-component
+  xit('should route to the dashboard page if authentication response is successful', () => {
+    const signupElement: DebugElement = fixture.debugElement;
+    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement
+    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement
+    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement
+
+    component.onSubmit();
+
+    expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
+  });
+
+  xit('should not route to the dashboard page if authentication response fails', () => {
+    const signupElement: DebugElement = fixture.debugElement;
+    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement
+    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement
+    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement
+
+    component.onSubmit();
+
+    expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
+  });
 });
