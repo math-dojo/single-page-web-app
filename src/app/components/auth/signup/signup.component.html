@@ -22,7 +22,22 @@
                 Invalid user name or password
             </div>
             <button type="submit" [disabled]="!newUserSignupForm.valid" class="btn btn-primary">Sign Up</button>
+            <div class="mtdj__social-login">
+                <div class="mtdj__social-login-label">
+                    <span class="label-text">or connect with</span>
+                </div>
+                <div class="btn-group btn-link mtdj__social-login-icon">
+                    <button class="btn mtdj__social-login-icon-btn">
+                        <img class="mtdj__social-login-icon-btn-logo" src="/assets/facebook.svg">
+                    </button>
+                    <button class="btn mtdj__social-login-icon-btn">
+                        <img class="mtdj__social-login-icon-btn-logo" src="/assets/google.svg">
+                    </button>
+                    <button class="btn mtdj__social-login-icon-btn">
+                        <img class="mtdj__social-login-icon-btn-logo" src="/assets/github.svg">
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="fb-login-button" data-width="300" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
     </form>
 </div>
