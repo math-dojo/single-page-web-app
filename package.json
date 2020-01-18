@@ -18,7 +18,8 @@
     "test": "ng test",
     "test-local": "ng test --browsers=Chrome --karmaConfig=karma.conf.local.js",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "node scripts/install_non_npm_deps.js"
   },
   "private": true,
   "dependencies": {

@@ -26,14 +26,6 @@ export class SignupComponent implements OnInit {
     self.loadFBSDK(applicationId);
   }
   loadFBSDK(applicationId: string) {
-    (function (d, s, id) {
-      let fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      let js = d.createElement(s); 
-      js.id = id;
-      js.setAttribute('src', "https://connect.facebook.net/en_US/sdk.js");
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-js-sdk'));
 
     (<any>window).fbAsyncInit = () => {
       (<any>window).FB.init({
