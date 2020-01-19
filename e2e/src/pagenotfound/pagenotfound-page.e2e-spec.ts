@@ -1,16 +1,16 @@
-import { AppPage } from './app.po';
+import { PageNotFoundPage } from './pagenotfound-page.po';
 import { browser, logging } from 'protractor';
 
-describe('workspace-project App', () => {
-  let page: AppPage;
+describe('PageNotFound Page', () => {
+  let page: PageNotFoundPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new PageNotFoundPage();
   });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getTitleText()).toEqual('Master maths through challenges.');
+  it('should display page not found text', () => {
+    page.navigateToPath('/i-cant-possibly-exist');
+    expect(page.getPageNotFoundMainText()).toMatch('The page you are looking for cannot be found.');
   });
 
   afterEach(async () => {
