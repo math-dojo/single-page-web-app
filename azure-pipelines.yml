@@ -28,6 +28,36 @@ steps:
   displayName: 'run unit and integration tests'
 
 - script: |
+    ./node_modules/.bin/webdriver-manager update --versions.chrome=77.0.3865.40
+  displayName: 'add chrome driver to node directory'
+  condition: |
+    or(
+      eq(variables['Build.Reason'], 'PullRequest'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+    )
+
+- script: |
+    npm run-script e2e
+  displayName: 'run end-to-end tests'
+  condition: |
+    or(
+      eq(variables['Build.Reason'], 'PullRequest'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+    )
+
+- script: |
+    npm run-script lint
+  displayName: 'run linting'
+  condition: |
+    or(
+      eq(variables['Build.Reason'], 'PullRequest'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+    )
+
+- script: |
     npm run-script build
   displayName: 'npm build'
 
