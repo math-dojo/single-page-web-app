@@ -1,0 +1,26 @@
+@import 'node_modules/@clr/ui/src/color/_variables.color.scss';
+
+header .branding .mtdj__logo {
+   height: 36px;
+   margin: 0 9px 0 0;
+}
+
+header .header-actions .mtdj__button_signup {
+   background: $clr-color-action-600; 
+   color: white;
+}
+
+#primary .content-area .mtdj__pagenotfound_img_container,
+#primary .content-area .mtdj__pagenotfound_maintext
+{
+    display: flex;
+    justify-content: center;
+}
+
+#primary .content-area .mtdj__pagenotfound_img_container img {
+    max-width: 100%;
+}
+
+footer .container {
+   padding: 24px; 
+}
