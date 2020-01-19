@@ -52,18 +52,18 @@ describe('SignupComponent', () => {
     spyOn(component, 'onSubmit');
 
     const signupElement: DebugElement = fixture.debugElement;
-    const signupFormElement = signupElement.query(By.css('.mtdj__signupform'))
+    const signupFormElement = signupElement.query(By.css('.mtdj__signupform'));
 
-    signupFormElement.triggerEventHandler('submit', null)
+    signupFormElement.triggerEventHandler('submit', null);
 
     expect(component.onSubmit).toHaveBeenCalledTimes(1);
   });
 
   xit('should call the authentication service\'s signupNewUser method if validation passes', () => {
     const signupElement: DebugElement = fixture.debugElement;
-    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement
-    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement
-    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement
+    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement;
+    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement;
+    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement;
 
     component.onSubmit();
 
@@ -74,9 +74,9 @@ describe('SignupComponent', () => {
   // https://angular.io/guide/testing#routing-component
   xit('should route to the dashboard page if authentication response is successful', () => {
     const signupElement: DebugElement = fixture.debugElement;
-    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement
-    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement
-    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement
+    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement;
+    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement;
+    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement;
 
     component.onSubmit();
 
@@ -85,9 +85,9 @@ describe('SignupComponent', () => {
 
   xit('should not route to the dashboard page if authentication response fails', () => {
     const signupElement: DebugElement = fixture.debugElement;
-    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement
-    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement
-    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement
+    const nameField = signupElement.query(By.css('mtdj__signupform__field-name')).nativeElement;
+    const email = signupElement.query(By.css('mtdj__signupform__field-email')).nativeElement;
+    const password = signupElement.query(By.css('mtdj__signupform__field-password')).nativeElement;
 
     component.onSubmit();
 
