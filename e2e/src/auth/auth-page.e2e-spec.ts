@@ -30,7 +30,7 @@ describe('Auth Page', () => {
     .then(() => {
       expect(browser.driver.getCurrentUrl()).toMatch(/\/dashboard$/);
     });
-    
+
 
   });
 
