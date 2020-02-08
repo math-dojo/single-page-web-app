@@ -23,6 +23,21 @@ export class DashboardComponent implements OnInit {
       name: 'Statistics',
       topicDescription: 'I am  bit hard',
       userProgress: 0.9
+    }),
+    new Topic({
+      name: 'Pure Mathematics',
+      topicDescription: 'I am  bit hard',
+      userProgress: 0.3
+    }),
+    new Topic({
+      name: 'Geometry',
+      topicDescription: 'I am  bit hard',
+      userProgress: 0.5
+    }),
+    new Topic({
+      name: 'Statistics',
+      topicDescription: 'I am  bit hard',
+      userProgress: 0.9
     })
   ];
 
