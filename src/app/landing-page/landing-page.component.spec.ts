@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LandingPageComponent } from './landing-page.component';
+import { ClarityModule } from '@clr/angular';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -8,9 +9,10 @@ describe('LandingPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LandingPageComponent ]
+      declarations: [LandingPageComponent],
+      imports: [ClarityModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
