@@ -10,6 +10,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LandingPageComponent,
     SignupComponent,
     PagenotfoundComponent,
-    DashboardComponent
+    DashboardComponent,
+    TopicPageComponent
   ],
   imports: [
     BrowserModule,
