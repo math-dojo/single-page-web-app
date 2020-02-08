@@ -55,7 +55,7 @@
         <div class="content-area">
             <div class="clr-row">
                 <div class="clr-col-12 clr-col-sm-4" *ngFor="let topic of topics">
-                    <div class="card">
+                    <a href="{{topic.linkToTopicSection}}" class="card clickable">
                         <div class="card-header">
                             {{topic.name}}
                         </div>
@@ -71,7 +71,7 @@
                         <div class="card-footer">
                             <a class="btn btn-primary">Continue</a>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
