@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ClarityModule } from '@clr/angular';
 
 import { TopicPageComponent } from './topic-page.component';
 
@@ -8,7 +9,8 @@ describe('TopicPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopicPageComponent ]
+      declarations: [ TopicPageComponent ],
+      imports: [ClarityModule]
     })
     .compileComponents();
   }));
