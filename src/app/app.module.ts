@@ -11,7 +11,7 @@ import { SignupComponent } from './components/auth/signup/signup.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
-import { MtdjHeaderComponent } from './mtdj-header/mtdj-header.component';
+import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.component';
 
 @NgModule({
   declarations: [
