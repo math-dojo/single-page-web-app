@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ClarityModule } from '@clr/angular';
 
 import { DashboardComponent } from './dashboard.component';
+import { MtdgFooterComponent } from '../mtdg-footer/mtdg-footer.component';
+import { MtdjHeaderComponent } from '../mtdj-header/mtdj-header.component';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -10,10 +12,10 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ],
+      declarations: [DashboardComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [ClarityModule, RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

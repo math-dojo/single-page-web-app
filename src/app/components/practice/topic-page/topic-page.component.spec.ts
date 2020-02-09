@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClarityModule } from '@clr/angular';
 
 import { TopicPageComponent } from './topic-page.component';
+import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
+import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
 
 describe('TopicPageComponent', () => {
   let component: TopicPageComponent;
@@ -9,7 +11,7 @@ describe('TopicPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopicPageComponent ],
+      declarations: [ TopicPageComponent, MtdgFooterComponent, MtdjHeaderComponent ],
       imports: [ClarityModule]
     })
     .compileComponents();

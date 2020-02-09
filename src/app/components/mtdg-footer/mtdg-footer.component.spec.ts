@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ClarityModule } from '@clr/angular';
 
 import { MtdgFooterComponent } from './mtdg-footer.component';
 
@@ -8,7 +9,8 @@ describe('MtdgFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MtdgFooterComponent ]
+      declarations: [ MtdgFooterComponent ],
+      imports: [ClarityModule]
     })
     .compileComponents();
   }));
