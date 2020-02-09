@@ -1,0 +1,52 @@
+<clr-header class="header header-1">
+    <div class="branding">
+        <a routerLink="/home" routerLinkActive="active" class="nav-link">
+            <img src="assets/dojo-transparent-white-outline.svg" alt="A dojo" class="mtdj__logo">
+            <span class="title">Math Dojo</span>
+        </a>
+    </div>
+    <div class="header-nav" [clr-nav-level]="1">
+        <a routerLink="/dashboard" routerLinkActive="active" class="active nav-link"><span class="nav-text">Practice</span></a>
+        <a routerLink="/contests" routerLinkActive="active"  class="nav-link"><span class="nav-text">Compete</span></a>
+        <a routerLink="/discuss" routerLinkActive="active"  class="nav-link"><span class="nav-text">Discuss</span></a>
+    </div>
+    <div class="header-actions">
+        <clr-dropdown>
+            <button class="nav-text" clrDropdownTrigger aria-label="toggle settings menu">
+                <clr-icon shape="user"></clr-icon>
+                username
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                <a href="..." clrDropdownItem>Profile</a>
+                <a href="..." clrDropdownItem>Preferences</a>
+                <a href="..." clrDropdownItem>Log out</a>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+    </div>
+</clr-header>
+<nav class="subnav">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Practice</a>
+        </li>
+        <li class="nav-item">
+            >
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Topic</a>
+        </li>
+        <li class="nav-item">
+            >
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Subtopic</a>
+        </li>
+        <li class="nav-item">
+            >
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Question</a>
+        </li>
+    </ul>
+</nav>

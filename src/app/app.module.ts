@@ -11,6 +11,7 @@ import { SignupComponent } from './components/auth/signup/signup.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
+import { MtdjHeaderComponent } from './mtdj-header/mtdj-header.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TopicPageComponent } from './components/practice/topic-page/topic-page.
     SignupComponent,
     PagenotfoundComponent,
     DashboardComponent,
-    TopicPageComponent
+    TopicPageComponent,
+    MtdjHeaderComponent
   ],
   imports: [
     BrowserModule,
