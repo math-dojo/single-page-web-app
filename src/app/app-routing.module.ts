@@ -8,7 +8,7 @@ import { TopicPageComponent } from './components/practice/topic-page/topic-page.
 
 
 const routes: Routes = [
-  { path: '/topics/:topicname', component: TopicPageComponent },
+  { path: 'topics/:topicname', component: TopicPageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/login', component: SignupComponent },
