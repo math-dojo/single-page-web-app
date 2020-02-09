@@ -12,6 +12,7 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
 import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.component';
+import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.compon
     PagenotfoundComponent,
     DashboardComponent,
     TopicPageComponent,
-    MtdjHeaderComponent
+    MtdjHeaderComponent,
+    MtdgFooterComponent
   ],
   imports: [
     BrowserModule,
