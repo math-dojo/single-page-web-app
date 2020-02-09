@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LandingPageComponent } from './landing-page.component';
 import { ClarityModule } from '@clr/angular';
 
-describe('LandingPageComponent', () => {
-  let component: LandingPageComponent;
-  let fixture: ComponentFixture<LandingPageComponent>;
+import { TopicPageComponent } from './topic-page.component';
+
+describe('TopicPageComponent', () => {
+  let component: TopicPageComponent;
+  let fixture: ComponentFixture<TopicPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LandingPageComponent],
+      declarations: [ TopicPageComponent ],
       imports: [ClarityModule]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LandingPageComponent);
+    fixture = TestBed.createComponent(TopicPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
