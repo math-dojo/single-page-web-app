@@ -55,7 +55,7 @@
         <div class="content-area">
             <div class="clr-row">
                 <div class="clr-col-12 clr-col-sm-4" *ngFor="let topic of topics">
-                    <a href="{{topic.linkToTopicSection}}" class="card clickable">
+                    <a [routerLink]="['/topics', topic.name.toLowerCase()]" class="card clickable">
                         <div class="card-header">
                             {{topic.name}}
                         </div>
