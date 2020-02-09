@@ -1,11 +1,11 @@
 @import 'node_modules/@clr/ui/src/color/_variables.color.scss';
 
-header .branding .mtdj__logo {
+clr-header .branding .mtdj__logo {
    height: 36px;
    margin: 0 9px 0 0;
 }
 
-header .header-actions .mtdj__button_signup {
+clr-header .header-actions .mtdj__button_signup {
    background: $clr-color-action-600; 
    color: white;
 }
