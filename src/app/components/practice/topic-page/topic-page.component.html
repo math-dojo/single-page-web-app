@@ -6,13 +6,13 @@
                 <div class="clr-col-12 clr-col-sm-8" *ngFor="let question of questions">
                     <a [routerLink]="['/questions', question.title.toLowerCase()]" class="card clickable">
                       <div class="card-block">
-                        <h4 class="card-title">{{question.title}}</h4>
-                        <p class="card-text">Difficulty: {{question.difficulty}}</p>
+                        <h4 class="card-title">{{question.formattedTitle}}</h4>
+                        <p class="card-text">Difficulty: {{question.formattedDifficulty}}</p>
                         <div class="progress-block">
                             <label>Success Rate</label>
                             <div class="progress-static labeled">
-                              <div class="progress-meter" [attr.data-value]="(question.successRate * 100).toFixed()" [attr.data-displayval]='(question.successRate * 100).toFixed()+"%"'></div>
-                              <span>{{(question.successRate * 100).toFixed()}}%</span>
+                              <div class="progress-meter" [attr.data-value]="question.formattedSuccessRate" [attr.data-displayval]='question.formattedSuccessRate+"%"'></div>
+                              <span>{{question.formattedSuccessRate}}%</span>
                             </div>
                         </div>
                     </div>
