@@ -3,7 +3,7 @@
     <div class="content-container" id="primary">
         <div class="content-area">
             <div class="clr-row">
-                <div class="clr-col-12 clr-col-sm-8" *ngFor="let question of questions">
+                <div class="clr-col-lg-6 clr-col-md-8 clr-col-sm-12 clr-col-12" *ngFor="let question of questions">
                     <a [routerLink]="['/questions', question.title.toLowerCase()]" class="card clickable">
                       <div class="card-block">
                         <h4 class="card-title">{{question.formattedTitle}}</h4>
