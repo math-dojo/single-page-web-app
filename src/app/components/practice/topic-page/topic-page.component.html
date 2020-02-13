@@ -1,25 +1,79 @@
 <clr-main-container class="main-container">
-    <app-mtdj-header></app-mtdj-header>
-    <div class="content-container" id="primary">
-        <div class="content-area">
-            <div class="clr-row">
-                <div class="clr-col-lg-6 clr-col-md-8 clr-col-sm-12 clr-col-12" *ngFor="let question of questions">
-                    <a [routerLink]="['/questions', question.title.toLowerCase()]" class="card clickable">
-                      <div class="card-block">
-                        <h4 class="card-title">{{question.formattedTitle}}</h4>
-                        <p class="card-text">Difficulty: {{question.formattedDifficulty}}</p>
-                        <div class="progress-block">
-                            <label>Success Rate</label>
-                            <div class="progress-static labeled">
-                              <div class="progress-meter" [attr.data-value]="question.formattedSuccessRate" [attr.data-displayval]='question.formattedSuccessRate+"%"'></div>
-                              <span>{{question.formattedSuccessRate}}%</span>
-                            </div>
-                        </div>
+  <app-mtdj-header></app-mtdj-header>
+  <div class="content-container" id="primary">
+    <div class="content-area">
+      <div class="clr-row">
+        <div class="clr-col-lg-8">
+          <div class="clr-row">
+            <div
+              class="clr-col-lg-8 clr-col-md-8 clr-col-sm-12 clr-col-12"
+              *ngFor="let question of questions"
+            >
+              <a
+                [routerLink]="['/questions', question.title.toLowerCase()]"
+                class="card clickable"
+              >
+                <div class="card-block">
+                  <h4 class="card-title">{{ question.formattedTitle }}</h4>
+                  <p class="card-text">
+                    Difficulty: {{ question.formattedDifficulty }}
+                  </p>
+                  <div class="progress-block">
+                    <label>Success Rate</label>
+                    <div class="progress-static labeled">
+                      <div
+                        class="progress-meter"
+                        [attr.data-value]="question.formattedSuccessRate"
+                        [attr.data-displayval]="
+                          question.formattedSuccessRate + '%'
+                        "
+                      ></div>
+                      <span>{{ question.formattedSuccessRate }}%</span>
                     </div>
-                    </a>
+                  </div>
                 </div>
+              </a>
             </div>
+          </div>
         </div>
+        <div class="clr-col-lg-4">
+          <div class="clr-row">
+            <div class="clr-form-control">
+              <label class="clr-control-label">DIFFICULTY</label>
+              <div class="clr-control-container">
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox1" name="checkbox-full" value="Easy" class="clr-checkbox">
+                  <label for="vertical-checkbox1" class="clr-control-label">Easy</label>
+                </div>
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium" class="clr-checkbox">
+                  <label for="vertical-checkbox2" class="clr-control-label">Medium</label>
+                </div>
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox3" name="checkbox-full" value="Hard" class="clr-checkbox">
+                  <label for="vertical-checkbox3" class="clr-control-label">Hard</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clr-row">
+            <div class="clr-form-control">
+              <label class="clr-control-label">STATUS</label>
+              <div class="clr-control-container">
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox1" name="checkbox-full" value="Easy" class="clr-checkbox">
+                  <label for="vertical-checkbox1" class="clr-control-label">Solved</label>
+                </div>
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium" class="clr-checkbox">
+                  <label for="vertical-checkbox2" class="clr-control-label">Unsolved</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <app-mtdg-footer></app-mtdg-footer>
+  </div>
+  <app-mtdg-footer></app-mtdg-footer>
 </clr-main-container>
