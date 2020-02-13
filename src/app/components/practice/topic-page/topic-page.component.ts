@@ -17,6 +17,24 @@ export class TopicPageComponent implements OnInit {
       difficulty: 'easy',
       solved: false,
       hints: ['try this', 'watch space odyssey']
+    }),
+    new Question({
+      title: 'other-thing-to-try',
+      body: 'something quite complex',
+      sampleAnswer: '42',
+      successRate: 0.817563,
+      difficulty: 'easy',
+      solved: false,
+      hints: ['try this', 'watch space odyssey']
+    }),
+    new Question({
+      title: 'final-on-the-list',
+      body: 'something quite complex',
+      sampleAnswer: '42',
+      successRate: 0.2,
+      difficulty: 'easy',
+      solved: false,
+      hints: ['try this', 'watch space odyssey']
     })
   ];
   constructor() { }
