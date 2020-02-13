@@ -4,7 +4,7 @@
         <div class="content-area">
             <div class="clr-row">
                 <div class="clr-col-12 clr-col-sm-4" *ngFor="let topic of topics">
-                    <a [routerLink]="['/topics', topic.name.toLowerCase()]" class="card clickable">
+                    <a [routerLink]="['/topics', topic.name.toLowerCase().replace(' ', '-')]" class="card clickable">
                         <div class="card-header">
                             {{topic.name}}
                         </div>
