@@ -4,6 +4,7 @@ export class Question extends QuestionDto {
   public readonly formattedTitle: string;
   public readonly formattedSuccessRate: string;
   public readonly formattedDifficulty: string;
+  public readonly parentTopic: string;
 
   public constructor({
     title,
@@ -42,5 +43,6 @@ export class Question extends QuestionDto {
 
     this.formattedSuccessRate = (this.successRate * 100).toFixed();
     this.formattedDifficulty = (this.difficulty.replace(/^\w/, (match) => match.toUpperCase()));
+    this.parentTopic = 'random-topic';
   }
 }
