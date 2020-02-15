@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-question-page',
@@ -6,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./question-page.component.scss']
 })
 export class QuestionPageComponent implements OnInit {
+
+  exampleForm = new FormGroup({
+    sample: new FormControl('', Validators.required),
+  });
 
   constructor() { }
 

@@ -20,16 +20,48 @@
               </div>
             </div>
             <ul class="list-group">
-                <li class="list-group-item">Hint 1: Lorem ipsum dolor.</li>
-                <li class="list-group-item">Hint 2: Lorem ipsum dolor sit.</li>
-                <li class="list-group-item">Hint 3: Lorem ipsum.</li>
+              <li class="list-group-item">Hint 1: Lorem ipsum dolor.</li>
+              <li class="list-group-item">Hint 2: Lorem ipsum dolor sit.</li>
+              <li class="list-group-item">Hint 3: Lorem ipsum.</li>
             </ul>
             <div class="card-footer">
               <button class="btn btn-sm btn-link">Show hints</button>
             </div>
           </div>
         </div>
-        <div class="clr-col-lg-6  clr-col-12"></div>
+        <div class="clr-col-lg-6  clr-col-12">
+          <div class="card">
+            <div class="card-header">
+              Header
+            </div>
+            <form clrForm [formGroup]="exampleForm">
+              <clr-input-container>
+                <label>Field 1 label</label>
+                <input clrInput formControlName="sample" />
+              </clr-input-container>
+              <clr-input-container>
+                <label>Field 2 label</label>
+                <input clrInput formControlName="sample" />
+              </clr-input-container>
+              <clr-textarea-container>
+                <label>Text Answers</label>
+                <textarea
+                  clrTextarea
+                  formControlName="sample"
+                  required
+                ></textarea>
+              </clr-textarea-container>
+              <div class="card-footer">
+                <button class="btn btn-primary" type="submit" (click)="submit()">
+                  Submit
+                </button>
+                <button class="btn" type="button" (click)="resetForm()">
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
