@@ -5,9 +5,11 @@ import { SignupComponent } from './components/auth/signup/signup.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
+import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 
 
 const routes: Routes = [
+  { path: 'questions/:question', component: QuestionPageComponent },
   { path: 'topics/:topicname', component: TopicPageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'auth/signup', component: SignupComponent },

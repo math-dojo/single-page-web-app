@@ -13,6 +13,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
 import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.component';
 import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.component';
+import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.compon
     DashboardComponent,
     TopicPageComponent,
     MtdjHeaderComponent,
-    MtdgFooterComponent
+    MtdgFooterComponent,
+    QuestionPageComponent
   ],
   imports: [
     BrowserModule,
