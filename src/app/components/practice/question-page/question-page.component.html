@@ -35,24 +35,35 @@
               Header
             </div>
             <form clrForm [formGroup]="exampleForm">
-              <clr-input-container>
-                <label>Field 1 label</label>
-                <input clrInput formControlName="sample" />
-              </clr-input-container>
-              <clr-input-container>
-                <label>Field 2 label</label>
-                <input clrInput formControlName="sample" />
-              </clr-input-container>
-              <clr-textarea-container>
-                <label>Text Answers</label>
-                <textarea
-                  clrTextarea
-                  formControlName="sample"
-                  required
-                ></textarea>
-              </clr-textarea-container>
+              <div class="card-block">
+                <div class="card-title">
+                  Block
+                </div>
+                <div class="card-text">
+                  <clr-input-container>
+                    <label>Field 1 label</label>
+                    <input clrInput formControlName="sample" />
+                  </clr-input-container>
+                  <clr-input-container>
+                    <label>Field 2 label</label>
+                    <input clrInput formControlName="sample" />
+                  </clr-input-container>
+                  <clr-textarea-container>
+                    <label>Text Answers</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="sample"
+                      required
+                    ></textarea>
+                  </clr-textarea-container>
+                </div>
+              </div>
               <div class="card-footer">
-                <button class="btn btn-primary" type="submit" (click)="submit()">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  (click)="submit()"
+                >
                   Submit
                 </button>
                 <button class="btn" type="button" (click)="resetForm()">
