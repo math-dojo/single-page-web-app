@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ClarityModule } from '@clr/angular';
 
 import { TopicPageComponent } from './topic-page.component';
@@ -12,7 +13,7 @@ describe('TopicPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TopicPageComponent, MtdgFooterComponent, MtdjHeaderComponent ],
-      imports: [ClarityModule]
+      imports: [ClarityModule, RouterTestingModule]
     })
     .compileComponents();
   }));

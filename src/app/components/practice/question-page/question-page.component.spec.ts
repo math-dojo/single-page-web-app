@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ClarityModule } from '@clr/angular';
 
 import { QuestionPageComponent } from './question-page.component';
+import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
+import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
 
 describe('QuestionPageComponent', () => {
   let component: QuestionPageComponent;
@@ -8,9 +12,11 @@ describe('QuestionPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QuestionPageComponent ]
+      declarations: [QuestionPageComponent, MtdgFooterComponent, MtdjHeaderComponent],
+      imports: [ClarityModule,
+        ReactiveFormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
