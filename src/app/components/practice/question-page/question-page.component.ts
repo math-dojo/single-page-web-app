@@ -22,7 +22,7 @@ export class QuestionPageComponent implements OnInit {
 
   }
 
-  reset() {
+  resetForm() {
 
   }
 
