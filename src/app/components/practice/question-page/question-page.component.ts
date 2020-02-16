@@ -18,4 +18,12 @@ export class QuestionPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  submit() {
+
+  }
+
+  reset() {
+
+  }
+
 }
