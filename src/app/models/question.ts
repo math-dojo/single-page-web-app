@@ -34,7 +34,7 @@ export class Question extends QuestionDto {
     });
 
     this.formattedTitle = this.title
-      .replace((/(^|-)(\w)/g), (match, p1, p2, offset, string) => {
+      .replace((/(^|-)(\w)/g), (match, p1, p2, offset, stringProvided) => {
         if (offset > 0) {
           return (' ' + p2.toUpperCase());
         }
