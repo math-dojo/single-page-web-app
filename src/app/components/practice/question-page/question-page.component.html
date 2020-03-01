@@ -42,34 +42,30 @@
                 <div class="card-text">
                   Some useful explanation on how to pick answers
                   <clr-radio-container>
-                    <label>Full radio</label>
+                    <label>Options</label>
                     <clr-radio-wrapper>
                       <input type="radio" clrRadio name="sample" required value="option1" formControlName="sample" />
                       <label>Option 1</label>
                     </clr-radio-wrapper>
                     <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="sample" required value="option2" formControlName="sample"  />
+                      <input type="radio" clrRadio name="sample" required value="option2" formControlName="sample" />
+                      <label>Option 2</label>
+                    </clr-radio-wrapper>
+                    <clr-radio-wrapper>
+                      <input type="radio" clrRadio name="sample" required value="option2" formControlName="sample" />
+                      <label>Option 2</label>
+                    </clr-radio-wrapper>
+                    <clr-radio-wrapper>
+                      <input type="radio" clrRadio name="sample" required value="option2" formControlName="sample" />
                       <label>Option 2</label>
                     </clr-radio-wrapper>
                     <clr-control-helper>Helper text</clr-control-helper>
                     <clr-control-error>This field is required!</clr-control-error>
                   </clr-radio-container>
-                  <clr-textarea-container>
-                    <label>Text Answers</label>
-                    <textarea
-                      clrTextarea
-                      formControlName="sample"
-                      required
-                    ></textarea>
-                  </clr-textarea-container>
                 </div>
               </div>
               <div class="card-footer">
-                <button
-                  class="btn btn-primary"
-                  type="submit"
-                  (click)="submit()"
-                >
+                <button class="btn btn-primary" type="submit" (click)="submit()">
                   Submit
                 </button>
                 <button class="btn" type="button" (click)="resetForm()">
