@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+
+import { Question } from 'src/app/models/question';
+import { QuestionService } from 'src/app/services/question.service';
 
 
 @Component({
@@ -13,7 +18,15 @@ export class QuestionPageComponent implements OnInit {
     sample: new FormControl('', Validators.required),
   });
 
-  constructor() { }
+  questionToDisplay: Question;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private questionService: QuestionService
+  ) {
+
+  }
 
   ngOnInit() {
   }
