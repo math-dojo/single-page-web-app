@@ -1,18 +1,25 @@
 <clr-main-container class="main-container">
   <app-mtdj-header></app-mtdj-header>
+  <nav class="subnav">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Practice</a>
+      </li>
+      <li class="nav-item">
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Topic</a>
+      </li>
+    </ul>
+  </nav>
   <div class="content-container" id="primary">
     <div class="content-area">
       <div class="clr-row">
         <div class="clr-col-lg-8">
           <div class="clr-row">
-            <div
-              class="clr-col-lg-8 clr-col-md-8 clr-col-sm-12 clr-col-12"
-              *ngFor="let question of questions"
-            >
-              <a
-                [routerLink]="['/questions', question.title.toLowerCase()]"
-                class="card clickable"
-              >
+            <div class="clr-col-lg-8 clr-col-md-8 clr-col-sm-12 clr-col-12" *ngFor="let question of questions">
+              <a [routerLink]="['/questions', question.title.toLowerCase()]" class="card clickable">
                 <div class="card-block">
                   <h4 class="card-title">{{ question.formattedTitle }}</h4>
                   <p class="card-text">
@@ -21,13 +28,10 @@
                   <div class="progress-block">
                     <label>Success Rate</label>
                     <div class="progress-static labeled">
-                      <div
-                        class="progress-meter"
-                        [attr.data-value]="question.formattedSuccessRate"
+                      <div class="progress-meter" [attr.data-value]="question.formattedSuccessRate"
                         [attr.data-displayval]="
                           question.formattedSuccessRate + '%'
-                        "
-                      ></div>
+                        "></div>
                       <span>{{ question.formattedSuccessRate }}%</span>
                     </div>
                   </div>
@@ -46,7 +50,8 @@
                   <label for="vertical-checkbox1" class="clr-control-label">Easy</label>
                 </div>
                 <div class="clr-checkbox-wrapper">
-                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium" class="clr-checkbox">
+                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium"
+                    class="clr-checkbox">
                   <label for="vertical-checkbox2" class="clr-control-label">Medium</label>
                 </div>
                 <div class="clr-checkbox-wrapper">
@@ -65,7 +70,8 @@
                   <label for="vertical-checkbox1" class="clr-control-label">Solved</label>
                 </div>
                 <div class="clr-checkbox-wrapper">
-                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium" class="clr-checkbox">
+                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium"
+                    class="clr-checkbox">
                   <label for="vertical-checkbox2" class="clr-control-label">Unsolved</label>
                 </div>
               </div>
