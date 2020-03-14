@@ -8,6 +8,9 @@ import { Topic } from '../models/topic';
   providedIn: 'root'
 })
 export class QuestionService {
+  getTopics(): Observable<Topic[]> {
+    return of(this.preStashedTopics);
+  }
   getTopicWithTitle(topicTitle: string): Observable<Topic> {
     return of(new Topic({
       title: topicTitle,
@@ -31,4 +34,37 @@ export class QuestionService {
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }));
   }
+
+  private preStashedTopics: Topic[] = [
+    new Topic({
+      title: 'pure-mathematics',
+      body: 'I am  bit hard',
+      userProgress: 0.3
+    }),
+    new Topic({
+      title: 'geometry',
+      body: 'I am  bit hard',
+      userProgress: 0.5
+    }),
+    new Topic({
+      title: 'statistics',
+      body: 'I am  bit hard',
+      userProgress: 0.9
+    }),
+    new Topic({
+      title: 'pure-mathematics',
+      body: 'I am  bit hard',
+      userProgress: 0.3
+    }),
+    new Topic({
+      title: 'geometry',
+      body: 'I am  bit hard',
+      userProgress: 0.5
+    }),
+    new Topic({
+      title: 'statistics',
+      body: 'I am  bit hard',
+      userProgress: 0.9
+    })
+  ];
 }

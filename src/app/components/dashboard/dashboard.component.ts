@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Topic } from '../../models/topic';
+import { Observable } from 'rxjs';
+import { QuestionService } from 'src/app/services/question.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,42 +10,14 @@ import { Topic } from '../../models/topic';
 })
 export class DashboardComponent implements OnInit {
 
-  topics: Topic[] = [
-    new Topic({
-      title: 'pure-mathematics',
-      body: 'I am  bit hard',
-      userProgress: 0.3
-    }),
-    new Topic({
-      title: 'geometry',
-      body: 'I am  bit hard',
-      userProgress: 0.5
-    }),
-    new Topic({
-      title: 'statistics',
-      body: 'I am  bit hard',
-      userProgress: 0.9
-    }),
-    new Topic({
-      title: 'pure-mathematics',
-      body: 'I am  bit hard',
-      userProgress: 0.3
-    }),
-    new Topic({
-      title: 'geometry',
-      body: 'I am  bit hard',
-      userProgress: 0.5
-    }),
-    new Topic({
-      title: 'statistics',
-      body: 'I am  bit hard',
-      userProgress: 0.9
-    })
-  ];
+  topics$: Observable<Topic[]>
 
-  constructor() { }
+  constructor(
+    private questionService: QuestionService
+  ) { }
 
   ngOnInit() {
+    this.topics$ = this.questionService.getTopics();
   }
 
 }
