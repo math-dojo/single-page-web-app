@@ -8,12 +8,17 @@ import { Topic } from '../models/topic';
   providedIn: 'root'
 })
 export class QuestionService {
+
+  constructor() { }
+
   getQuestionsForTopic(topicTitle: string): Observable<Question[]> {
     return of(this.preStashedQuestions);
   }
+
   getTopics(): Observable<Topic[]> {
     return of(this.preStashedTopics);
   }
+
   getTopicWithTitle(topicTitle: string): Observable<Topic> {
     return of(new Topic({
       title: topicTitle,
@@ -21,8 +26,6 @@ export class QuestionService {
       userProgress: Math.random()
     }));
   }
-
-  constructor() { }
 
   getQuestionWithTitle(questionTitle: string): Observable<Question> {
     return of(new Question({
