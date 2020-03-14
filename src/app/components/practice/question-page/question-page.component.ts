@@ -33,7 +33,7 @@ export class QuestionPageComponent implements OnInit {
   ngOnInit() {
     this.question$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.questionService.getQuestionWithName(params.get('question')))
+        this.questionService.getQuestionWithTitle(params.get('question')))
     );
   }
 
