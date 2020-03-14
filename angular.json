@@ -66,7 +66,23 @@
                   "maximumError": "10kb"
                 }
               ]
-            }
+            },
+            "preproduction": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.preprod.ts"
+                }
+              ]
+            },
+            "nonproduction": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.nonprod.ts"
+                }
+              ]
+            }            
           }
         },
         "serve": {
@@ -77,7 +93,13 @@
           "configurations": {
             "production": {
               "browserTarget": "single-page-web-app:build:production"
-            }
+            },
+            "preproduction": {
+              "browserTarget": "single-page-web-app:build:preproduction"
+            },
+            "nonproduction": {
+              "browserTarget": "single-page-web-app:build:nonproduction"
+            }            
           }
         },
         "extract-i18n": {
