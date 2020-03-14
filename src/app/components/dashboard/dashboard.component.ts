@@ -10,33 +10,33 @@ export class DashboardComponent implements OnInit {
 
   topics: Topic[] = [
     new Topic({
-      name: 'Pure Mathematics',
-      topicDescription: 'I am  bit hard',
+      title: 'pure-mathematics',
+      body: 'I am  bit hard',
       userProgress: 0.3
     }),
     new Topic({
-      name: 'Geometry',
-      topicDescription: 'I am  bit hard',
+      title: 'geometry',
+      body: 'I am  bit hard',
       userProgress: 0.5
     }),
     new Topic({
-      name: 'Statistics',
-      topicDescription: 'I am  bit hard',
+      title: 'statistics',
+      body: 'I am  bit hard',
       userProgress: 0.9
     }),
     new Topic({
-      name: 'Pure Mathematics',
-      topicDescription: 'I am  bit hard',
+      title: 'pure-mathematics',
+      body: 'I am  bit hard',
       userProgress: 0.3
     }),
     new Topic({
-      name: 'Geometry',
-      topicDescription: 'I am  bit hard',
+      title: 'geometry',
+      body: 'I am  bit hard',
       userProgress: 0.5
     }),
     new Topic({
-      name: 'Statistics',
-      topicDescription: 'I am  bit hard',
+      title: 'statistics',
+      body: 'I am  bit hard',
       userProgress: 0.9
     })
   ];

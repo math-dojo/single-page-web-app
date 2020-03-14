@@ -4,12 +4,12 @@
         <div class="content-area">
             <div class="clr-row">
                 <div class="clr-col-lg-4 clr-col-md-6 clr-col-sm-8 clr-col-12" *ngFor="let topic of topics">
-                    <a [routerLink]="['/topics', topic.name.toLowerCase().replace(' ', '-')]" class="card clickable">
+                    <a [routerLink]="['/topics', topic.title]" class="card clickable">
                         <div class="card-header">
-                            {{topic.name}}
+                            {{topic.formattedTitle}}
                         </div>
                         <div class="card-block">
-                            <p class="card-text">{{topic.topicDescription}}</p>
+                            <p class="card-text">{{topic.body}}</p>
                             <div class="progress-block">
                                 <label>Progress</label>
                                 <div class="progress success">
