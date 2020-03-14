@@ -1,21 +1,21 @@
 <clr-main-container class="main-container">
   <app-mtdj-header></app-mtdj-header>
   <nav class="subnav">
-    <ul class="nav">
+    <ul class="nav" *ngIf="question$ | async as question">
       <li class="nav-item">
-        <a class="nav-link" href="#">Practice</a>
+        <a class="nav-link" routerLink="/dashboard">Practice</a>
       </li>
       <li class="nav-item">
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Topic</a>
+        <a class="nav-link" [routerLink]="['/topics', question.parentTopic]">{{question.formattedParentTopicTitle}}</a>
       </li>
       <li class="nav-item">
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="#">Question</a>
+        <a class="nav-link active" [routerLink]="['/questions', question.title]">{{question.formattedTitle}}</a>
       </li>
     </ul>
   </nav>
