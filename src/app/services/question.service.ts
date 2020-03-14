@@ -2,11 +2,19 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { Question } from '../models/question';
+import { Topic } from '../models/topic';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
+  getTopicWithTitle(topicTitle: string): Observable<Topic> {
+    return of(new Topic({
+      title: topicTitle,
+      body: 'I am  bit hard',
+      userProgress: Math.random()
+    }));
+  }
 
   constructor() { }
 

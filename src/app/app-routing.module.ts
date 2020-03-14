@@ -10,7 +10,7 @@ import { QuestionPageComponent } from './components/practice/question-page/quest
 
 const routes: Routes = [
   { path: 'questions/:question', component: QuestionPageComponent },
-  { path: 'topics/:topicname', component: TopicPageComponent },
+  { path: 'topics/:topic', component: TopicPageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/login', component: SignupComponent },
