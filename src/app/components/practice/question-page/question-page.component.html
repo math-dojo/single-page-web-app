@@ -54,27 +54,15 @@
             <form clrForm [formGroup]="exampleForm" clrLayout="vertical">
               <div class="card-block">
                 <div class="card-title">
-                  Block
+                  Answer Sheet
                 </div>
                 <div class="card-text">
                   Some useful explanation on how to pick answers
                   <clr-radio-container>
                     <label>Options</label>
-                    <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="sample" required value="option1" formControlName="sample" />
-                      <label>Option 1</label>
-                    </clr-radio-wrapper>
-                    <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="sample" required value="option2" formControlName="sample" />
-                      <label>Option 2</label>
-                    </clr-radio-wrapper>
-                    <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="sample" required value="option2" formControlName="sample" />
-                      <label>Option 2</label>
-                    </clr-radio-wrapper>
-                    <clr-radio-wrapper>
-                      <input type="radio" clrRadio name="sample" required value="option2" formControlName="sample" />
-                      <label>Option 2</label>
+                    <clr-radio-wrapper *ngFor="let each of question.questionAnswerOptions">
+                      <input type="radio" clrRadio name="sample" required value="{{each}}" formControlName="sample" />
+                      <label>{{each}}</label>
                     </clr-radio-wrapper>
                     <clr-control-helper>Helper text</clr-control-helper>
                     <clr-control-error>This field is required!</clr-control-error>
