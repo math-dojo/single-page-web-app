@@ -17,7 +17,7 @@
     <div class="content-area">
       <div class="clr-row">
         <div class="clr-col-lg-8">
-          <div class="clr-row">
+          <div class="clr-row" *ngIf="questions$ | async as questions">
             <div class="clr-col-lg-8 clr-col-md-8 clr-col-sm-12 clr-col-12" *ngFor="let question of questions">
               <a [routerLink]="['/questions', question.title.toLowerCase()]" class="card clickable">
                 <div class="card-block">

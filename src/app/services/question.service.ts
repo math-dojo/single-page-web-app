@@ -8,6 +8,9 @@ import { Topic } from '../models/topic';
   providedIn: 'root'
 })
 export class QuestionService {
+  getQuestionsForTopic(topicTitle: string): Observable<Question[]> {
+    return of(this.preStashedQuestions);
+  }
   getTopics(): Observable<Topic[]> {
     return of(this.preStashedTopics);
   }
@@ -35,7 +38,7 @@ export class QuestionService {
     }));
   }
 
-  private preStashedTopics: Topic[] = [
+  private readonly preStashedTopics: Topic[] = [
     new Topic({
       title: 'pure-mathematics',
       body: 'I am  bit hard',
@@ -65,6 +68,42 @@ export class QuestionService {
       title: 'statistics',
       body: 'I am  bit hard',
       userProgress: 0.9
+    })
+  ];
+
+  private readonly preStashedQuestions = [
+    new Question({
+      title: 'try-me-first',
+      body: 'something quite complex',
+      sampleAnswer: '42',
+      successRate: 0.42,
+      difficulty: 'easy',
+      solved: false,
+      hints: ['try this', 'watch space odyssey'],
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
+    }),
+    new Question({
+      title: 'other-thing-to-try',
+      body: 'something quite complex',
+      sampleAnswer: '42',
+      successRate: 0.817563,
+      difficulty: 'easy',
+      solved: false,
+      hints: ['try this', 'watch space odyssey'],
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
+    }),
+    new Question({
+      title: 'final-on-the-list',
+      body: 'something quite complex',
+      sampleAnswer: '42',
+      successRate: 0.2,
+      difficulty: 'easy',
+      solved: false,
+      hints: ['try this', 'watch space odyssey'],
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     })
   ];
 }
