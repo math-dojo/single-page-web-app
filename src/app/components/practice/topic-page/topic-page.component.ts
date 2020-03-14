@@ -16,7 +16,9 @@ export class TopicPageComponent implements OnInit {
       successRate: 0.42,
       difficulty: 'easy',
       solved: false,
-      hints: ['try this', 'watch space odyssey']
+      hints: ['try this', 'watch space odyssey'],
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }),
     new Question({
       title: 'other-thing-to-try',
@@ -25,7 +27,9 @@ export class TopicPageComponent implements OnInit {
       successRate: 0.817563,
       difficulty: 'easy',
       solved: false,
-      hints: ['try this', 'watch space odyssey']
+      hints: ['try this', 'watch space odyssey'],
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }),
     new Question({
       title: 'final-on-the-list',
@@ -34,7 +38,9 @@ export class TopicPageComponent implements OnInit {
       successRate: 0.2,
       difficulty: 'easy',
       solved: false,
-      hints: ['try this', 'watch space odyssey']
+      hints: ['try this', 'watch space odyssey'],
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     })
   ];
   constructor() { }

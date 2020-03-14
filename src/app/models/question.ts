@@ -1,9 +1,11 @@
 import { QuestionDto } from './question-dto';
+import { convertKebabToSentenceCase } from '../utilities/content-title-formatter';
 
 export class Question extends QuestionDto {
   public readonly formattedTitle: string;
   public readonly formattedSuccessRate: string;
   public readonly formattedDifficulty: string;
+  public readonly formattedParentTopicTitle: string;
   public readonly parentTopic: string;
 
   public constructor({
@@ -13,7 +15,9 @@ export class Question extends QuestionDto {
     hints,
     solved,
     successRate,
-    difficulty
+    difficulty,
+    questionAnswerOptions,
+    parentTopicTitle
   }: {
     title: string,
     body: string,
@@ -21,7 +25,9 @@ export class Question extends QuestionDto {
     hints: string[],
     solved: boolean,
     successRate: number,
-    difficulty: string
+    difficulty: string,
+    questionAnswerOptions,
+    parentTopicTitle
   }) {
     super({
       title,
@@ -30,19 +36,16 @@ export class Question extends QuestionDto {
       hints,
       solved,
       successRate,
-      difficulty
+      difficulty,
+      questionAnswerOptions,
+      parentTopicTitle
     });
 
-    this.formattedTitle = this.title
-      .replace((/(^|-)(\w)/g), (match, p1, p2, offset, stringProvided) => {
-        if (offset > 0) {
-          return (' ' + p2.toUpperCase());
-        }
-        return p2.toUpperCase();
-    });
+    this.formattedTitle = convertKebabToSentenceCase(this.title);
 
     this.formattedSuccessRate = (this.successRate * 100).toFixed();
     this.formattedDifficulty = (this.difficulty.replace(/^\w/, (match) => match.toUpperCase()));
     this.parentTopic = 'random-topic';
+    this.formattedParentTopicTitle = convertKebabToSentenceCase(this.parentTopic);
   }
 }

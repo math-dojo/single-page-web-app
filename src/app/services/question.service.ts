@@ -18,7 +18,9 @@ export class QuestionService {
       hints: ['try this first', 'if this doesn\'t help, tough'],
       solved: false,
       successRate: 0.4,
-      difficulty: 'simple'
+      difficulty: 'simple',
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }));
   }
 }
