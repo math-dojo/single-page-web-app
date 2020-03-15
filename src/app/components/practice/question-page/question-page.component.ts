@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 
 import { Question } from 'src/app/models/question';
 import { QuestionService } from 'src/app/services/question.service';
@@ -31,9 +31,12 @@ export class QuestionPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.question$ = this.route.paramMap.pipe(
+    const questionDto$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.questionService.getQuestionWithTitle(params.get('question')))
+    );
+    this.question$ = questionDto$.pipe(
+      map(questionDto => Question.fromQuestionDto(questionDto))
     );
   }
 

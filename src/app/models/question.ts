@@ -48,4 +48,8 @@ export class Question extends QuestionDto {
     this.parentTopic = 'random-topic';
     this.formattedParentTopicTitle = convertKebabToSentenceCase(this.parentTopic);
   }
+
+  static fromQuestionDto(questionDto: QuestionDto) {
+    return new Question({ ...questionDto })
+  }
 }
