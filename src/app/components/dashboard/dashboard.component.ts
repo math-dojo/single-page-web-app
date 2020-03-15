@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Topic } from '../../models/topic';
 import { Observable } from 'rxjs';
 import { QuestionService } from 'src/app/services/question.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +18,12 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.topics$ = this.questionService.getTopics();
+    const topicDtos$ = this.questionService.getTopics();
+
+    this.topics$ = topicDtos$.pipe(
+      map(topics => topics.map(
+        eachTopicDto => Topic.fromTopicDto(eachTopicDto)
+      )));
   }
 
 }

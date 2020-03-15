@@ -1,21 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http'
 
 import { Question } from '../models/question';
 import { Topic } from '../models/topic';
+
+import { environment } from '../../environments/environment';
+import { TopicDto } from '../models/topic-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getQuestionsForTopic(topicTitle: string): Observable<Question[]> {
     return of(this.preStashedQuestions);
   }
 
-  getTopics(): Observable<Topic[]> {
+  getTopics(): Observable<TopicDto[]> {
+    if (environment.name == 'default') {
+      return this.http.get<TopicDto[]>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/topics`);
+    } 
     return of(this.preStashedTopics);
   }
 

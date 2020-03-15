@@ -11,7 +11,7 @@ export class Topic extends TopicDto {
     }: {
         title: string,
         body: string,
-        userProgress: number       
+        userProgress: number
     }) {
         super({
             title,
@@ -20,6 +20,10 @@ export class Topic extends TopicDto {
         });
 
         this.formattedTitle = convertKebabToSentenceCase(this.title);
+    }
+
+    static fromTopicDto(topicDto: TopicDto) {
+        return new Topic({...topicDto})
     }
 
 }
