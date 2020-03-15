@@ -16,5 +16,17 @@ export class TopicDto {
         this.body = body;
         this.userProgress = userProgress;
     }
+        
+    static createDtoWithNonEmptyFields({
+        title = '',
+        body = '',
+        userProgress = 0
+    } = {}): TopicDto {
+        return new TopicDto({
+            title,
+            body,
+            userProgress
+        });
+    }
 
 }

@@ -41,4 +41,28 @@ export class QuestionDto {
         this.parentTopicTitle = parentTopicTitle;
     }
 
+    static createDtoWithNonEmptyFields({
+        title = '',
+        body = '',
+        sampleAnswer = '',
+        hints = [''],
+        solved = false,
+        successRate = 0,
+        difficulty = '',
+        parentTopicTitle = '',
+        questionAnswerOptions = ['']
+    } = {}): QuestionDto {
+        return new QuestionDto({
+            title,
+            body,
+            sampleAnswer,
+            hints,
+            solved,
+            successRate,
+            difficulty,
+            parentTopicTitle,
+            questionAnswerOptions
+        })
+    }
+
 }
