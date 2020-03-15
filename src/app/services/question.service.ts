@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 
-import { Question } from '../models/question';
-import { Topic } from '../models/topic';
-
 import { environment } from '../../environments/environment';
 import { TopicDto } from '../models/topic-dto';
+import { QuestionDto } from '../models/question-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +13,12 @@ export class QuestionService {
 
   constructor(private http: HttpClient) { }
 
-  getQuestionsForTopic(topicTitle: string): Observable<Question[]> {
+  getQuestionsForTopic(topicTitle: string): Observable<QuestionDto[]> {
+    if (environment.name == 'default') {
+      return this.http.get<QuestionDto[]>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/topics/${topicTitle}/questions`);
+    } 
     return of(this.preStashedQuestions);
   }
 
@@ -28,16 +31,16 @@ export class QuestionService {
     return of(this.preStashedTopics);
   }
 
-  getTopicWithTitle(topicTitle: string): Observable<Topic> {
-    return of(new Topic({
+  getTopicWithTitle(topicTitle: string): Observable<TopicDto> {
+    return of(new TopicDto({
       title: topicTitle,
       body: 'I am  bit hard',
       userProgress: Math.random()
     }));
   }
 
-  getQuestionWithTitle(questionTitle: string): Observable<Question> {
-    return of(new Question({
+  getQuestionWithTitle(questionTitle: string): Observable<QuestionDto> {
+    return of(new QuestionDto({
       title: questionTitle,
       body: 'Lorem Ipsum. I am a lovely wall of text and I have contained within a very hard question. What is the meaning of life?',
       sampleAnswer: 'some sample answer',
@@ -50,33 +53,33 @@ export class QuestionService {
     }));
   }
 
-  private readonly preStashedTopics: Topic[] = [
-    new Topic({
+  private readonly preStashedTopics = [
+    new TopicDto({
       title: 'pure-mathematics',
       body: 'I am  bit hard',
       userProgress: 0.3
     }),
-    new Topic({
+    new TopicDto({
       title: 'geometry',
       body: 'I am  bit hard',
       userProgress: 0.5
     }),
-    new Topic({
+    new TopicDto({
       title: 'statistics',
       body: 'I am  bit hard',
       userProgress: 0.9
     }),
-    new Topic({
+    new TopicDto({
       title: 'pure-mathematics',
       body: 'I am  bit hard',
       userProgress: 0.3
     }),
-    new Topic({
+    new TopicDto({
       title: 'geometry',
       body: 'I am  bit hard',
       userProgress: 0.5
     }),
-    new Topic({
+    new TopicDto({
       title: 'statistics',
       body: 'I am  bit hard',
       userProgress: 0.9
@@ -84,7 +87,7 @@ export class QuestionService {
   ];
 
   private readonly preStashedQuestions = [
-    new Question({
+    new QuestionDto({
       title: 'try-me-first',
       body: 'something quite complex',
       sampleAnswer: '42',
@@ -95,7 +98,7 @@ export class QuestionService {
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }),
-    new Question({
+    new QuestionDto({
       title: 'other-thing-to-try',
       body: 'something quite complex',
       sampleAnswer: '42',
@@ -106,7 +109,7 @@ export class QuestionService {
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }),
-    new Question({
+    new QuestionDto({
       title: 'final-on-the-list',
       body: 'something quite complex',
       sampleAnswer: '42',
