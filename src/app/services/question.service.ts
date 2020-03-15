@@ -18,7 +18,11 @@ export class QuestionService {
       return this.http.get<QuestionDto[]>(`${
         environment.apis.questionServiceConsumerEndpoint
       }/topics/${topicTitle}/questions`);
-    } 
+    }
+    
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
     return of(this.preStashedQuestions);
   }
 
@@ -27,7 +31,11 @@ export class QuestionService {
       return this.http.get<TopicDto[]>(`${
         environment.apis.questionServiceConsumerEndpoint
       }/topics`);
-    } 
+    }
+
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */ 
     return of(this.preStashedTopics);
   }
 
