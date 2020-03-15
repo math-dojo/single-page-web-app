@@ -23,7 +23,7 @@ export class Topic extends TopicDto {
     }
 
     static fromTopicDto(topicDto: TopicDto) {
-        return new Topic({...topicDto})
+        return new Topic({...topicDto});
     }
 
 }

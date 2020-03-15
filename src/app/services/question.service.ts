@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { TopicDto } from '../models/topic-dto';
@@ -12,70 +12,6 @@ import { QuestionDto } from '../models/question-dto';
 export class QuestionService {
 
   constructor(private http: HttpClient) { }
-
-  getQuestionsForTopic(topicTitle: string): Observable<QuestionDto[]> {
-    if (environment.name == 'default') {
-      return this.http.get<QuestionDto[]>(`${
-        environment.apis.questionServiceConsumerEndpoint
-      }/topics/${topicTitle}/questions`);
-    }
-    
-    /* Return a prestashed response when deployed
-     * until the question service api is ready
-    */
-    return of(this.preStashedQuestions);
-  }
-
-  getTopics(): Observable<TopicDto[]> {
-    if (environment.name == 'default') {
-      return this.http.get<TopicDto[]>(`${
-        environment.apis.questionServiceConsumerEndpoint
-      }/topics`);
-    }
-
-    /* Return a prestashed response when deployed
-     * until the question service api is ready
-    */ 
-    return of(this.preStashedTopics);
-  }
-
-  getTopicWithTitle(topicTitle: string): Observable<TopicDto> {
-    if (environment.name == 'default') {
-      return this.http.get<TopicDto>(`${
-        environment.apis.questionServiceConsumerEndpoint
-      }/topics/${topicTitle}`);
-    }
-    /* Return a prestashed response when deployed
-     * until the question service api is ready
-    */
-    return of(new TopicDto({
-      title: topicTitle,
-      body: 'I am  bit hard',
-      userProgress: Math.random()
-    }));
-  }
-
-  getQuestionWithTitle(questionTitle: string): Observable<QuestionDto> {
-    if (environment.name == 'default') {
-      return this.http.get<QuestionDto>(`${
-        environment.apis.questionServiceConsumerEndpoint
-      }/questions/${questionTitle}`);
-    }
-    /* Return a prestashed response when deployed
-     * until the question service api is ready
-    */ 
-    return of(new QuestionDto({
-      title: questionTitle,
-      body: 'Lorem Ipsum. I am a lovely wall of text and I have contained within a very hard question. What is the meaning of life?',
-      sampleAnswer: 'some sample answer',
-      hints: ['try this first', 'if this doesn\'t help, tough'],
-      solved: false,
-      successRate: 0.4,
-      difficulty: 'simple',
-      parentTopicTitle: 'something-hard',
-      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
-    }));
-  }
 
   private readonly preStashedTopics = [
     new TopicDto({
@@ -145,4 +81,68 @@ export class QuestionService {
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     })
   ];
+
+  getQuestionsForTopic(topicTitle: string): Observable<QuestionDto[]> {
+    if (environment.name == 'default') {
+      return this.http.get<QuestionDto[]>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/topics/${topicTitle}/questions`);
+    }
+
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
+    return of(this.preStashedQuestions);
+  }
+
+  getTopics(): Observable<TopicDto[]> {
+    if (environment.name == 'default') {
+      return this.http.get<TopicDto[]>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/topics`);
+    }
+
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
+    return of(this.preStashedTopics);
+  }
+
+  getTopicWithTitle(topicTitle: string): Observable<TopicDto> {
+    if (environment.name == 'default') {
+      return this.http.get<TopicDto>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/topics/${topicTitle}`);
+    }
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
+    return of(new TopicDto({
+      title: topicTitle,
+      body: 'I am  bit hard',
+      userProgress: Math.random()
+    }));
+  }
+
+  getQuestionWithTitle(questionTitle: string): Observable<QuestionDto> {
+    if (environment.name == 'default') {
+      return this.http.get<QuestionDto>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/questions/${questionTitle}`);
+    }
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
+    return of(new QuestionDto({
+      title: questionTitle,
+      body: 'Lorem Ipsum. I am a lovely wall of text and I have contained within a very hard question. What is the meaning of life?',
+      sampleAnswer: 'some sample answer',
+      hints: ['try this first', 'if this doesn\'t help, tough'],
+      solved: false,
+      successRate: 0.4,
+      difficulty: 'simple',
+      parentTopicTitle: 'something-hard',
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
+    }));
+  }
 }

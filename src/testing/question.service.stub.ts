@@ -15,5 +15,5 @@ export const QuestionServiceStub: Partial<QuestionService> = {
 
     getQuestionWithTitle: jasmine.createSpy('getQuestionsForTopic')
     .and.returnValue(of(QuestionDto.createDtoWithNonEmptyFields()))
-    
+
 };

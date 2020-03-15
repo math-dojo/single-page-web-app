@@ -48,6 +48,6 @@ export class Question extends QuestionDto {
   }
 
   static fromQuestionDto(questionDto: QuestionDto) {
-    return new Question({ ...questionDto })
+    return new Question({ ...questionDto });
   }
 }

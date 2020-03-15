@@ -10,13 +10,13 @@ export class TopicDto {
     }: {
         title: string,
         body: string,
-        userProgress: number       
+        userProgress: number
     }) {
         this.title = title;
         this.body = body;
         this.userProgress = userProgress;
     }
-        
+
     static createDtoWithNonEmptyFields({
         title = '',
         body = '',

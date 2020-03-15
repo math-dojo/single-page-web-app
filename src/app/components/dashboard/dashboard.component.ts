@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
 
-  topics$: Observable<Topic[]>
+  topics$: Observable<Topic[]>;
 
   constructor(
     private questionService: QuestionService

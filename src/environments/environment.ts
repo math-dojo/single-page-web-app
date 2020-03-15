@@ -4,18 +4,18 @@
 
 export const environment = {
   get production() {
-    return false
+    return false;
   },
   get name() {
-    return "default"
+    return 'default';
   },
-  get apis(){
+  get apis() {
     return {
       get questionServiceConsumerEndpoint() {
-        return 'http://localhost:4201'
+        return 'http://localhost:4201';
       }
-    }
-  } 
+    };
+  }
 };
 
 /*

@@ -4,5 +4,5 @@ export function convertKebabToSentenceCase(kebabCasetoConvert: string): string {
           return (' ' + p2.toUpperCase());
         }
         return p2.toUpperCase();
-    })
+    });
 }

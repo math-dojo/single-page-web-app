@@ -13,7 +13,7 @@ import { switchMap, map } from 'rxjs/operators';
 })
 export class TopicPageComponent implements OnInit {
 
-  topic$: Observable<Topic>
+  topic$: Observable<Topic>;
   questions$: Observable<Question[]>;
 
   constructor(
@@ -25,7 +25,7 @@ export class TopicPageComponent implements OnInit {
     const topicDto$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.questionService.getTopicWithTitle(params.get('topic')))
-    )
+    );
     this.topic$ = topicDto$.pipe(
       map(topicDto => Topic.fromTopicDto(topicDto))
     );
@@ -33,12 +33,12 @@ export class TopicPageComponent implements OnInit {
     const questionsDtos$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.questionService.getQuestionsForTopic(params.get('topic')))
-    )
+    );
     this.questions$ = questionsDtos$.pipe(
       map(questions => questions.map(
         eachQuestionDto => Question.fromQuestionDto(eachQuestionDto)
       ))
-    )
+    );
 
   }
 

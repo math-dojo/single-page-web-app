@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 })
 export class QuestionPageComponent implements OnInit {
 
-  question$: Observable<Question>
+  question$: Observable<Question>;
 
   exampleForm = new FormGroup({
     sample: new FormControl('', Validators.required),
