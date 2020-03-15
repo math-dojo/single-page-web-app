@@ -83,7 +83,7 @@ export class QuestionService {
   ];
 
   getQuestionsForTopic(topicTitle: string): Observable<QuestionDto[]> {
-    if (environment.name == 'default') {
+    if (environment.name === 'default') {
       return this.http.get<QuestionDto[]>(`${
         environment.apis.questionServiceConsumerEndpoint
       }/topics/${topicTitle}/questions`);
@@ -96,7 +96,7 @@ export class QuestionService {
   }
 
   getTopics(): Observable<TopicDto[]> {
-    if (environment.name == 'default') {
+    if (environment.name === 'default') {
       return this.http.get<TopicDto[]>(`${
         environment.apis.questionServiceConsumerEndpoint
       }/topics`);
@@ -109,7 +109,7 @@ export class QuestionService {
   }
 
   getTopicWithTitle(topicTitle: string): Observable<TopicDto> {
-    if (environment.name == 'default') {
+    if (environment.name === 'default') {
       return this.http.get<TopicDto>(`${
         environment.apis.questionServiceConsumerEndpoint
       }/topics/${topicTitle}`);
@@ -125,7 +125,7 @@ export class QuestionService {
   }
 
   getQuestionWithTitle(questionTitle: string): Observable<QuestionDto> {
-    if (environment.name == 'default') {
+    if (environment.name === 'default') {
       return this.http.get<QuestionDto>(`${
         environment.apis.questionServiceConsumerEndpoint
       }/questions/${questionTitle}`);
