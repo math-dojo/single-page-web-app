@@ -3,8 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  name: "nonproduction"
+  get production() {
+    return false;
+  },
+  get name() {
+    return 'nonproduction';
+  },
+  get apis() {
+    return {
+      get questionServiceConsumerEndpoint() {
+        return '';
+      }
+    };
+  }
 };
 
 /*

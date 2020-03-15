@@ -1,4 +1,15 @@
 export const environment = {
-  production: true,
-  name: "production"
+  get production() {
+    return true;
+  },
+  get name() {
+    return 'production';
+  },
+  get apis() {
+    return {
+      get questionServiceConsumerEndpoint() {
+        return '';
+      }
+    };
+  }
 };
