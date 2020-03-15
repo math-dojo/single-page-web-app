@@ -9,4 +9,8 @@ describe('AuthenticationService', () => {
     const service: AuthenticationService = TestBed.inject(AuthenticationService);
     expect(service).toBeTruthy();
   });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

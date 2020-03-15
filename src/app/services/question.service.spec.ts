@@ -21,4 +21,8 @@ describe('QuestionService', () => {
     const service: QuestionService = TestBed.inject(QuestionService);
     expect(service).toBeTruthy();
   });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

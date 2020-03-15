@@ -93,4 +93,8 @@ describe('SignupComponent', () => {
 
     expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
   });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

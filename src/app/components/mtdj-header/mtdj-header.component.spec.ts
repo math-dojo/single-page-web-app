@@ -29,4 +29,8 @@ describe('MtdjHeaderComponent', () => {
   xit('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
 });

@@ -15,20 +15,20 @@ describe('TopicPageComponent', () => {
   let fixture: ComponentFixture<TopicPageComponent>;
 
   beforeEach(async(() => {
-    const testActivatedRoute = new ActivatedRouteStub({topic: 'some-topic-title'});
+    const testActivatedRoute = new ActivatedRouteStub({ topic: 'some-topic-title' });
     TestBed.configureTestingModule({
-      declarations: [ TopicPageComponent, MtdgFooterComponent, MtdjHeaderComponent ],
+      declarations: [TopicPageComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [ClarityModule, RouterTestingModule]
     })
-    .overrideComponent(TopicPageComponent, {
-      set: {
-        providers: [
-          { provide: QuestionService, useValue: QuestionServiceStub },
-          { provide: ActivatedRoute, useValue: testActivatedRoute }
-        ]
-      }
-    })
-    .compileComponents();
+      .overrideComponent(TopicPageComponent, {
+        set: {
+          providers: [
+            { provide: QuestionService, useValue: QuestionServiceStub },
+            { provide: ActivatedRoute, useValue: testActivatedRoute }
+          ]
+        }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -39,5 +39,9 @@ describe('TopicPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });
