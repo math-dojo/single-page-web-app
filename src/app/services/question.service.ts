@@ -40,6 +40,14 @@ export class QuestionService {
   }
 
   getTopicWithTitle(topicTitle: string): Observable<TopicDto> {
+    if (environment.name == 'default') {
+      return this.http.get<TopicDto>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/topics/${topicTitle}`);
+    }
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
     return of(new TopicDto({
       title: topicTitle,
       body: 'I am  bit hard',
@@ -48,6 +56,14 @@ export class QuestionService {
   }
 
   getQuestionWithTitle(questionTitle: string): Observable<QuestionDto> {
+    if (environment.name == 'default') {
+      return this.http.get<QuestionDto>(`${
+        environment.apis.questionServiceConsumerEndpoint
+      }/questions/${questionTitle}`);
+    }
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */ 
     return of(new QuestionDto({
       title: questionTitle,
       body: 'Lorem Ipsum. I am a lovely wall of text and I have contained within a very hard question. What is the meaning of life?',
