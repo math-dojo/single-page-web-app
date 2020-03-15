@@ -1,7 +1,7 @@
-<clr-main-container class="main-container">
+<clr-main-container class="main-container" *ngIf="question$ | async as question">
   <app-mtdj-header></app-mtdj-header>
   <nav class="subnav">
-    <ul class="nav" *ngIf="question$ | async as question">
+    <ul class="nav">
       <li class="nav-item">
         <a class="nav-link" routerLink="/dashboard">Practice</a>
       </li>
@@ -9,7 +9,7 @@
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/topics', question.parentTopic]">{{question.formattedParentTopicTitle}}</a>
+        <a class="nav-link" [routerLink]="['/topics', question.parentTopicTitle]">{{question.formattedParentTopicTitle}}</a>
       </li>
       <li class="nav-item">
         >
@@ -21,7 +21,7 @@
   </nav>
   <div class="content-container" id="primary">
     <div class="content-area">
-      <div class="clr-row mtdj__question-feature-area" *ngIf="question$ | async as question">
+      <div class="clr-row mtdj__question-feature-area">
         <div class="clr-col-lg-6 clr-col-12 mtdj__question-container">
           <div class="card">
             <div class="card-header">
