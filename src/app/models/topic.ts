@@ -1,18 +1,29 @@
-export class Topic {
-    public readonly name: string;
-    public readonly topicDescription: string;
-    public readonly userProgress: number;
-    public readonly linkToTopicSection: string;
+import { TopicDto } from './topic-dto';
+import { convertKebabToSentenceCase } from '../utilities/content-title-formatter';
+
+export class Topic extends TopicDto {
+    public readonly formattedTitle: string;
 
     public constructor({
-        name,
-        topicDescription,
+        title,
+        body,
         userProgress
+    }: {
+        title: string,
+        body: string,
+        userProgress: number
     }) {
-        this.name = name;
-        this.topicDescription = topicDescription;
-        this.userProgress = userProgress;
-        this.linkToTopicSection = `/topics/${name.toLowerCase()}`;
+        super({
+            title,
+            body,
+            userProgress
+        });
+
+        this.formattedTitle = convertKebabToSentenceCase(this.title);
+    }
+
+    static fromTopicDto(topicDto: TopicDto) {
+        return new Topic({...topicDto});
     }
 
 }

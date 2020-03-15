@@ -1,0 +1,87 @@
+<clr-main-container class="main-container" *ngIf="question$ | async as question">
+  <app-mtdj-header></app-mtdj-header>
+  <nav class="subnav">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/dashboard">Practice</a>
+      </li>
+      <li class="nav-item">
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/topics', question.parentTopicTitle]">{{question.formattedParentTopicTitle}}</a>
+      </li>
+      <li class="nav-item">
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" [routerLink]="['/questions', question.title]">{{question.formattedTitle}}</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="content-container" id="primary">
+    <div class="content-area">
+      <div class="clr-row mtdj__question-feature-area">
+        <div class="clr-col-lg-6 clr-col-12 mtdj__question-container">
+          <div class="card">
+            <div class="card-header">
+              {{question.formattedTitle}}
+            </div>
+            <div class="card-block">
+              <div class="card-title">
+                Problem Description
+              </div>
+              <div class="card-text">
+                {{question.body}}
+              </div>
+              <div class="card-img">
+                <img src="..." />
+              </div>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let hint of question.hints">{{hint}}</li>
+            </ul>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-link">Show hints</button>
+            </div>
+          </div>
+        </div>
+        <div class="clr-col-lg-6  clr-col-12 mtdj__question-submission-container">
+          <div class="card">
+            <div class="card-header">
+              Header
+            </div>
+            <form clrForm [formGroup]="exampleForm" clrLayout="vertical">
+              <div class="card-block">
+                <div class="card-title">
+                  Answer Sheet
+                </div>
+                <div class="card-text">
+                  Some useful explanation on how to pick answers
+                  <clr-radio-container>
+                    <label>Options</label>
+                    <clr-radio-wrapper *ngFor="let each of question.questionAnswerOptions">
+                      <input type="radio" clrRadio name="sample" required value="{{each}}" formControlName="sample" />
+                      <label>{{each}}</label>
+                    </clr-radio-wrapper>
+                    <clr-control-helper>Helper text</clr-control-helper>
+                    <clr-control-error>This field is required!</clr-control-error>
+                  </clr-radio-container>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-primary" type="submit" (click)="submit()">
+                  Submit
+                </button>
+                <button class="btn" type="button" (click)="resetForm()">
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-mtdg-footer></app-mtdg-footer>
+</clr-main-container>

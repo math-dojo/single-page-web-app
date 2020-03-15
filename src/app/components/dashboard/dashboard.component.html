@@ -1,66 +1,15 @@
 <clr-main-container class="main-container">
-    <clr-header class="header header-1">
-        <div class="branding">
-            <a routerLink="/home" routerLinkActive="active" class="nav-link">
-                <img src="assets/dojo-transparent-white-outline.svg" alt="A dojo" class="mtdj__logo">
-                <span class="title">Math Dojo</span>
-            </a>
-        </div>
-        <div class="header-nav" [clr-nav-level]="1">
-            <a routerLink="/dashboard" routerLinkActive="active" class="active nav-link"><span class="nav-text">Practice</span></a>
-            <a routerLink="/contests" routerLinkActive="active"  class="nav-link"><span class="nav-text">Compete</span></a>
-            <a routerLink="/discuss" routerLinkActive="active"  class="nav-link"><span class="nav-text">Discuss</span></a>
-        </div>
-        <div class="header-actions">
-            <clr-dropdown>
-                <button class="nav-text" clrDropdownTrigger aria-label="toggle settings menu">
-                    <clr-icon shape="user"></clr-icon>
-                    username
-                    <clr-icon shape="caret down"></clr-icon>
-                </button>
-                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-                    <a href="..." clrDropdownItem>Profile</a>
-                    <a href="..." clrDropdownItem>Preferences</a>
-                    <a href="..." clrDropdownItem>Log out</a>
-                </clr-dropdown-menu>
-            </clr-dropdown>
-        </div>
-    </clr-header>
-    <nav class="subnav">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Practice</a>
-            </li>
-            <li class="nav-item">
-                >
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Topic</a>
-            </li>
-            <li class="nav-item">
-                >
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Subtopic</a>
-            </li>
-            <li class="nav-item">
-                >
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Question</a>
-            </li>
-        </ul>
-    </nav>
+    <app-mtdj-header></app-mtdj-header>
     <div class="content-container" id="primary">
         <div class="content-area">
-            <div class="clr-row">
-                <div class="clr-col-12 clr-col-sm-4" *ngFor="let topic of topics">
-                    <a [routerLink]="['/topics', topic.name.toLowerCase()]" class="card clickable">
+            <div class="clr-row" *ngIf="topics$ | async as topics">
+                <div class="clr-col-lg-4 clr-col-md-6 clr-col-sm-8 clr-col-12" *ngFor="let topic of topics">
+                    <a [routerLink]="['/topics', topic.title]" class="card clickable">
                         <div class="card-header">
-                            {{topic.name}}
+                            {{topic.formattedTitle}}
                         </div>
                         <div class="card-block">
-                            <p class="card-text">{{topic.topicDescription}}</p>
+                            <p class="card-text">{{topic.body}}</p>
                             <div class="progress-block">
                                 <label>Progress</label>
                                 <div class="progress success">
@@ -76,19 +25,5 @@
             </div>
         </div>
     </div>
-    <footer>
-        <div class="container">
-            <div class="clr-row">
-                <div class="clr-col-4">
-                    <span>Copyright &copy; 2019 Math-Dojo</span>
-                </div>
-                <div class="clr-col-4">
-                    <div>Dojo icon made by <a href="https://www.flaticon.com/authors/freepik"
-                            title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"
-                            title="Flaticon">www.flaticon.com</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <app-mtdg-footer></app-mtdg-footer>
 </clr-main-container>
