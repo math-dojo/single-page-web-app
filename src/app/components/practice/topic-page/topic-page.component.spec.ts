@@ -5,6 +5,8 @@ import { ClarityModule } from '@clr/angular';
 import { TopicPageComponent } from './topic-page.component';
 import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
 import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
+import { QuestionService } from 'src/app/services/question.service';
+import { QuestionServiceStub } from 'src/testing/question.service.stub';
 
 describe('TopicPageComponent', () => {
   let component: TopicPageComponent;
@@ -14,6 +16,13 @@ describe('TopicPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TopicPageComponent, MtdgFooterComponent, MtdjHeaderComponent ],
       imports: [ClarityModule, RouterTestingModule]
+    })
+    .overrideComponent(TopicPageComponent, {
+      set: {
+        providers: [
+          { provide: QuestionService, useValue: QuestionServiceStub }
+        ]
+      }
     })
     .compileComponents();
   }));
