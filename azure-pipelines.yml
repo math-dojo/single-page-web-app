@@ -79,7 +79,7 @@ steps:
         $accountNameExists = az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
         If ($accountNameExists.nameAvailable) {
           try { 
-            az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui
+            az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui  --auth-mode login
           }
           catch {
             Write-Host "An error occurred:"
@@ -87,7 +87,7 @@ steps:
           }
         }
         
-        az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html --404-document index.html
+        az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html --404-document index.html  --auth-mode login
 
 - task: AzureFileCopy@3
   displayName: 'Copy Build Artifacts to Blob Storage'

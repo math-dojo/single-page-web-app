@@ -1,76 +1,85 @@
 <clr-main-container class="main-container">
-    <clr-header class="header header-1">
-        <div class="branding">
-            <a routerLink="/home" routerLinkActive="active" class="nav-link">
-                <img src="assets/dojo-transparent-white-outline.svg" alt="A dojo" class="mtdj__logo">
-                <span class="title">Math Dojo</span>
-            </a>
-        </div>
-        <div class="header-nav" [clr-nav-level]="1">
-            <a routerLink="/dashboard" routerLinkActive="active" class="active nav-link"><span class="nav-text">Practice</span></a>
-            <a routerLink="/contests" routerLinkActive="active"  class="nav-link"><span class="nav-text">Compete</span></a>
-            <a routerLink="/discuss" routerLinkActive="active"  class="nav-link"><span class="nav-text">Discuss</span></a>
-        </div>
-        <div class="header-actions">
-            <clr-dropdown>
-                <button class="nav-text" clrDropdownTrigger aria-label="toggle settings menu">
-                    <clr-icon shape="user"></clr-icon>
-                    username
-                    <clr-icon shape="caret down"></clr-icon>
-                </button>
-                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-                    <a href="..." clrDropdownItem>Profile</a>
-                    <a href="..." clrDropdownItem>Preferences</a>
-                    <a href="..." clrDropdownItem>Log out</a>
-                </clr-dropdown-menu>
-            </clr-dropdown>
-        </div>
-    </clr-header>
-    <nav class="subnav">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Practice</a>
-            </li>
-            <li class="nav-item">
-                >
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Topic</a>
-            </li>
-            <li class="nav-item">
-                >
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Subtopic</a>
-            </li>
-            <li class="nav-item">
-                >
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Question</a>
-            </li>
-        </ul>
-    </nav>
-    <div class="content-container" id="primary">
-        <div class="content-area">
-            <div class="clr-row">
-
-            </div>
-        </div>
-    </div>
-    <footer>
-        <div class="container">
-            <div class="clr-row">
-                <div class="clr-col-4">
-                    <span>Copyright &copy; 2019 Math-Dojo</span>
-                </div>
-                <div class="clr-col-4">
-                    <div>Dojo icon made by <a href="https://www.flaticon.com/authors/freepik"
-                            title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"
-                            title="Flaticon">www.flaticon.com</a>
+  <app-mtdj-header></app-mtdj-header>
+  <nav class="subnav">
+    <ul class="nav" *ngIf="topic$ | async as topic">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/dashboard">Practice</a>
+      </li>
+      <li class="nav-item">
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" [routerLink]="['/topics', topic.title]">{{topic.formattedTitle}}</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="content-container" id="primary">
+    <div class="content-area">
+      <div class="clr-row">
+        <div class="clr-col-lg-8">
+          <div class="clr-row" *ngIf="questions$ | async as questions">
+            <div class="clr-col-lg-8 clr-col-md-8 clr-col-sm-12 clr-col-12" *ngFor="let question of questions">
+              <a [routerLink]="['/questions', question.title.toLowerCase()]" class="card clickable">
+                <div class="card-block">
+                  <h4 class="card-title">{{ question.formattedTitle }}</h4>
+                  <p class="card-text">
+                    Difficulty: {{ question.formattedDifficulty }}
+                  </p>
+                  <div class="progress-block">
+                    <label>Success Rate</label>
+                    <div class="progress-static labeled">
+                      <div class="progress-meter" [attr.data-value]="question.formattedSuccessRate"
+                        [attr.data-displayval]="
+                          question.formattedSuccessRate + '%'
+                        "></div>
+                      <span>{{ question.formattedSuccessRate }}%</span>
                     </div>
+                  </div>
                 </div>
+              </a>
             </div>
+          </div>
         </div>
-    </footer>
+        <div class="clr-col-lg-4">
+          <div class="clr-row">
+            <div class="clr-form-control">
+              <label class="clr-control-label">DIFFICULTY</label>
+              <div class="clr-control-container">
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox1" name="checkbox-full" value="Easy" class="clr-checkbox">
+                  <label for="vertical-checkbox1" class="clr-control-label">Easy</label>
+                </div>
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium"
+                    class="clr-checkbox">
+                  <label for="vertical-checkbox2" class="clr-control-label">Medium</label>
+                </div>
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox3" name="checkbox-full" value="Hard" class="clr-checkbox">
+                  <label for="vertical-checkbox3" class="clr-control-label">Hard</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clr-row">
+            <div class="clr-form-control">
+              <label class="clr-control-label">STATUS</label>
+              <div class="clr-control-container">
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox1" name="checkbox-full" value="Easy" class="clr-checkbox">
+                  <label for="vertical-checkbox1" class="clr-control-label">Solved</label>
+                </div>
+                <div class="clr-checkbox-wrapper">
+                  <input type="checkbox" id="vertical-checkbox2" name="checkbox-full" value="Medium"
+                    class="clr-checkbox">
+                  <label for="vertical-checkbox2" class="clr-control-label">Unsolved</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-mtdg-footer></app-mtdg-footer>
 </clr-main-container>

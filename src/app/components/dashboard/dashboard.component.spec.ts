@@ -3,6 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ClarityModule } from '@clr/angular';
 
 import { DashboardComponent } from './dashboard.component';
+import { MtdgFooterComponent } from '../mtdg-footer/mtdg-footer.component';
+import { MtdjHeaderComponent } from '../mtdj-header/mtdj-header.component';
+import { QuestionService } from 'src/app/services/question.service';
+import { QuestionServiceStub } from 'src/testing/question.service.stub';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -10,10 +14,17 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ],
+      declarations: [DashboardComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [ClarityModule, RouterTestingModule]
     })
-    .compileComponents();
+    .overrideComponent(DashboardComponent, {
+      set: {
+        providers: [
+          { provide: QuestionService, useValue: QuestionServiceStub }
+        ]
+      }
+    })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -24,5 +35,9 @@ describe('DashboardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
   });
 });
