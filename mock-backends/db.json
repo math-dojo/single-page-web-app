@@ -22,7 +22,7 @@
         {
             "id": "other-thing-to-try",
             "title": "other-thing-to-try",
-            "questionBody": "\\\\sum_{i=1}^nx_i",
+            "questionBody": "$\\sum_{i=1}^nx_i$",
             "sampleAnswer": "42",
             "successRate": 0.817563,
             "difficulty": "easy",
