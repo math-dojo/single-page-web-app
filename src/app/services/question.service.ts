@@ -49,33 +49,33 @@ export class QuestionService {
   private readonly preStashedQuestions = [
     new QuestionDto({
       title: 'try-me-first',
-      body: 'something quite complex',
+      questionBody: 'something quite complex',
       sampleAnswer: '42',
       successRate: 0.42,
       difficulty: 'easy',
-      solved: false,
+      answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }),
     new QuestionDto({
       title: 'other-thing-to-try',
-      body: 'something quite complex',
+      questionBody: 'something quite complex',
       sampleAnswer: '42',
       successRate: 0.817563,
       difficulty: 'easy',
-      solved: false,
+      answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
     }),
     new QuestionDto({
       title: 'final-on-the-list',
-      body: 'something quite complex',
+      questionBody: 'something quite complex',
       sampleAnswer: '42',
       successRate: 0.2,
       difficulty: 'easy',
-      solved: false,
+      answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
@@ -135,10 +135,10 @@ export class QuestionService {
     */
     return of(new QuestionDto({
       title: questionTitle,
-      body: 'Lorem Ipsum. I am a lovely wall of text and I have contained within a very hard question. What is the meaning of life?',
+      questionBody: 'Lorem Ipsum. I am a lovely wall of text and I have contained within a very hard question. What is the meaning of life?',
       sampleAnswer: 'some sample answer',
       hints: ['try this first', 'if this doesn\'t help, tough'],
-      solved: false,
+      answer: 'false',
       successRate: 0.4,
       difficulty: 'simple',
       parentTopicTitle: 'something-hard',
