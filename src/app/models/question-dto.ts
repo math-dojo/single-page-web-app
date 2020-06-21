@@ -8,6 +8,7 @@ export class QuestionDto {
     public readonly parentTopicTitle: string;
     public readonly questionAnswerOptions: string[];
     public readonly answer: string;
+    public readonly solved: boolean;
 
     public constructor({
         title,
@@ -18,7 +19,8 @@ export class QuestionDto {
         successRate,
         difficulty,
         parentTopicTitle,
-        questionAnswerOptions
+        questionAnswerOptions,
+        solved
     }: {
         title: string,
         questionBody: string,
@@ -28,7 +30,8 @@ export class QuestionDto {
         successRate: number,
         difficulty: string,
         parentTopicTitle: string,
-        questionAnswerOptions: string[]
+        questionAnswerOptions: string[],
+        solved: boolean
     }) {
         this.title = title;
         this.questionBody = questionBody;
@@ -50,7 +53,8 @@ export class QuestionDto {
         successRate = 0,
         difficulty = '',
         parentTopicTitle = '',
-        questionAnswerOptions = ['']
+        questionAnswerOptions = [''],
+        solved = false
     } = {}): QuestionDto {
         return new QuestionDto({
             title,
@@ -61,7 +65,8 @@ export class QuestionDto {
             successRate,
             difficulty,
             parentTopicTitle,
-            questionAnswerOptions
+            questionAnswerOptions,
+            solved
         });
     }
 

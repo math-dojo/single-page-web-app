@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
 export class QuestionPageComponent implements OnInit {
 
   question$: Observable<Question>;
-  body : string;
 
   exampleForm = new FormGroup({
     sample: new FormControl('', Validators.required),
@@ -39,7 +38,6 @@ export class QuestionPageComponent implements OnInit {
     this.question$ = questionDto$.pipe(
       map(questionDto => Question.fromQuestionDto(questionDto))
     );
-     this.question$.subscribe(question => this.body = question.questionBody);
   }
 
   submit() {

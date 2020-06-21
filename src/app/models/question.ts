@@ -16,7 +16,8 @@ export class Question extends QuestionDto {
     successRate,
     difficulty,
     questionAnswerOptions,
-    parentTopicTitle
+    parentTopicTitle,
+    solved
   }: {
     title: string,
     questionBody: string,
@@ -26,7 +27,8 @@ export class Question extends QuestionDto {
     successRate: number,
     difficulty: string,
     questionAnswerOptions,
-    parentTopicTitle
+    parentTopicTitle,
+    solved: boolean
   }) {
     super({
       title,
@@ -37,7 +39,8 @@ export class Question extends QuestionDto {
       successRate,
       difficulty,
       questionAnswerOptions,
-      parentTopicTitle
+      parentTopicTitle,
+      solved
     });
 
     this.formattedTitle = convertKebabToSentenceCase(this.title);

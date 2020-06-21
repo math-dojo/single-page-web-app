@@ -49,25 +49,27 @@ export class QuestionService {
   private readonly preStashedQuestions = [
     new QuestionDto({
       title: 'try-me-first',
-      questionBody: 'something quite complex',
+      questionBody: 'When $a \\ne 0$, the solution of $$(ax^2 + bx + c = 0)$$ is $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
       sampleAnswer: '42',
       successRate: 0.42,
       difficulty: 'easy',
       answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
-      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
+      solved : false
     }),
     new QuestionDto({
       title: 'other-thing-to-try',
-      questionBody: 'something quite complex',
+      questionBody: '$\\sum_{i=1}^nx_i$',
       sampleAnswer: '42',
       successRate: 0.817563,
       difficulty: 'easy',
       answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
-      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
+      solved : false
     }),
     new QuestionDto({
       title: 'final-on-the-list',
@@ -78,7 +80,8 @@ export class QuestionService {
       answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
-      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
+      solved : false
     })
   ];
 
@@ -135,14 +138,15 @@ export class QuestionService {
     */
     return of(new QuestionDto({
       title: questionTitle,
-      questionBody: 'Lorem Ipsum. I am a lovely wall of text and I have contained within a very hard question. What is the meaning of life?',
+      questionBody: 'Lorem Ipsum. I am a lovely wall of text',
       sampleAnswer: 'some sample answer',
       hints: ['try this first', 'if this doesn\'t help, tough'],
       answer: 'false',
       successRate: 0.4,
       difficulty: 'simple',
       parentTopicTitle: 'something-hard',
-      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy']
+      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
+      solved : false
     }));
   }
 }
