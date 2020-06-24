@@ -16,7 +16,7 @@ import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.compon
 import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.component';
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 import { KatexModule } from 'ng-katex';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     TopicPageComponent,
     MtdjHeaderComponent,
     MtdgFooterComponent,
-    QuestionPageComponent
+    QuestionPageComponent,
   ],
   imports: [
     BrowserModule,

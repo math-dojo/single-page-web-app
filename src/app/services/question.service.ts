@@ -138,7 +138,7 @@ export class QuestionService {
     */
     return of(new QuestionDto({
       title: questionTitle,
-      questionBody: 'Lorem Ipsum. I am a lovely wall of text',
+      questionBody: 'When $a \\ne 0$, the solution of $$(ax^2 + bx + c = 0)$$ is $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
       sampleAnswer: 'some sample answer',
       hints: ['try this first', 'if this doesn\'t help, tough'],
       answer: 'false',
