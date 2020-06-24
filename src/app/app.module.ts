@@ -28,7 +28,7 @@ import { KatexModule } from 'ng-katex';
     TopicPageComponent,
     MtdjHeaderComponent,
     MtdgFooterComponent,
-    QuestionPageComponent,
+    QuestionPageComponent
   ],
   imports: [
     BrowserModule,
