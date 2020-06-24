@@ -9,35 +9,38 @@ export class Question extends QuestionDto {
 
   public constructor({
     title,
-    body,
+    questionBody,
     sampleAnswer,
     hints,
-    solved,
+    answer,
     successRate,
     difficulty,
     questionAnswerOptions,
-    parentTopicTitle
+    parentTopicTitle,
+    solved
   }: {
     title: string,
-    body: string,
+    questionBody: string,
     sampleAnswer: string,
     hints: string[],
-    solved: boolean,
+    answer: string,
     successRate: number,
     difficulty: string,
     questionAnswerOptions,
-    parentTopicTitle
+    parentTopicTitle,
+    solved: boolean
   }) {
     super({
       title,
-      body,
+      questionBody,
       sampleAnswer,
       hints,
-      solved,
+      answer,
       successRate,
       difficulty,
       questionAnswerOptions,
-      parentTopicTitle
+      parentTopicTitle,
+      solved
     });
 
     this.formattedTitle = convertKebabToSentenceCase(this.title);

@@ -15,6 +15,8 @@ import { TopicPageComponent } from './components/practice/topic-page/topic-page.
 import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.component';
 import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.component';
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
+import { KatexModule } from 'ng-katex';
+
 
 @NgModule({
   declarations: [
@@ -34,9 +36,11 @@ import { QuestionPageComponent } from './components/practice/question-page/quest
     ClarityModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    KatexModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

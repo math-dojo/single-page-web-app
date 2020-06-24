@@ -3,11 +3,11 @@
         {
             "id": "try-me-first",
             "title": "try-me-first",
-            "body": "something quite complex",
+            "questionBody": "When $a \\ne 0$, there are two solutions to $$(ax^2 + bx + c = 0)$$ and they are $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$",
             "sampleAnswer": "42",
             "successRate": 0.42,
             "difficulty": "easy",
-            "solved": false,
+            "answer": "false",
             "hints": [
                 "try this",
                 "watch space odyssey"
@@ -22,11 +22,11 @@
         {
             "id": "other-thing-to-try",
             "title": "other-thing-to-try",
-            "body": "something quite complex",
+            "questionBody": "$\\sum_{i=1}^nx_i$",
             "sampleAnswer": "42",
             "successRate": 0.817563,
             "difficulty": "easy",
-            "solved": false,
+            "solved": "false",
             "hints": [
                 "try this",
                 "watch space odyssey"
@@ -41,11 +41,11 @@
         {
             "id": "final-on-the-list",
             "title": "final-on-the-list",
-            "body": "something quite complex",
+            "questionBody": "something quite complex",
             "sampleAnswer": "42",
             "successRate": 0.2,
             "difficulty": "easy",
-            "solved": false,
+            "answer": "false",
             "hints": [
                 "try this",
                 "watch space odyssey"
