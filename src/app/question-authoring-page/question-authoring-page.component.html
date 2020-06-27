@@ -1,0 +1,57 @@
+<clr-main-container class="main-container">
+<clr-header class="header header-1">
+    <div class="branding">
+        <a routerLink="/home"  routerLinkActive="active" class="nav-link">
+            <img src="assets/dojo-transparent-white-outline.svg" alt="A dojo" class="mtdj__logo">
+            <span class="title">Math Dojo</span>
+        </a>
+    </div>
+
+</clr-header>
+<div class=" question-form-wrapper" >
+    <form  class="question-form" [formGroup]="newQuestionForm" (submit)="onSubmit()">
+        <section class="title">
+            <h3 class="welcome">Math Dojo Question Creation Page</h3>
+            
+        </section>
+        
+           
+                <label class="clr-sr-only">Question Title</label>
+                <input type="text" name="title" clrInput placeholder="Question Title" formControlName="title"/>
+          <br>
+                <label >Question Body</label><br>
+                <textarea style="height:200px;width: 900px"  type="text" name="body" formControlName="body"name="Text1" cols="40" rows="5"></textarea>
+             
+                <br> <br>
+                <label >Sample Answer</label><br>
+                <textarea style="height:100px;width: 900px" type="text" name="answer"cols="200" rows="5"  formControlName="answer"></textarea>
+                <br>
+           
+                <label class="clr-sr-only">Hints</label>
+                <input type="text" name="hints" clrInput placeholder="Hints (Maximum 3 seperated by semicolons)" formControlName="hints"/>
+                <br>
+                <label >Difficulty</label><br>
+                <input type="text" name="difficulty" list="difficultyOptions">
+                <datalist id="difficultyOptions">
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+                </datalist> 
+            <br>
+            <label class="clr-sr-only">Options</label>
+                <input type="text" name="options" clrInput placeholder="Options (Maximum 4 seperated by semicolons)" formControlName="options"/>
+               
+           
+                <label class="clr-sr-only">Topic Title</label>
+                <input type="text" name="parentTopicTitle" clrInput placeholder="Topic Title" formControlName="parentTopicTitle"/>
+                <br>
+                <label >Answer</label><br>
+                <textarea style="height:100px;width: 900px" type="text" name="answer"cols="200" rows="5"  formControlName="answer"></textarea>
+                <br> <br>
+    
+            
+            <button type="submit" class="btn btn-success"(click)="onSubmit()">Submit Question</button>
+        
+    </form>
+</div>
+</clr-main-container>

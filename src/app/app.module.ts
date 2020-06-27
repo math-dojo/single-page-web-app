@@ -16,6 +16,7 @@ import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.compon
 import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.component';
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 import { KatexModule } from 'ng-katex';
+import { QuestionAuthoringPageComponent } from './question-authoring-page/question-authoring-page.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { KatexModule } from 'ng-katex';
     TopicPageComponent,
     MtdjHeaderComponent,
     MtdgFooterComponent,
-    QuestionPageComponent
+    QuestionPageComponent,
+    QuestionAuthoringPageComponent
   ],
   imports: [
     BrowserModule,
