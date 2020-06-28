@@ -42,6 +42,7 @@ export class QuestionDto {
         this.difficulty = difficulty;
         this.questionAnswerOptions = questionAnswerOptions;
         this.parentTopicTitle = parentTopicTitle;
+        this.solved = solved;
     }
 
     static createDtoWithNonEmptyFields({
