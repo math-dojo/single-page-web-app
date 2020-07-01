@@ -27,32 +27,32 @@ export class QuestionAuthoringPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-   
+
   }
- 
-  onSubmit(){
-   
+
+  onSubmit() {
+
     const question = new QuestionDto({
       title: this.newQuestionForm.controls.title.value,
       questionBody: this.newQuestionForm.controls.body.value,
       sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
-      hints: this.newQuestionForm.controls.hints.value.split(";"),
+      hints: this.newQuestionForm.controls.hints.value.split(';'),
       answer: this.newQuestionForm.controls.answer.value,
       successRate: 0,
       difficulty: this.newQuestionForm.controls.difficulty.value,
       parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
-      questionAnswerOptions: this.newQuestionForm.controls.options.value.split(";"),
+      questionAnswerOptions: this.newQuestionForm.controls.options.value.split(';'),
       solved : false
     });
-    this.validateHints = this.customSplitValidator(3, question.hints)
-    this.validateOptions = this.customSplitValidator(4, question.questionAnswerOptions)
+    this.validateHints = this.customSplitValidator(3, question.hints);
+    this.validateOptions = this.customSplitValidator(4, question.questionAnswerOptions);
     this.submitted = true;
     console.log(question.title);
-  //add backend validation after call to question service
-  //connect to azure queue store
-  //add web security
+  // add backend validation after call to question service
+  // connect to azure queue store
+  // add web security
   }
-   customSplitValidator( maxLength : Number, parts : string[]){
+   customSplitValidator( maxLength: number, parts: string[]) {
       return (parts.length > 2 && (parts.length <= maxLength));
   }
 
