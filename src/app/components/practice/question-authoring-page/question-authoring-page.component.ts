@@ -36,8 +36,8 @@ export class QuestionAuthoringPageComponent implements OnInit {
     answer: new FormControl('', Validators.required)
   });
 
-  constructor(private questionService :  QuestionService ) {
-   
+  constructor(private questionService: QuestionService ) {
+
    }
 
   ngOnInit(): void {
@@ -50,22 +50,26 @@ export class QuestionAuthoringPageComponent implements OnInit {
       title: this.newQuestionForm.controls.title.value,
       questionBody: this.newQuestionForm.controls.body.value,
       sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
-      hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm.controls.hint1.value, this.newQuestionForm.controls.hint3.value],
+      hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
+      .controls.hint1.value, this.newQuestionForm.controls.hint3.value],
       answer: this.newQuestionForm.controls.answer.value,
       successRate: 0,
       difficulty: this.newQuestionForm.controls.difficulty.value,
       parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
-      questionAnswerOptions: [this.newQuestionForm.controls.option1.value, this.newQuestionForm.controls.option2.value, this.newQuestionForm.controls.option3.value, this.newQuestionForm.controls.option4.value],
+      questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
+       this.newQuestionForm.controls.option2.value,
+      this.newQuestionForm.controls.option3.value,
+       this.newQuestionForm.controls.option4.value],
       solved : false
     });
 
     this.validateOptions =  this.customOptionsValidator(question.questionAnswerOptions);
-    let notFound : boolean; 
-    this.questionService.getQuestionWithTitle(question.title).pipe(map(questions => notFound = questions.title == null));
-    if(notFound == true ){
-      this.questionExists = true
+    let notFound: boolean;
+    this.questionService.getQuestionWithTitle(question.title).pipe(map(questions => notFound = questions.title === null));
+    if (notFound === true ) {
+      this.questionExists = true;
     }
-    if(this.validateOptions && !this.questionExists){
+    if (this.validateOptions && !this.questionExists) {
       // connect to azure queue store here
      this.submitted = true;
     }
@@ -73,7 +77,8 @@ export class QuestionAuthoringPageComponent implements OnInit {
   // add web security
   }
    customOptionsValidator( options: string[]) {
-      return !(options[0] != "" && options[1] == "") && !(options[0] == "" &&(options[1] != "" || options[2] != "" || options[3] != ""));
+      return !(options[0] !== '' && options[1] === '') && !(options[0] === '' &&
+       (options[1] !== '' || options[2] !== '' || options[3] !== ''));
   }
 
 }
