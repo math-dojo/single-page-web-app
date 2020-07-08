@@ -7,8 +7,8 @@ trigger:
 - master
 - develop
 - rl* # release branches to be built should be named rl[insertSemverHere]
-#- ft* # feature branches to be built should be named ft[insertSemverHere]
-- hf* # hotfix branches to be built should be named hf[insertSemverHere]
+#- ft* # feature branches to be built should be named ft[insertGithubIssueNumberHere]
+- hf* # hotfix branches to be built should be named hf[insertGithubIssueNumberHere]
 
 pool:
   vmImage: 'windows-2019'
@@ -78,7 +78,7 @@ steps:
     inlineScript: |
         $accountNameExists = az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
         If ($accountNameExists.nameAvailable) {
-          try { 
+          try {
             az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui  --auth-mode login
           }
           catch {
@@ -86,7 +86,7 @@ steps:
             Write-Host $_
           }
         }
-        
+
         az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html --404-document index.html  --auth-mode login
 
 - task: AzureFileCopy@3
