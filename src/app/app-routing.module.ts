@@ -6,9 +6,12 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
+import { QuestionAuthoringPageComponent } from './components/practice/question-authoring-page/question-authoring-page.component';
+
 
 
 const routes: Routes = [
+  { path: 'practice/create', component: QuestionAuthoringPageComponent },
   { path: 'questions/:question', component: QuestionPageComponent },
   { path: 'topics/:topic', component: TopicPageComponent },
   { path: 'dashboard', component: DashboardComponent },
