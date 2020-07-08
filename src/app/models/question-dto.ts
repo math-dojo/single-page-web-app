@@ -1,67 +1,73 @@
 export class QuestionDto {
     public readonly title: string;
-    public readonly body: string;
+    public readonly questionBody: string;
     public readonly sampleAnswer: string;
     public readonly hints: string[];
     public readonly successRate: number;
     public readonly difficulty: string;
     public readonly parentTopicTitle: string;
     public readonly questionAnswerOptions: string[];
-    public solved: boolean;
+    public readonly answer: string;
+    public readonly solved: boolean;
 
     public constructor({
         title,
-        body,
+        questionBody,
         sampleAnswer,
         hints,
-        solved,
+        answer,
         successRate,
         difficulty,
         parentTopicTitle,
-        questionAnswerOptions
+        questionAnswerOptions,
+        solved
     }: {
         title: string,
-        body: string,
+        questionBody: string,
         sampleAnswer: string,
         hints: string[],
-        solved: boolean,
+        answer: string,
         successRate: number,
         difficulty: string,
         parentTopicTitle: string,
-        questionAnswerOptions: string[]
+        questionAnswerOptions: string[],
+        solved: boolean
     }) {
         this.title = title;
-        this.body = body;
+        this.questionBody = questionBody;
         this.sampleAnswer = sampleAnswer;
         this.hints = hints;
-        this.solved = solved;
+        this.answer = answer;
         this.successRate = successRate;
         this.difficulty = difficulty;
         this.questionAnswerOptions = questionAnswerOptions;
         this.parentTopicTitle = parentTopicTitle;
+        this.solved = solved;
     }
 
     static createDtoWithNonEmptyFields({
         title = '',
-        body = '',
+        questionBody = '',
         sampleAnswer = '',
         hints = [''],
-        solved = false,
+        answer = '',
         successRate = 0,
         difficulty = '',
         parentTopicTitle = '',
-        questionAnswerOptions = ['']
+        questionAnswerOptions = [''],
+        solved = false
     } = {}): QuestionDto {
         return new QuestionDto({
             title,
-            body,
+            questionBody,
             sampleAnswer,
             hints,
-            solved,
+            answer,
             successRate,
             difficulty,
             parentTopicTitle,
-            questionAnswerOptions
+            questionAnswerOptions,
+            solved
         });
     }
 
