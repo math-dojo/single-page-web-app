@@ -77,10 +77,10 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
         $accountNameExists = az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
-        Write-Host $accountNameExists
+        Write-Host "Does the account name exist for mathdojouibuild$(Build.SourceBranchName): $accountNameExists"
         If ($accountNameExists.nameAvailable) {
           try {
-            az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui  --auth-mode login
+            az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui --subscription 5594cd6c-b674-4323-8517-5e859a399468
           }
           catch {
             Write-Host "An error occurred:"
