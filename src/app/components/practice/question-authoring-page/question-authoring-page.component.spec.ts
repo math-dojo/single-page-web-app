@@ -1,7 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionAuthoringPageComponent } from './question-authoring-page.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
+import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
+import { ClarityModule } from '@clr/angular';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { KatexModule } from 'ng-katex';
+import { QuestionService } from 'src/app/services/question.service';
+import { QuestionServiceStub } from 'src/testing/question.service.stub';
 
 
 describe('QuestionAuthoringPageComponent', () => {
@@ -10,12 +17,22 @@ describe('QuestionAuthoringPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QuestionAuthoringPageComponent ],
+      declarations: [QuestionAuthoringPageComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [
-        HttpClientTestingModule
+        ClarityModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        KatexModule
       ],
     })
-    .compileComponents();
+      .overrideComponent(QuestionAuthoringPageComponent, {
+        set: {
+          providers: [
+            { provide: QuestionService, useValue: QuestionServiceStub }
+          ]
+        }
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -25,12 +42,12 @@ describe('QuestionAuthoringPageComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should return false', () => {
-  //   let testStringArray : string[] = ["test1" , "", ""]
-  //   expect(component.customOptionsValidator(testStringArray)).toBeFalsy;
-  // });
-  // it('should return true', () => {
-  //   let testStringArray : string[] = ["test1" , "test2", "test3"]
-  //   expect(component.customOptionsValidator(testStringArray)).toBeTruthy;
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+  });
+
 });
