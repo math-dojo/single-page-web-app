@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl,  Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { ResolvedStaticSymbol } from '@angular/compiler';
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionDto } from 'src/app/models/question-dto';
-import { isEmpty, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 
@@ -36,9 +35,9 @@ export class QuestionAuthoringPageComponent implements OnInit {
     answer: new FormControl('', Validators.required)
   });
 
-  constructor(private questionService: QuestionService ) {
+  constructor(private questionService: QuestionService) {
 
-   }
+  }
 
   ngOnInit(): void {
 
@@ -51,34 +50,34 @@ export class QuestionAuthoringPageComponent implements OnInit {
       questionBody: this.newQuestionForm.controls.body.value,
       sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
       hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
-      .controls.hint1.value, this.newQuestionForm.controls.hint3.value],
+        .controls.hint1.value, this.newQuestionForm.controls.hint3.value],
       answer: this.newQuestionForm.controls.answer.value,
       successRate: 0,
       difficulty: this.newQuestionForm.controls.difficulty.value,
       parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
       questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
-       this.newQuestionForm.controls.option2.value,
+      this.newQuestionForm.controls.option2.value,
       this.newQuestionForm.controls.option3.value,
-       this.newQuestionForm.controls.option4.value],
-      solved : false
+      this.newQuestionForm.controls.option4.value],
+      solved: false
     });
 
-    this.validateOptions =  this.customOptionsValidator(question.questionAnswerOptions);
+    this.validateOptions = this.customOptionsValidator(question.questionAnswerOptions);
     let notFound: boolean;
     this.questionService.getQuestionWithTitle(question.title).pipe(map(questions => notFound = questions.title === null));
-    if (notFound === true ) {
+    if (notFound === true) {
       this.questionExists = true;
     }
     if (this.validateOptions && !this.questionExists) {
       // connect to azure queue store here
-     this.submitted = true;
+      this.submitted = true;
     }
 
-  // add web security
+    // add web security
   }
-   customOptionsValidator( options: string[]) {
-      return !(options[0] !== '' && options[1] === '') && !(options[0] === '' &&
-       (options[1] !== '' || options[2] !== '' || options[3] !== ''));
+  customOptionsValidator(options: string[]) {
+    return !(options[0] !== '' && options[1] === '') && !(options[0] === '' &&
+      (options[1] !== '' || options[2] !== '' || options[3] !== ''));
   }
 
 }
