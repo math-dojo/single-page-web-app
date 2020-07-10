@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionDto } from 'src/app/models/question-dto';
 import { map } from 'rxjs/operators';
+import { Topic } from 'src/app/models/topic';
 
 
 
@@ -16,7 +17,6 @@ export class QuestionAuthoringPageComponent implements OnInit {
   submitted = false;
   questionExists = false;
   difficulty: string[] = ['Easy', 'Medium', 'Hard'];
-  topics: string[] = ['Pure Mathematics', 'Statistics', 'Geometry'];
   validateOptions = true;
   disabled = false;
   newQuestionForm: FormGroup = new FormGroup({
@@ -34,13 +34,19 @@ export class QuestionAuthoringPageComponent implements OnInit {
     option4: new FormControl(''),
     answer: new FormControl('', Validators.required)
   });
+  topics$: any;
 
   constructor(private questionService: QuestionService) {
 
   }
 
   ngOnInit(): void {
+    const topicDtos$ = this.questionService.getTopics();
 
+    this.topics$ = topicDtos$.pipe(
+      map(topics => topics.map(
+        eachTopicDto => Topic.fromTopicDto(eachTopicDto)
+      )));
   }
 
   onSubmit() {

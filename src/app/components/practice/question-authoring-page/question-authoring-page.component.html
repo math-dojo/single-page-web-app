@@ -18,8 +18,10 @@
                 required
                 clrDatalistInput
               />
-              <datalist>
-                <option *ngFor="let topic of topics" [value]="topic"></option>
+              <datalist *ngIf="topics$ | async as topics">
+                <option *ngFor="let topic of topics" [value]="topic.title"
+                  >{{ topic.formattedTitle }}
+                </option>
               </datalist>
             </clr-datalist-container>
 
