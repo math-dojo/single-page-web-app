@@ -4,7 +4,7 @@
     <div class="content-area">
       <div class="clr-row mtdj__question-auth-feature-area">
         <div
-          class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-input-container"
+          class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
         >
           <form clrForm [formGroup]="newQuestionForm">
             <clr-input-container>
@@ -34,13 +34,7 @@
 
             <clr-textarea-container>
               <label>Body</label>
-              <textarea
-                clrTextarea
-                formControlName="body"
-                cols="110"
-                rows="5"
-                required
-              ></textarea>
+              <textarea clrTextarea formControlName="body" required></textarea>
               <clr-control-helper
                 >Equations should be written in LaTex</clr-control-helper
               >
@@ -48,12 +42,7 @@
 
             <clr-textarea-container>
               <label>Sample Answer</label>
-              <textarea
-                clrTextarea
-                formControlName="sampleAnswer"
-                cols="110"
-                rows="5"
-              ></textarea>
+              <textarea clrTextarea formControlName="sampleAnswer"></textarea>
               <clr-control-helper
                 >An example of how to answer the question in a
                 textbox</clr-control-helper
@@ -65,49 +54,75 @@
               <textarea
                 clrTextarea
                 formControlName="answer"
-                cols="110"
-                rows="5"
                 required
               ></textarea>
             </clr-textarea-container>
 
             <clr-input-container>
               <label>Hint 1</label>
-              <input clrInput formControlName="hint1" size="100" />
+              <input
+                class=".mtdj__question-auth-input--long"
+                clrInput
+                formControlName="hint1"
+              />
             </clr-input-container>
             <clr-input-container>
               <label>Hint 2</label>
-              <input clrInput formControlName="hint2" size="100" />
+              <input
+                class=".mtdj__question-auth-input--long"
+                clrInput
+                formControlName="hint2"
+              />
             </clr-input-container>
             <clr-input-container>
               <label>Hint 3</label>
-              <input clrInput formControlName="hint3" size="100" />
+              <input
+                class=".mtdj__question-auth-input--long"
+                clrInput
+                formControlName="hint3"
+              />
             </clr-input-container>
 
             <clr-input-container>
               <label>Option 1</label>
-              <input clrInput formControlName="option1" size="100" />
+              <input
+                class=".mtdj__question-auth-input--long"
+                clrInput
+                formControlName="option1"
+              />
               <clr-control-helper
                 >Equations should be written in LaTex</clr-control-helper
               >
             </clr-input-container>
             <clr-input-container>
               <label>Option 2</label>
-              <input clrInput formControlName="option2" size="100" />
+              <input
+                class=".mtdj__question-auth-input--long"
+                clrInput
+                formControlName="option2"
+              />
               <clr-control-helper
                 >Equations should be written in LaTex</clr-control-helper
               >
             </clr-input-container>
             <clr-input-container>
               <label>Option 3</label>
-              <input clrInput formControlName="option3" size="100" />
+              <input
+                class=".mtdj__question-auth-input--long"
+                clrInput
+                formControlName="option3"
+              />
               <clr-control-helper
                 >Equations should be written in LaTex</clr-control-helper
               >
             </clr-input-container>
             <clr-input-container>
               <label>Option 4</label>
-              <input clrInput formControlName="option4" size="100" />
+              <input
+                class=".mtdj__question-auth-input--long"
+                clrInput
+                formControlName="option4"
+              />
               <clr-control-helper
                 >Equations should be written in LaTex</clr-control-helper
               >
