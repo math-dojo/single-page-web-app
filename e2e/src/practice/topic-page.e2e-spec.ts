@@ -1,7 +1,7 @@
 import { TopicPage } from './topic-page.po';
 import { browser, logging } from 'protractor';
 
-describe('Topic Page', () => {
+describe('Given I navigate to the Topic Page', () => {
   let page: TopicPage;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('Topic Page', () => {
     expect(foundTopicCards).toBeGreaterThanOrEqual(1);
   });
 
-  it('clicking a question card should navigate to the question view', () => {
+  it('should navigate to the question view when I click a question card ', () => {
 
     const firstQuestionCardName = page.getFirstQuestionCardTitle().getText();
 
