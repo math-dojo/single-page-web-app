@@ -22,7 +22,7 @@ describe('Given I navigate to the Dashboard Page', () => {
     expect(page.getActiveSubNavText().getText()).toEqual(firstTopicCardName);
 
     const resourceUrl = page.getCurrentResourcePath();
-    expect(resourceUrl).toMatch(/^\/topics\/([a-z0-9-])+$/);
+    expect(resourceUrl).toMatch(/^\/practice\/topics\/([a-z0-9-])+$/);
   });
 
   afterEach(async () => {

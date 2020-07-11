@@ -14,7 +14,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          [routerLink]="['/topics', question.parentTopicTitle]"
+          [routerLink]="['/practice/topics', question.parentTopicTitle]"
           >{{ question.formattedParentTopicTitle }}</a
         >
       </li>
@@ -24,7 +24,7 @@
       <li class="nav-item">
         <a
           class="nav-link active"
-          [routerLink]="['/questions', question.title]"
+          [routerLink]="['/practice/questions', question.title]"
           >{{ question.formattedTitle }}</a
         >
       </li>

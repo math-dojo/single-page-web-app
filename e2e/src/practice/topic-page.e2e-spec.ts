@@ -23,7 +23,7 @@ describe('Given I navigate to the Topic Page', () => {
     expect(page.getActiveSubNavText().getText()).toEqual(firstQuestionCardName);
 
     const resourceUrl = page.getCurrentResourcePath();
-    expect(resourceUrl).toMatch(/^\/questions\/([a-z0-9-])+$/);
+    expect(resourceUrl).toMatch(/^\/practice\/questions\/([a-z0-9-])+$/);
   });
 
   afterEach(async () => {

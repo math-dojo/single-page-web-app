@@ -12,8 +12,8 @@ import { QuestionAuthoringPageComponent } from './components/practice/question-a
 
 const routes: Routes = [
   { path: 'practice/create', component: QuestionAuthoringPageComponent },
-  { path: 'questions/:question', component: QuestionPageComponent },
-  { path: 'topics/:topic', component: TopicPageComponent },
+  { path: 'practice/questions/:question', component: QuestionPageComponent },
+  { path: 'practice/topics/:topic', component: TopicPageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/login', component: SignupComponent },

@@ -24,7 +24,7 @@ export class TopicPage extends Utils {
   }
 
   navigateToFeatureRoot() {
-    this.navigateToPath('/topics/pure-mathematics');
+    this.navigateToPath('/practice/topics/pure-mathematics');
   }
 
 }

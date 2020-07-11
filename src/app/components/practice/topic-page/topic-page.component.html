@@ -9,9 +9,11 @@
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link active" [routerLink]="['/topics', topic.title]">{{
-          topic.formattedTitle
-        }}</a>
+        <a
+          class="nav-link active"
+          [routerLink]="['/practice/topics', topic.title]"
+          >{{ topic.formattedTitle }}</a
+        >
       </li>
     </ul>
   </nav>
@@ -25,7 +27,10 @@
               *ngFor="let question of questions"
             >
               <a
-                [routerLink]="['/questions', question.title.toLowerCase()]"
+                [routerLink]="[
+                  '/practice/questions',
+                  question.title.toLowerCase()
+                ]"
                 class="card clickable mtdj__topic_question_card"
               >
                 <div class="card-block">
