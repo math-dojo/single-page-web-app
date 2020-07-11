@@ -15,6 +15,6 @@ export class Utils {
   }
 
   getActiveSubNavText() {
-    return element(by.css('.subnav.mtdj__practice_subnav .nav-link.active')).getText();
+    return element(by.css('.subnav.mtdj__practice_subnav .nav-link.active'));
   }
 }

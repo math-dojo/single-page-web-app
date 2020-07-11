@@ -16,7 +16,7 @@ export class TopicPage extends Utils {
   }
 
   getFirstQuestionCardTitle() {
-    return this.getFirstQuestionCard().element(by.css('.card-title')).getText();
+    return this.getFirstQuestionCard().element(by.css('.card-title'));
   }
 
   clickFirstQuestionCard() {

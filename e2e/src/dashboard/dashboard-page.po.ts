@@ -16,7 +16,7 @@ export class DashboardPage extends Utils {
   }
 
   getFirstTopicCardTitle() {
-    return this.getFirstTopicCard().element(by.css('.card-header')).getText();
+    return this.getFirstTopicCard().element(by.css('.card-header'));
   }
 
   clickFirstTopicCard() {

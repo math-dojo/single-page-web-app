@@ -16,11 +16,11 @@ describe('Topic Page', () => {
 
   it('clicking a question card should navigate to the question view', () => {
 
-    const firstQuestionCardName = page.getFirstQuestionCardTitle();
+    const firstQuestionCardName = page.getFirstQuestionCardTitle().getText();
 
     page.clickFirstQuestionCard();
 
-    expect(page.getActiveSubNavText()).toEqual(firstQuestionCardName);
+    expect(page.getActiveSubNavText().getText()).toEqual(firstQuestionCardName);
 
     const resourceUrl = page.getCurrentResourcePath();
     expect(resourceUrl).toMatch(/^\/questions\/([a-z0-9-])+$/);

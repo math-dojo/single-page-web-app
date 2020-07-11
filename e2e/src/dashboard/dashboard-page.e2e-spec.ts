@@ -17,11 +17,11 @@ describe('Dashboard Page', () => {
   it('clicking a topic card should navigate to the topic page view', () => {
     page.navigateToFeatureRoot();
 
-    const firstTopicCardName = page.getFirstTopicCardTitle();
+    const firstTopicCardName = page.getFirstTopicCardTitle().getText();
 
     page.clickFirstTopicCard();
 
-    expect(page.getActiveSubNavText()).toEqual(firstTopicCardName);
+    expect(page.getActiveSubNavText().getText()).toEqual(firstTopicCardName);
 
     const resourceUrl = page.getCurrentResourcePath();
     expect(resourceUrl).toMatch(/^\/topics\/([a-z0-9-])+$/);
