@@ -11,6 +11,17 @@ export class DashboardPage extends Utils {
     return this.getTopicCards().count();
   }
 
+  getFirstTopicCard() {
+    return this.getTopicCards().first();
+  }
+
+  getFirstTopicCardTitle() {
+    return this.getFirstTopicCard().element(by.css('.card-header')).getText();
+  }
+
+  clickFirstTopicCard() {
+    return this.getFirstTopicCard().click();
+  }
 
   navigateToFeatureRoot() {
     this.navigateToPath('/dashboard');

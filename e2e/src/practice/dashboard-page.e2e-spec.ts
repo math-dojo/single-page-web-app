@@ -8,10 +8,23 @@ describe('Dashboard Page', () => {
     page = new DashboardPage();
   });
 
-  it('should display at least 1 card containing a topic name', async () => {
+  it('should display at least 1 card containing a topic name', () => {
     page.navigateToFeatureRoot();
     const foundTopicCards = page.getNumberOfTopicCards();
     expect(foundTopicCards).toBeGreaterThanOrEqual(1);
+  });
+
+  it('clicking a topic card should navigate to the topic page view', () => {
+    page.navigateToFeatureRoot();
+
+    const firstTopicCardName = page.getFirstTopicCardTitle();
+
+    page.clickFirstTopicCard();
+
+    expect(page.getActiveSubNavText()).toEqual(firstTopicCardName);
+
+    const resourceUrl = page.getCurrentResourcePath();
+    expect(resourceUrl).toMatch(/^\/topics\/([a-z0-9-])+$/);
   });
 
   afterEach(async () => {
