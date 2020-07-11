@@ -17,7 +17,7 @@
   </nav>
   <div class="content-container" id="primary">
     <div class="content-area">
-      <div class="clr-row">
+      <div class="clr-row mtdj__topic_question_display">
         <div class="clr-col-lg-8">
           <div class="clr-row" *ngIf="questions$ | async as questions">
             <div
@@ -26,7 +26,7 @@
             >
               <a
                 [routerLink]="['/questions', question.title.toLowerCase()]"
-                class="card clickable"
+                class="card clickable mtdj__topic_question_card"
               >
                 <div class="card-block">
                   <h4 class="card-title">{{ question.formattedTitle }}</h4>
