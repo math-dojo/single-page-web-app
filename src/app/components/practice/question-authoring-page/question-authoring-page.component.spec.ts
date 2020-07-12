@@ -59,14 +59,34 @@ describe('QuestionAuthoringPageComponent', () => {
     expect(component.onSubmit).toHaveBeenCalledTimes(1);
   });
 
-  it('should update the value of the question title control when text is entered', () => {
-    const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
-    const inputQuestionTitle = 'something-really-hard';
+  const parameters = [
+    {
+      description: 'title input control when text is entered', controlName: 'title',
+      cssSelector: '#mtdj__question-auth-input-title input', inputValue: 'something-really-hard'
+    },
+    {
+      description: 'topic input control when text is entered', controlName: 'parentTopicTitle',
+      cssSelector: '#mtdj__question-auth-input-topic input', inputValue: 'something-really-hard'
+    },
+    {
+      description: 'body input control when text is entered', controlName: 'body',
+      cssSelector: '#mtdj__question-auth-input-body textarea', inputValue: 'some quqestion'
+    },
+    {
+      description: 'sampleAnswer input control when text is entered', controlName: 'sampleAnswer',
+      cssSelector: '#mtdj__question-auth-input-sample_answer textarea', inputValue: 'some sample answer'
+    }
+  ];
+  parameters.forEach(({ description, cssSelector, inputValue, controlName }) => {
+    it(`should update the value of the ${description}`, () => {
+      const inputFormElement = fixture.debugElement.query(By.css(cssSelector));
+      const inputQuestionTitle = inputValue;
 
-    inputFormElement.nativeElement.value = inputQuestionTitle;
-    inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+      inputFormElement.nativeElement.value = inputQuestionTitle;
+      inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
 
-    expect(fixture.componentInstance.newQuestionForm.controls.title.value).toEqual(inputQuestionTitle);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
+    });
   });
 
   afterEach(() => {
