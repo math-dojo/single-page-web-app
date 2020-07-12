@@ -5,6 +5,7 @@ import { QuestionService } from 'src/app/services/question.service';
 import { QuestionDto } from 'src/app/models/question-dto';
 import { map } from 'rxjs/operators';
 import { Topic } from 'src/app/models/topic';
+import { Difficulty } from 'src/app/models/question_difficulty';
 
 
 
@@ -16,7 +17,7 @@ import { Topic } from 'src/app/models/topic';
 export class QuestionAuthoringPageComponent implements OnInit {
   submitted = false;
   questionExists = false;
-  difficulty: string[] = ['Easy', 'Medium', 'Hard'];
+  difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   validateOptions = true;
   disabled = false;
   newQuestionForm: FormGroup = new FormGroup({

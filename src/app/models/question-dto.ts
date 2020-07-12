@@ -1,10 +1,12 @@
+import { Difficulty } from './question_difficulty';
+
 export class QuestionDto {
   public readonly title: string;
   public readonly questionBody: string;
   public readonly sampleAnswer: string;
   public readonly hints: string[];
   public readonly successRate: number;
-  public readonly difficulty: string;
+  public readonly difficulty: Difficulty;
   public readonly parentTopicTitle: string;
   public readonly questionAnswerOptions: string[];
   public readonly answer: string;
@@ -29,7 +31,7 @@ export class QuestionDto {
     hints: string[],
     answer: string,
     successRate: number,
-    difficulty: string,
+    difficulty: Difficulty,
     parentTopicTitle: string,
     questionAnswerOptions: string[],
     solved: boolean
@@ -53,7 +55,7 @@ export class QuestionDto {
     hints = [''],
     answer = '',
     successRate = 0,
-    difficulty = '',
+    difficulty = null,
     parentTopicTitle = '',
     questionAnswerOptions = [''],
     solved = false

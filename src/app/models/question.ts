@@ -1,5 +1,6 @@
 import { QuestionDto } from './question-dto';
 import { convertKebabToSentenceCase } from '../utilities/content-title-formatter';
+import { Difficulty } from './question_difficulty';
 
 export class Question extends QuestionDto {
   public readonly formattedTitle: string;
@@ -25,7 +26,7 @@ export class Question extends QuestionDto {
     hints: string[],
     answer: string,
     successRate: number,
-    difficulty: string,
+    difficulty: Difficulty,
     questionAnswerOptions,
     parentTopicTitle,
     solved: boolean
