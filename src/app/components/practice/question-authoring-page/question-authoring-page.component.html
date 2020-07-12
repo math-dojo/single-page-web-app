@@ -28,9 +28,9 @@
             <clr-select-container id="mtdj__question-auth-input-difficulty">
               <label>Difficulty</label>
               <select clrSelect formControlName="difficulty">
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
+                <option *ngFor="let each of difficulty" [value]="each">{{
+                  each
+                }}</option>
               </select>
             </clr-select-container>
 
@@ -132,7 +132,11 @@
               >
             </clr-input-container>
 
-            <button type="submit" class="btn btn-primary">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!newQuestionForm.valid"
+            >
               Submit Question
             </button>
             <clr-alert
