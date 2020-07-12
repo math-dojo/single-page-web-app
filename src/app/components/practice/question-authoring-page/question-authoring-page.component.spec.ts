@@ -59,6 +59,16 @@ describe('QuestionAuthoringPageComponent', () => {
     expect(component.onSubmit).toHaveBeenCalledTimes(1);
   });
 
+  it('should update the value of the question title control when text is entered', () => {
+    const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
+    const inputQuestionTitle = 'something-really-hard';
+
+    inputFormElement.nativeElement.value = inputQuestionTitle;
+    inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+
+    expect(fixture.componentInstance.newQuestionForm.controls.title.value).toEqual(inputQuestionTitle);
+  });
+
   afterEach(() => {
     TestBed.resetTestingModule();
   });
