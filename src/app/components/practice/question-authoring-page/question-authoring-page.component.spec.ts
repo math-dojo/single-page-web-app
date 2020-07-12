@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { KatexModule } from 'ng-katex';
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionServiceStub } from 'src/testing/question.service.stub';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 
 describe('QuestionAuthoringPageComponent', () => {
@@ -44,6 +46,17 @@ describe('QuestionAuthoringPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call its onSubmit method when its form\'s submit event is triggered', () => {
+    spyOn(component, 'onSubmit');
+
+    const signupElement: DebugElement = fixture.debugElement;
+    const signupFormElement = signupElement.query(By.css('.mtdj__question-auth-input-container form'));
+
+    signupFormElement.triggerEventHandler('submit', null);
+
+    expect(component.onSubmit).toHaveBeenCalledTimes(1);
   });
 
   afterEach(() => {
