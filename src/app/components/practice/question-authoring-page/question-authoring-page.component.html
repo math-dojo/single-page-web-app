@@ -7,11 +7,11 @@
           class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
         >
           <form clrForm [formGroup]="newQuestionForm" (ngSubmit)="onSubmit()">
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-title">
               <label>Question Title</label>
               <input clrInput formControlName="title" required />
             </clr-input-container>
-            <clr-datalist-container>
+            <clr-datalist-container id="mtdj__question-auth-input-topic">
               <label>Topic Title</label>
               <input
                 formControlName="parentTopicTitle"
@@ -25,7 +25,7 @@
               </datalist>
             </clr-datalist-container>
 
-            <clr-select-container>
+            <clr-select-container id="mtdj__question-auth-input-difficulty">
               <label>Difficulty</label>
               <select clrSelect formControlName="difficulty">
                 <option value="Easy">Easy</option>
@@ -34,7 +34,7 @@
               </select>
             </clr-select-container>
 
-            <clr-textarea-container>
+            <clr-textarea-container id="mtdj__question-auth-input-body">
               <label>Body</label>
               <textarea clrTextarea formControlName="body" required></textarea>
               <clr-control-helper
@@ -42,7 +42,9 @@
               >
             </clr-textarea-container>
 
-            <clr-textarea-container>
+            <clr-textarea-container
+              id="mtdj__question-auth-input-sample_answer"
+            >
               <label>Sample Answer</label>
               <textarea clrTextarea formControlName="sampleAnswer"></textarea>
               <clr-control-helper
@@ -51,7 +53,7 @@
               >
             </clr-textarea-container>
 
-            <clr-textarea-container>
+            <clr-textarea-container id="mtdj__question-auth-input-answer">
               <label>Answer</label>
               <textarea
                 clrTextarea
@@ -60,7 +62,7 @@
               ></textarea>
             </clr-textarea-container>
 
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-hint1">
               <label>Hint 1</label>
               <input
                 class=".mtdj__question-auth-input--long"
@@ -68,7 +70,7 @@
                 formControlName="hint1"
               />
             </clr-input-container>
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-hint2">
               <label>Hint 2</label>
               <input
                 class=".mtdj__question-auth-input--long"
@@ -76,7 +78,7 @@
                 formControlName="hint2"
               />
             </clr-input-container>
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-hint3">
               <label>Hint 3</label>
               <input
                 class=".mtdj__question-auth-input--long"
@@ -85,7 +87,7 @@
               />
             </clr-input-container>
 
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-option1">
               <label>Option 1</label>
               <input
                 class=".mtdj__question-auth-input--long"
@@ -96,7 +98,7 @@
                 >Equations should be written in LaTex</clr-control-helper
               >
             </clr-input-container>
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-option2">
               <label>Option 2</label>
               <input
                 class=".mtdj__question-auth-input--long"
@@ -107,7 +109,7 @@
                 >Equations should be written in LaTex</clr-control-helper
               >
             </clr-input-container>
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-option3">
               <label>Option 3</label>
               <input
                 class=".mtdj__question-auth-input--long"
@@ -118,7 +120,7 @@
                 >Equations should be written in LaTex</clr-control-helper
               >
             </clr-input-container>
-            <clr-input-container>
+            <clr-input-container id="mtdj__question-auth-input-option4">
               <label>Option 4</label>
               <input
                 class=".mtdj__question-auth-input--long"
