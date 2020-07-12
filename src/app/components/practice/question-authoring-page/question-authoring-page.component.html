@@ -6,7 +6,7 @@
         <div
           class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
         >
-          <form clrForm [formGroup]="newQuestionForm">
+          <form clrForm [formGroup]="newQuestionForm" (ngSubmit)="onSubmit()">
             <clr-input-container>
               <label>Question Title</label>
               <input clrInput formControlName="title" required />
@@ -130,7 +130,7 @@
               >
             </clr-input-container>
 
-            <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+            <button type="submit" class="btn btn-primary">
               Submit Question
             </button>
             <clr-alert
