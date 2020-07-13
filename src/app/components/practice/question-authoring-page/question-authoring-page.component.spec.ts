@@ -75,6 +75,22 @@ describe('QuestionAuthoringPageComponent', () => {
     {
       description: 'sampleAnswer input control when text is entered', controlName: 'sampleAnswer',
       cssSelector: '#mtdj__question-auth-input-sample_answer textarea', inputValue: 'some sample answer'
+    },
+    {
+      description: 'answer input control when text is entered', controlName: 'answer',
+      cssSelector: '#mtdj__question-auth-input-answer textarea', inputValue: 'some correct answer'
+    },
+    {
+      description: 'hint1 input control when text is entered', controlName: 'hint1',
+      cssSelector: '#mtdj__question-auth-input-hint1 input', inputValue: 'some hint'
+    },
+    {
+      description: 'hint2 input control when text is entered', controlName: 'hint2',
+      cssSelector: '#mtdj__question-auth-input-hint2 input', inputValue: 'some hint'
+    },
+    {
+      description: 'hint3 input control when text is entered', controlName: 'hint3',
+      cssSelector: '#mtdj__question-auth-input-hint3 input', inputValue: 'some hint'
     }
   ];
   parameters.forEach(({ description, cssSelector, inputValue, controlName }) => {
