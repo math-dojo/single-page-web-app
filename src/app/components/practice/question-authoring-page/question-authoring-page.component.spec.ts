@@ -91,6 +91,22 @@ describe('QuestionAuthoringPageComponent', () => {
     {
       description: 'hint3 input control when text is entered', controlName: 'hint3',
       cssSelector: '#mtdj__question-auth-input-hint3 input', inputValue: 'some hint'
+    },
+    {
+      description: 'option1 input control when text is entered', controlName: 'option1',
+      cssSelector: '#mtdj__question-auth-input-option1 input', inputValue: 'some option'
+    },
+    {
+      description: 'option2 input control when text is entered', controlName: 'option2',
+      cssSelector: '#mtdj__question-auth-input-option2 input', inputValue: 'some option'
+    },
+    {
+      description: 'option3 input control when text is entered', controlName: 'option3',
+      cssSelector: '#mtdj__question-auth-input-option3 input', inputValue: 'some option'
+    },
+    {
+      description: 'option4 input control when text is entered', controlName: 'option4',
+      cssSelector: '#mtdj__question-auth-input-option4 input', inputValue: 'some option'
     }
   ];
   parameters.forEach(({ description, cssSelector, inputValue, controlName }) => {
@@ -105,7 +121,12 @@ describe('QuestionAuthoringPageComponent', () => {
     });
   });
 
+  //TODO: Write sepearate test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
+
+  let a = 0;
   afterEach(() => {
+    a++;
+    console.log(`I run for the ${a}st/th time`);
     TestBed.resetTestingModule();
   });
 
