@@ -154,6 +154,7 @@ describe('QuestionAuthoringPageComponent', () => {
 
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(longerQuestionTitle);
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].invalid).toBe(true);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].errors.maxlength).toBeTruthy();
 
       // TODO: #41 Test rendering of clarity validation error in unit tests
       /*
@@ -174,6 +175,8 @@ describe('QuestionAuthoringPageComponent', () => {
       // Then
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].invalid).toBe(true);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].errors.required).toBeTruthy();
+
     });
   });
 
