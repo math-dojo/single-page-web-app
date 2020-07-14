@@ -154,6 +154,21 @@ describe('QuestionAuthoringPageComponent', () => {
             const errorDisplayElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'));
             expect(errorDisplayElement.nativeElement.value).toMatch(/is a required field/); */
     });
+
+    it('should show an error if the question title is empty', () => {
+      // Given
+      const controlName = 'title';
+      const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
+
+      // When
+      const inputQuestionTitle = '';
+      inputFormElement.nativeElement.value = inputQuestionTitle;
+      inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+
+      // Then
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].invalid).toBe(true);
+    });
   });
 
 
