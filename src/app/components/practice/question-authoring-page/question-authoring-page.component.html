@@ -10,6 +10,9 @@
             <clr-input-container id="mtdj__question-auth-input-title">
               <label>Question Title</label>
               <input clrInput formControlName="title" required />
+              <clr-control-error *clrIfError="'required'"
+                >This is a required field</clr-control-error
+              >
             </clr-input-container>
             <clr-datalist-container id="mtdj__question-auth-input-topic">
               <label>Topic Title</label>
@@ -139,28 +142,6 @@
             >
               Submit Question
             </button>
-            <clr-alert
-              *ngIf="!validateOptions"
-              clrAlertType="danger"
-              [clrAlertClosable]="false"
-            >
-              Please make sure there is more than one option and they are in
-              order.
-            </clr-alert>
-            <clr-alert
-              *ngIf="questionExists"
-              clrAlertType="danger"
-              [clrAlertClosable]="false"
-            >
-              A Question of that title already exists.
-            </clr-alert>
-            <clr-alert
-              *ngIf="submitted"
-              clrAlertType="success"
-              [clrAlertClosable]="false"
-            >
-              Question submission successful.
-            </clr-alert>
           </form>
         </div>
         <div
