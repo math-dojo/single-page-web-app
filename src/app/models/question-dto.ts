@@ -14,7 +14,7 @@ export class QuestionDto {
   public readonly imageUrl: string;
 
   public constructor({
-    title = '',
+    title,
     questionBody = '',
     sampleAnswer = '',
     hints = [],
@@ -26,15 +26,15 @@ export class QuestionDto {
     solved = false
   }: {
     title: string,
-    questionBody: string,
-    sampleAnswer: string,
-    hints: string[],
-    answer: string,
-    successRate: number,
-    difficulty: Difficulty,
+    questionBody?: string,
+    sampleAnswer?: string,
+    hints?: string[],
+    answer?: string,
+    successRate?: number,
+    difficulty?: Difficulty,
     parentTopicTitle: string,
-    questionAnswerOptions: string[],
-    solved: boolean
+    questionAnswerOptions?: string[],
+    solved?: boolean
   }) {
     this.title = title;
     this.questionBody = questionBody;
