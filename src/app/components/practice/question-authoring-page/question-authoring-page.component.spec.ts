@@ -123,13 +123,36 @@ describe('QuestionAuthoringPageComponent', () => {
     });
   });
 
+  describe('Input Validation', () => {
+    it('should allow the length of the question title to be up to 64 chars', () => {
+      const controlName = 'title';
+      const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
+      const inputQuestionTitle = 'a question title that is very exactly sixty-four characters long';
 
-  //TODO: Write sepearate test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
+      inputFormElement.nativeElement.value = inputQuestionTitle;
+      inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
 
-  let a = 0;
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].valid).toBe(true);
+    });
+
+    it('should allow the length of the question title to be up to 64 chars', () => {
+      const controlName = 'title';
+      const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
+      const inputQuestionTitle = 'a question title that is very exactly sixty-four characters long';
+      const longerQuestionTitle = `${inputQuestionTitle} more stuff`;
+      inputFormElement.nativeElement.value = longerQuestionTitle;
+      inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(longerQuestionTitle);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].invalid).toBe(true);
+    });
+  });
+
+
+  // TODO: Write sepearate test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
+
   afterEach(() => {
-    a++;
-    console.log(`I run for the ${a}st/th time`);
     TestBed.resetTestingModule();
   });
 
