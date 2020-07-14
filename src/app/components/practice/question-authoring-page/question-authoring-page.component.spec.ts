@@ -1,23 +1,29 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { QuestionAuthoringPageComponent } from './question-authoring-page.component';
-import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
-import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
 import { ClarityModule } from '@clr/angular';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KatexModule } from 'ng-katex';
-import { QuestionService } from 'src/app/services/question.service';
-import { QuestionServiceStub } from 'src/testing/question.service.stub';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { createStubInstance, SinonStubbedInstance } from 'sinon';
+import { of } from 'rxjs';
+
+import { QuestionService } from 'src/app/services/question.service';
+import { QuestionServiceStub } from 'src/testing/question.service.stub';
+import { QuestionAuthoringPageComponent } from './question-authoring-page.component';
+import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
+import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
+import { TopicDto } from 'src/app/models/topic-dto';
 
 
 describe('QuestionAuthoringPageComponent', () => {
   let component: QuestionAuthoringPageComponent;
   let fixture: ComponentFixture<QuestionAuthoringPageComponent>;
+  let questionServiceStub: SinonStubbedInstance<QuestionService>;
 
   beforeEach(async(() => {
+    questionServiceStub = createStubInstance(QuestionService);
+    questionServiceStub.getTopics.returns(of([TopicDto.createDtoWithNonEmptyFields()]));
     TestBed.configureTestingModule({
       declarations: [QuestionAuthoringPageComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [
@@ -30,7 +36,7 @@ describe('QuestionAuthoringPageComponent', () => {
       .overrideComponent(QuestionAuthoringPageComponent, {
         set: {
           providers: [
-            { provide: QuestionService, useValue: QuestionServiceStub }
+            { provide: QuestionService, useValue: questionServiceStub }
           ]
         }
       })
