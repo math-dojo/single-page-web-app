@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { TopicDto } from '../models/topic-dto';
 import { QuestionDto } from '../models/question-dto';
 import { Difficulty } from '../models/question_difficulty';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -128,11 +129,19 @@ export class QuestionService {
     }));
   }
 
-  getQuestionWithTitle(questionTitle: string): Observable<QuestionDto> {
+  getQuestionWithTitle(questionTitle: string): Observable<QuestionDto | null> {
     if (environment.name === 'default') {
       return this.http.get<QuestionDto>(`${
         environment.apis.questionServiceConsumerEndpoint
-        }/questions/${questionTitle}`);
+        }/questions/${questionTitle}`)
+        .pipe(
+          catchError((err: HttpErrorResponse, caught) => {
+            if (err.status === 404) {
+              return of(null);
+            }
+            throwError(err);
+          })
+        );
     }
     /* Return a prestashed response when deployed
      * until the question service api is ready
