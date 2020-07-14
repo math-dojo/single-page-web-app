@@ -47,6 +47,30 @@ describe('QuestionService', () => {
     req.flush(expectedQuestionDto);
   });
 
+  it('should return null if question could not be found, i.e. error was 404 ', () => {
+    // Given
+    const questionNameToSearchFor = 'test-question';
+    const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
+
+    // When
+    const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+
+    // Then
+    questionSearchObservable.subscribe({
+      next: response => expect(response).toBeNull('the returned object is not null'),
+      error: fail
+    });
+
+    const req = httpTestingController.expectOne(`${
+      environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
+      }`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(`the specified question ${questionNameToSearchFor} could not be found`, {
+      status: 404,
+      statusText: 'not found'
+    });
+  });
+
   afterEach(() => {
     httpTestingController.verify();
 
