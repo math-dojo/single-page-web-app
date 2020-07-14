@@ -136,7 +136,7 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].valid).toBe(true);
     });
 
-    it('should allow the length of the question title to be up to 64 chars', () => {
+    it('should show an error if the question title is more than 64 chars', () => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
       const inputQuestionTitle = 'a question title that is very exactly sixty-four characters long';

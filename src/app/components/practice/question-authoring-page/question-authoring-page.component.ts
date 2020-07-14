@@ -15,13 +15,13 @@ import { Difficulty } from 'src/app/models/question_difficulty';
   styleUrls: ['./question-authoring-page.component.scss']
 })
 export class QuestionAuthoringPageComponent implements OnInit {
-  submitted = false;
-  questionExists = false;
+  private maxQuestionTitleLength = 64;
   difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
-  validateOptions = true;
-  disabled = false;
+
   newQuestionForm: FormGroup = new FormGroup({
-    title: new FormControl('', Validators.required),
+    title: new FormControl('', [
+      Validators.required, Validators.maxLength(this.maxQuestionTitleLength)
+    ]),
     body: new FormControl('', Validators.required),
     sampleAnswer: new FormControl(''),
     hint1: new FormControl(''),
@@ -52,39 +52,40 @@ export class QuestionAuthoringPageComponent implements OnInit {
 
   onSubmit() {
 
-    const question = new QuestionDto({
-      title: this.newQuestionForm.controls.title.value,
-      questionBody: this.newQuestionForm.controls.body.value,
-      sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
-      hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
-        .controls.hint1.value, this.newQuestionForm.controls.hint3.value],
-      answer: this.newQuestionForm.controls.answer.value,
-      successRate: 0,
-      difficulty: this.newQuestionForm.controls.difficulty.value,
-      parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
-      questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
-      this.newQuestionForm.controls.option2.value,
-      this.newQuestionForm.controls.option3.value,
-      this.newQuestionForm.controls.option4.value],
-      solved: false
-    });
+    /*     const question = new QuestionDto({
+          title: this.newQuestionForm.controls.title.value,
+          questionBody: this.newQuestionForm.controls.body.value,
+          sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
+          hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
+            .controls.hint1.value, this.newQuestionForm.controls.hint3.value],
+          answer: this.newQuestionForm.controls.answer.value,
+          successRate: 0,
+          difficulty: this.newQuestionForm.controls.difficulty.value,
+          parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
+          questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
+          this.newQuestionForm.controls.option2.value,
+          this.newQuestionForm.controls.option3.value,
+          this.newQuestionForm.controls.option4.value],
+          solved: false
+        });
 
-    this.validateOptions = this.customOptionsValidator(question.questionAnswerOptions);
-    let notFound: boolean;
-    this.questionService.getQuestionWithTitle(question.title).pipe(map(questions => notFound = questions.title === null));
-    if (notFound === true) {
-      this.questionExists = true;
-    }
-    if (this.validateOptions && !this.questionExists) {
-      // connect to azure queue store here
-      this.submitted = true;
-    }
+        this.validateOptions = this.customOptionsValidator(question.questionAnswerOptions);
+        let notFound: boolean;
+        this.questionService.getQuestionWithTitle(question.title).pipe(map(questions => notFound = questions.title === null));
+        if (notFound === true) {
+          this.questionExists = true;
+        }
+        if (this.validateOptions && !this.questionExists) {
+          // connect to azure queue store here
+          this.submitted = true;
+        } */
 
     // add web security
   }
-  customOptionsValidator(options: string[]) {
-    return !(options[0] !== '' && options[1] === '') && !(options[0] === '' &&
-      (options[1] !== '' || options[2] !== '' || options[3] !== ''));
-  }
+
+  /*   customOptionsValidator(options: string[]) {
+      return !(options[0] !== '' && options[1] === '') && !(options[0] === '' &&
+        (options[1] !== '' || options[2] !== '' || options[3] !== ''));
+    } */
 
 }
