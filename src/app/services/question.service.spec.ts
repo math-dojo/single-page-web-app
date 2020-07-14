@@ -2,11 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { QuestionService } from './question.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { QuestionDto } from '../models/question-dto';
+import { environment } from 'src/environments/environment';
 
 describe('QuestionService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
+  let questionService: QuestionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -15,6 +18,7 @@ describe('QuestionService', () => {
 
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
+    questionService = TestBed.inject(QuestionService);
   });
 
   it('should be created', () => {
@@ -22,7 +26,30 @@ describe('QuestionService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('should return a question dto if one with a matching title can be found', () => {
+    // Given
+    const questionNameToSearchFor = 'test-question';
+    const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
+
+    // When
+    const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+
+    // Then
+    questionSearchObservable.subscribe({
+      next: returnedQuestionDto => expect(returnedQuestionDto.title).toEqual(questionNameToSearchFor),
+      error: fail
+    });
+
+    const req = httpTestingController.expectOne(`${
+      environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
+      }`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(expectedQuestionDto);
+  });
+
   afterEach(() => {
+    httpTestingController.verify();
+
     TestBed.resetTestingModule();
   });
 });
