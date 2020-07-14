@@ -14,16 +14,16 @@ export class QuestionDto {
   public readonly imageUrl: string;
 
   public constructor({
-    title,
-    questionBody,
-    sampleAnswer,
-    hints,
-    answer,
-    successRate,
-    difficulty,
+    title = '',
+    questionBody = '',
+    sampleAnswer = '',
+    hints = [],
+    answer = '',
+    successRate = 0,
+    difficulty = Difficulty.Easy,
     parentTopicTitle,
-    questionAnswerOptions,
-    solved
+    questionAnswerOptions = [],
+    solved = false
   }: {
     title: string,
     questionBody: string,
