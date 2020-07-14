@@ -144,8 +144,15 @@ describe('QuestionAuthoringPageComponent', () => {
       inputFormElement.nativeElement.value = longerQuestionTitle;
       inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
 
+      fixture.detectChanges();
+
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(longerQuestionTitle);
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].invalid).toBe(true);
+
+      // TODO: #41 Test rendering of clarity validation error in unit tests
+      /*
+            const errorDisplayElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'));
+            expect(errorDisplayElement.nativeElement.value).toMatch(/is a required field/); */
     });
   });
 
