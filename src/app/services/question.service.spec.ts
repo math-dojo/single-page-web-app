@@ -5,6 +5,8 @@ import { QuestionService } from './question.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { QuestionDto } from '../models/question-dto';
 import { environment } from 'src/environments/environment';
+import { QuestionServiceError } from './question-service.error';
+import { GenericErrorType } from '../utilities/generic-error.type';
 
 describe('QuestionService', () => {
   let httpClient: HttpClient;
@@ -68,6 +70,41 @@ describe('QuestionService', () => {
     req.flush(`the specified question ${questionNameToSearchFor} could not be found`, {
       status: 404,
       statusText: 'not found'
+    });
+  });
+
+  it('should return a QuestionServiceError if the service returns codes between 400 and 503, excluding 404', () => {
+    // Given
+    const questionNameToSearchFor = 'test-question';
+    const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
+    const errorStatusText = 'some error message';
+    const codesToExclude = new Set([404]);
+    const statusCodeChoices = [...Array((503 - 400) + 1).keys()].map(each => each + 400).filter(each => !(codesToExclude).has(each));
+    const statusCode = statusCodeChoices[Math.floor(Math.random() * statusCodeChoices.length)];
+
+    const checkErrorThrown = <T>(expectedErrorType: GenericErrorType<T>, regexMatchForMessage: RegExp) => {
+      return (error: Error) => {
+        expect(error instanceof expectedErrorType).toBe(true);
+        expect(error.message).toMatch(regexMatchForMessage);
+      };
+    };
+
+    // When
+    const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+
+    // Then
+    questionSearchObservable.subscribe({
+      next: () => fail('an error should have been thrown'),
+      error: checkErrorThrown(QuestionServiceError, new RegExp(errorStatusText))
+    });
+
+    const req = httpTestingController.expectOne(`${
+      environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
+      }`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(`the specified question ${questionNameToSearchFor} could not be found`, {
+      status: statusCode,
+      statusText: errorStatusText
     });
   });
 
