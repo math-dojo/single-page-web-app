@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { TopicDto } from '../models/topic-dto';
 import { QuestionDto } from '../models/question-dto';
 import { Difficulty } from '../models/question_difficulty';
-import { catchError } from 'rxjs/operators';
+import { QuestionServiceError } from './question-service.error';
 
 @Injectable({
   providedIn: 'root'
@@ -139,7 +140,7 @@ export class QuestionService {
             if (err.status === 404) {
               return of(null);
             }
-            throwError(err);
+            throw new QuestionServiceError(err.message);
           })
         );
     }
