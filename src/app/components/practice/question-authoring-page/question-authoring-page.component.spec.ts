@@ -29,7 +29,6 @@ describe('QuestionAuthoringPageComponent', () => {
       declarations: [QuestionAuthoringPageComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [
         ClarityModule,
-        RouterTestingModule,
         ReactiveFormsModule,
         KatexModule
       ],
@@ -176,6 +175,8 @@ describe('QuestionAuthoringPageComponent', () => {
       const inputQuestionTitle = '';
       inputFormElement.nativeElement.value = inputQuestionTitle;
       inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+      inputFormElement.nativeElement.dispatchEvent(new FocusEvent('blur'));
+      fixture.detectChanges();
 
       // Then
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
