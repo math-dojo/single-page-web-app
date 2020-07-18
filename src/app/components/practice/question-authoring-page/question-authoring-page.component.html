@@ -13,6 +13,14 @@
               <clr-control-error *clrIfError="'required'"
                 >This is a required field</clr-control-error
               >
+              <clr-control-error *clrIfError="'maxlength'"
+                >This has exceeded the max length of
+                characters</clr-control-error
+              >
+              <clr-control-error *clrIfError="'titleAlreadyExists'">{{
+                newQuestionForm.controls.title.errors.titleAlreadyExists
+                  .errorMessage
+              }}</clr-control-error>
             </clr-input-container>
             <clr-datalist-container id="mtdj__question-auth-input-topic">
               <label>Topic Title</label>
