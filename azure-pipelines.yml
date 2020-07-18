@@ -34,7 +34,7 @@ steps:
   displayName: 'run unit and integration tests'
 
 - script: |
-    ./node_modules/.bin/webdriver-manager update --versions.chrome=79.0.3945.36
+    ./node_modules/.bin/webdriver-manager update --versions.chrome=83.0.4103.39
   displayName: 'add chrome driver to node directory'
   condition: |
     or(
