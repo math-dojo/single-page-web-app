@@ -74,10 +74,6 @@ describe('QuestionAuthoringPageComponent', () => {
   describe('Input controls', () => {
     const parameters = [
       {
-        description: 'title input control when text is entered', controlName: 'title',
-        cssSelector: '#mtdj__question-auth-input-title input', inputValue: 'something-really-hard'
-      },
-      {
         description: 'topic input control when text is entered', controlName: 'parentTopicTitle',
         cssSelector: '#mtdj__question-auth-input-topic input', inputValue: 'something-really-hard'
       },
