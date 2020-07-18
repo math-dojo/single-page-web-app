@@ -6,6 +6,7 @@ import { QuestionDto } from 'src/app/models/question-dto';
 import { map } from 'rxjs/operators';
 import { Topic } from 'src/app/models/topic';
 import { Difficulty } from 'src/app/models/question_difficulty';
+import { QuestionTitleValidator } from './question-title.validator';
 
 
 
@@ -16,29 +17,33 @@ import { Difficulty } from 'src/app/models/question_difficulty';
 })
 export class QuestionAuthoringPageComponent implements OnInit {
   private maxQuestionTitleLength = 64;
-  difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
+  private questionTitleValidator: QuestionTitleValidator;
 
-  newQuestionForm: FormGroup = new FormGroup({
-    title: new FormControl('', [
-      Validators.required, Validators.maxLength(this.maxQuestionTitleLength)
-    ]),
-    body: new FormControl('', Validators.required),
-    sampleAnswer: new FormControl(''),
-    hint1: new FormControl(''),
-    hint2: new FormControl(''),
-    hint3: new FormControl(''),
-    difficulty: new FormControl('', Validators.required),
-    parentTopicTitle: new FormControl('', Validators.required),
-    option1: new FormControl(''),
-    option2: new FormControl(''),
-    option3: new FormControl(''),
-    option4: new FormControl(''),
-    answer: new FormControl('', Validators.required)
-  });
+  difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
+  newQuestionForm: FormGroup;
   topics$: any;
 
   constructor(private questionService: QuestionService) {
-
+    // this.questionTitleValidator = new QuestionTitleValidator(questionService);
+    this.newQuestionForm = new FormGroup({
+      title: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(this.maxQuestionTitleLength)/* ,
+        this.questionTitleValidator.validate */
+      ]),
+      body: new FormControl('', Validators.required),
+      sampleAnswer: new FormControl(''),
+      hint1: new FormControl(''),
+      hint2: new FormControl(''),
+      hint3: new FormControl(''),
+      difficulty: new FormControl('', Validators.required),
+      parentTopicTitle: new FormControl('', Validators.required),
+      option1: new FormControl(''),
+      option2: new FormControl(''),
+      option3: new FormControl(''),
+      option4: new FormControl(''),
+      answer: new FormControl('', Validators.required)
+    });
   }
 
   ngOnInit(): void {
