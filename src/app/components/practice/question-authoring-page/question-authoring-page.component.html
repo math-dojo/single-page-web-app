@@ -160,7 +160,131 @@
               <clr-tab>
                 <button clrTabLink>Preview</button>
                 <clr-tab-content *clrIfActive>
-                  ...
+                  <clr-input-container id="mtdj__question-auth-input-title">
+                    <label>Question Title</label>
+                    <input clrInput formControlName="title" required disabled />
+                  </clr-input-container>
+                  <clr-datalist-container id="mtdj__question-auth-input-topic">
+                    <label>Topic Title</label>
+                    <input
+                      formControlName="parentTopicTitle"
+                      required
+                      clrDatalistInput
+                      disabled
+                    />
+                    <datalist *ngIf="topics$ | async as topics">
+                      <option *ngFor="let topic of topics" [value]="topic.title"
+                        >{{ topic.formattedTitle }}
+                      </option>
+                    </datalist>
+                  </clr-datalist-container>
+
+                  <clr-select-container
+                    id="mtdj__question-auth-input-difficulty"
+                  >
+                    <label>Difficulty</label>
+                    <select clrSelect formControlName="difficulty" disabled>
+                      <option *ngFor="let each of difficulty" [value]="each">{{
+                        each
+                      }}</option>
+                    </select>
+                  </clr-select-container>
+
+                  <clr-textarea-container id="mtdj__question-auth-input-body">
+                    <label>Body</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="body"
+                      required
+                      disabled
+                    ></textarea>
+                  </clr-textarea-container>
+
+                  <clr-textarea-container
+                    id="mtdj__question-auth-input-sample_answer"
+                  >
+                    <label>Sample Answer</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="sampleAnswer"
+                      disabled
+                    ></textarea>
+                  </clr-textarea-container>
+
+                  <clr-textarea-container id="mtdj__question-auth-input-answer">
+                    <label>Answer</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="answer"
+                      required
+                      disabled
+                    ></textarea>
+                  </clr-textarea-container>
+
+                  <clr-input-container id="mtdj__question-auth-input-hint1">
+                    <label>Hint 1</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="hint1"
+                      disabled
+                    />
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-hint2">
+                    <label>Hint 2</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="hint2"
+                      disabled
+                    />
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-hint3">
+                    <label>Hint 3</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="hint3"
+                      disabled
+                    />
+                  </clr-input-container>
+
+                  <clr-input-container id="mtdj__question-auth-input-option1">
+                    <label>Option 1</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option1"
+                      disabled
+                    />
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-option2">
+                    <label>Option 2</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option2"
+                      disabled
+                    />
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-option3">
+                    <label>Option 3</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option3"
+                      disabled
+                    />
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-option4">
+                    <label>Option 4</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option4"
+                      disabled
+                    />
+                  </clr-input-container>
                 </clr-tab-content>
               </clr-tab>
             </clr-tabs>
