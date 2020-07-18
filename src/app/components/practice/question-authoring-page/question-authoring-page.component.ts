@@ -17,20 +17,20 @@ import { QuestionTitleValidator } from './question-title.validator';
 })
 export class QuestionAuthoringPageComponent implements OnInit {
   private maxQuestionTitleLength = 64;
-  private questionTitleValidator: QuestionTitleValidator;
 
   difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
   topics$: any;
 
-  constructor(private questionService: QuestionService) {
-    // this.questionTitleValidator = new QuestionTitleValidator(questionService);
+  constructor(private questionService: QuestionService, private questionTitleValidator: QuestionTitleValidator) {
     this.newQuestionForm = new FormGroup({
       title: new FormControl('', [
         Validators.required,
-        Validators.maxLength(this.maxQuestionTitleLength)/* ,
-        this.questionTitleValidator.validate */
-      ]),
+        Validators.maxLength(this.maxQuestionTitleLength)
+      ],
+        [
+          this.questionTitleValidator.validate.bind(this.questionTitleValidator)
+        ]),
       body: new FormControl('', Validators.required),
       sampleAnswer: new FormControl(''),
       hint1: new FormControl(''),
