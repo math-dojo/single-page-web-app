@@ -31,13 +31,16 @@ export class QuestionAuthoringPageComponent implements OnInit {
     const boundValidatorFunction: (ctrl: AbstractControl) => Observable<ValidationErrors> = this
       .questionTitleValidator.validate.bind(this.questionTitleValidator);
     this.newQuestionForm = new FormGroup({
-      title: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(this.maxQuestionTitleLength)
-      ],
-        [
+      title: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.maxLength(this.maxQuestionTitleLength)
+        ],
+        updateOn: 'blur',
+        asyncValidators: [
           boundValidatorFunction
-        ]),
+        ]
+      }),
       body: new FormControl('', Validators.required),
       sampleAnswer: new FormControl(''),
       hint1: new FormControl(''),
