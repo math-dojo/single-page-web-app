@@ -139,6 +139,8 @@ describe('QuestionAuthoringPageComponent', () => {
 
       inputFormElement.nativeElement.value = inputQuestionTitle;
       inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+      inputFormElement.nativeElement.dispatchEvent(new FocusEvent('blur'));
+      fixture.detectChanges();
 
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].valid).toBe(true);
@@ -149,9 +151,10 @@ describe('QuestionAuthoringPageComponent', () => {
       const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
       const inputQuestionTitle = 'a question title that is very exactly sixty-four characters long';
       const longerQuestionTitle = `${inputQuestionTitle} more stuff`;
+
       inputFormElement.nativeElement.value = longerQuestionTitle;
       inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
-
+      inputFormElement.nativeElement.dispatchEvent(new FocusEvent('blur'));
       fixture.detectChanges();
 
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(longerQuestionTitle);
@@ -191,6 +194,8 @@ describe('QuestionAuthoringPageComponent', () => {
       // When
       inputFormElement.nativeElement.value = inputQuestionTitle;
       inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+      inputFormElement.nativeElement.dispatchEvent(new FocusEvent('blur'));
+      fixture.detectChanges();
 
       // Then
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
