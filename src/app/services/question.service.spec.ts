@@ -73,7 +73,7 @@ describe('QuestionService', () => {
     });
   });
 
-  it('should return a QuestionServiceError if the service returns codes between 400 and 503, excluding 404', () => {
+  it('should throw a QuestionServiceError if the service returns codes between 400 and 503, excluding 404', () => {
     // Given
     const questionNameToSearchFor = 'test-question';
     const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
