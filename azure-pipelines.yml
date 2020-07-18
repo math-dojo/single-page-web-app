@@ -7,11 +7,17 @@ trigger:
 - master
 - develop
 - rl* # release branches to be built should be named rl[insertSemverHere]
-#- ft* # feature branches to be built should be named ft[insertSemverHere]
-- hf* # hotfix branches to be built should be named hf[insertSemverHere]
+# - ft* # feature branches to be built should be named ft[insertGithubIssueNumberHere]
+- hf* # hotfix branches to be built should be named hf[insertGithubIssueNumberHere]
 
 pool:
   vmImage: 'windows-2019'
+
+variables:
+  ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    appName: "pr$(System.PullRequest.PullRequestNumber)"
+  ${{ if not(eq(variables['Build.Reason'], 'PullRequest')) }}:
+    appName: "$(Build.SourceBranchName)"
 
 steps:
 - task: NodeTool@0
@@ -28,7 +34,7 @@ steps:
   displayName: 'run unit and integration tests'
 
 - script: |
-    ./node_modules/.bin/webdriver-manager update --versions.chrome=79.0.3945.36
+    ./node_modules/.bin/webdriver-manager update --versions.chrome=83.0.4103.39
   displayName: 'add chrome driver to node directory'
   condition: |
     or(
@@ -76,18 +82,19 @@ steps:
     scriptType: ps
     scriptLocation: inlineScript
     inlineScript: |
-        $accountNameExists = az storage account check-name --name mathdojouibuild$(Build.SourceBranchName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
+        $accountNameExists = az storage account check-name --name mathdojouibuild$(appName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
+        Write-Host "Does the account name exist for mathdojouibuild$(appName): $accountNameExists"
         If ($accountNameExists.nameAvailable) {
-          try { 
-            az storage account create --name mathdojouibuild$(Build.SourceBranchName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui  --auth-mode login
+          try {
+            az storage account create --name mathdojouibuild$(appName) --kind StorageV2 --location uksouth --resource-group math-dojo-hzprod-web-ui --subscription 5594cd6c-b674-4323-8517-5e859a399468
           }
           catch {
             Write-Host "An error occurred:"
             Write-Host $_
           }
         }
-        
-        az storage blob service-properties update --account-name mathdojouibuild$(Build.SourceBranchName) --static-website --index-document index.html --404-document index.html  --auth-mode login
+
+        az storage blob service-properties update --account-name mathdojouibuild$(appName) --static-website --index-document index.html --404-document index.html  --auth-mode login
 
 - task: AzureFileCopy@3
   displayName: 'Copy Build Artifacts to Blob Storage'
@@ -95,7 +102,7 @@ steps:
     sourcePath: '$(Build.ArtifactStagingDirectory)'
     azureSubscription: azure-ad-app-math-dojo-ui-pipeline
     destination: AzureBlob
-    storage: 'mathdojouibuild$(Build.SourceBranchName)'
+    storage: 'mathdojouibuild$(appName)'
     containerName: $web
     copyFilesInParallel: true
     cleanTargetBeforeCopy: true
@@ -107,4 +114,4 @@ steps:
     scriptType: ps
     scriptLocation: inlineScript
     inlineScript: |
-        az storage account show -n mathdojouibuild$(Build.SourceBranchName) -g math-dojo-hzprod-web-ui --query "primaryEndpoints.web" --output tsv
+        az storage account show -n mathdojouibuild$(appName) -g math-dojo-hzprod-web-ui --query "primaryEndpoints.web" --output tsv

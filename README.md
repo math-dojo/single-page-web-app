@@ -1,6 +1,6 @@
 # SinglePageWebApp
 
-Repo contains the code for the single page web application
+Repo contains the code for the customer-facing single page web application
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
 

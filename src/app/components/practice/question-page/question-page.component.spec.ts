@@ -10,6 +10,7 @@ import { QuestionServiceStub } from 'src/testing/question.service.stub';
 import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { RouterTestingModule } from '@angular/router/testing';
+import { KatexModule } from 'ng-katex';
 
 describe('QuestionPageComponent', () => {
   let component: QuestionPageComponent;
@@ -17,22 +18,25 @@ describe('QuestionPageComponent', () => {
 
   beforeEach(async(() => {
     const testActivatedRoute = new ActivatedRouteStub({
-      question: 'some-question-title'});
+      question: 'some-question-title'
+    });
 
     TestBed.configureTestingModule({
       declarations: [QuestionPageComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [ClarityModule,
         RouterTestingModule,
-        ReactiveFormsModule]
+        ReactiveFormsModule,
+        KatexModule
+      ]
     })
-    .overrideComponent(QuestionPageComponent, {
-      set: {
-        providers: [
-          { provide: QuestionService, useValue: QuestionServiceStub },
-          { provide: ActivatedRoute, useValue: testActivatedRoute }
-        ]
-      }
-    })
+      .overrideComponent(QuestionPageComponent, {
+        set: {
+          providers: [
+            { provide: QuestionService, useValue: QuestionServiceStub },
+            { provide: ActivatedRoute, useValue: testActivatedRoute }
+          ]
+        }
+      })
       .compileComponents();
   }));
 
