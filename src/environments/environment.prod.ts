@@ -9,6 +9,9 @@ export const environment = {
     return {
       get questionServiceConsumerEndpoint() {
         return '';
+      },
+      get questionQueueQuarantineConsumerEndpoint() {
+        return '';
       }
     };
   }
