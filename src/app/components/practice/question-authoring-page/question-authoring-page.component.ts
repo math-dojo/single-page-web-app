@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionDto } from 'src/app/models/question-dto';
@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Topic } from 'src/app/models/topic';
 import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionTitleValidator } from './question-title.validator';
+import { Observable } from 'rxjs';
 
 
 
@@ -23,13 +24,19 @@ export class QuestionAuthoringPageComponent implements OnInit {
   topics$: any;
 
   constructor(private questionService: QuestionService, private questionTitleValidator: QuestionTitleValidator) {
+    /* Angular calls the async validator from some context where "this" does not point to
+     * the instance of the questionTitleValidator bound here. This needs to be done
+     * explicitly.
+     */
+    const boundValidatorFunction: (ctrl: AbstractControl) => Observable<ValidationErrors> = this
+      .questionTitleValidator.validate.bind(this.questionTitleValidator);
     this.newQuestionForm = new FormGroup({
       title: new FormControl('', [
         Validators.required,
         Validators.maxLength(this.maxQuestionTitleLength)
       ],
         [
-          this.questionTitleValidator.validate.bind(this.questionTitleValidator)
+          boundValidatorFunction
         ]),
       body: new FormControl('', Validators.required),
       sampleAnswer: new FormControl(''),
