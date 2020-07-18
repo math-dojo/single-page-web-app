@@ -38,7 +38,8 @@ describe('QuestionAuthoringPageComponent', () => {
       .overrideComponent(QuestionAuthoringPageComponent, {
         set: {
           providers: [
-            { provide: QuestionService, useValue: questionServiceStub }
+            { provide: QuestionService, useValue: questionServiceStub },
+            { provide: QuestionTitleValidator }
           ]
         }
       })
@@ -132,10 +133,11 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
   describe('Input Validation', () => {
-    it('should allow the length of the question title to be up to 64 chars', () => {
+    it('should allow a new question title that also meets the 64 chars length restriction', () => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
       const inputQuestionTitle = 'a question title that is very exactly sixty-four characters long';
+      questionServiceStub.getQuestionWithTitle.returns(of(null));
 
       inputFormElement.nativeElement.value = inputQuestionTitle;
       inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
