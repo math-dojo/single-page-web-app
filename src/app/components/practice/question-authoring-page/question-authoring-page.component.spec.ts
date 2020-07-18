@@ -130,7 +130,7 @@ describe('QuestionAuthoringPageComponent', () => {
     });
   });
 
-  describe('Input Validation', () => {
+  describe('Question Title Validation', () => {
     it('should allow a new question title that also meets the 64 chars length restriction', () => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
