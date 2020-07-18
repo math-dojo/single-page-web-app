@@ -14,6 +14,8 @@ import { QuestionAuthoringPageComponent } from './question-authoring-page.compon
 import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
 import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
 import { TopicDto } from 'src/app/models/topic-dto';
+import { QuestionDto } from 'src/app/models/question-dto';
+import { QuestionTitleValidator } from './question-title.validator';
 
 
 describe('QuestionAuthoringPageComponent', () => {
@@ -176,7 +178,26 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].invalid).toBe(true);
       expect(fixture.componentInstance.newQuestionForm.controls[controlName].errors.required).toBeTruthy();
+    });
 
+    it('should show an error if the question title is already taken ', () => {
+      // Given
+      const controlName = 'title';
+      const inputFormElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title input'));
+      const inputQuestionTitle = 'title-that-is-already-taken';
+      questionServiceStub.getQuestionWithTitle.returns(of(
+        new QuestionDto({ title: inputQuestionTitle, parentTopicTitle: 'something' })));
+
+      // When
+      inputFormElement.nativeElement.value = inputQuestionTitle;
+      inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+
+      // Then
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].value).toEqual(inputQuestionTitle);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].invalid).toBe(true);
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].errors.titleAlreadyExists).toBeTruthy();
+      expect(fixture.componentInstance.newQuestionForm.controls[controlName].errors.titleAlreadyExists.errorMessage)
+        .toMatch(`a question with title "${inputQuestionTitle}" already exists`);
     });
   });
 
