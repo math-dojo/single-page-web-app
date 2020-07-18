@@ -208,7 +208,7 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
 
-  // TODO: Write sepearate test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
+  // TODO: Write test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
 
   afterEach(() => {
     TestBed.resetTestingModule();
