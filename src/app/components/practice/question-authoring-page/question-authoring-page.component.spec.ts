@@ -9,7 +9,6 @@ import { createStubInstance, SinonStubbedInstance } from 'sinon';
 import { of } from 'rxjs';
 
 import { QuestionService } from 'src/app/services/question.service';
-import { QuestionServiceStub } from 'src/testing/question.service.stub';
 import { QuestionAuthoringPageComponent } from './question-authoring-page.component';
 import { MtdgFooterComponent } from '../../mtdg-footer/mtdg-footer.component';
 import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
