@@ -14,7 +14,7 @@ export const environment = {
       get questionServiceConsumerEndpoint() {
         return '';
       },
-      get questionQueueQuarantineConsumerEndpoint() {
+      get questionQuarantineConsumerEndpoint() {
         return '';
       }
     };

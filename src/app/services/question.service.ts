@@ -160,4 +160,18 @@ export class QuestionService {
       solved: false
     }));
   }
+
+
+  postQuestionToQuarantine(questionToPost: QuestionDto): Observable<string> {
+    if (environment.name === 'default') {
+      return this.http.post<string>(`${
+        environment.apis.questionQuarantineConsumerEndpoint
+        }/question`, questionToPost)
+        .pipe(
+          catchError((err: HttpErrorResponse, caught) => {
+            throw new QuestionServiceError(err.message);
+          })
+        );
+    }
+  }
 }

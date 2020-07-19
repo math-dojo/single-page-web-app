@@ -112,6 +112,35 @@ describe('QuestionService', () => {
     });
   });
 
+  describe('Given I call .postQuestionToQuarantine, it: ', () => {
+
+    it('should return an observable of null if the question is submitted successfully', () => {
+      // Given
+      const questionToSubmit = new QuestionDto({ title: 'some-title', parentTopicTitle: 'nonsense' });
+      const expectedResponseText = 'Successful submission';
+
+      // When
+      const questionSearchObservable = questionService.postQuestionToQuarantine(questionToSubmit);
+
+      // Then
+      questionSearchObservable.subscribe({
+        next: responseText => expect(responseText).toMatch(expectedResponseText),
+        error: fail
+      });
+
+      const req = httpTestingController.expectOne((foundRequest) => {
+        const regexOfExpectedUrl = new RegExp(`${
+          environment.apis.questionQuarantineConsumerEndpoint}/question`);
+        return ((foundRequest.method === 'POST') && regexOfExpectedUrl.test(foundRequest.url));
+      });
+      expect(req.request.method).toEqual('POST');
+      req.flush(expectedResponseText, {
+        status: 201,
+        statusText: 'Success'
+      });
+    });
+  });
+
   afterEach(() => {
     httpTestingController.verify();
 

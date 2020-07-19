@@ -14,7 +14,7 @@ export const environment = {
       get questionServiceConsumerEndpoint() {
         return 'http://localhost:4201';
       },
-      get questionQueueQuarantineConsumerEndpoint() {
+      get questionQuarantineConsumerEndpoint() {
         return 'http://localhost:4201';
       }
     };
