@@ -84,14 +84,6 @@ describe('QuestionService', () => {
       const statusCodeChoices = [...Array((503 - 400) + 1).keys()].map(each => each + 400).filter(each => !(codesToExclude).has(each));
       const statusCode = statusCodeChoices[Math.floor(Math.random() * statusCodeChoices.length)];
 
-      const checkErrorThrown = <T>(expectedErrorType: GenericErrorType<T>, regexMatchForMessage: RegExp) => {
-        return (error: Error) => {
-          expect(error instanceof expectedErrorType).toBe(
-            true, `The provided error did not match the expected type ${expectedErrorType.name}`);
-          expect(error.message).toMatch(regexMatchForMessage, `the error message: ${error.message} did not match the expected format`);
-        };
-      };
-
       // When
       const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
 
@@ -146,4 +138,12 @@ describe('QuestionService', () => {
 
     TestBed.resetTestingModule();
   });
+
+  function checkErrorThrown<T>(expectedErrorType: GenericErrorType<T>, regexMatchForMessage: RegExp) {
+    return (error: Error) => {
+      expect(error instanceof expectedErrorType).toBe(
+        true, `The provided error did not match the expected type ${expectedErrorType.name}`);
+      expect(error.message).toMatch(regexMatchForMessage, `the error message: ${error.message} did not match the expected format`);
+    };
+  }
 });
