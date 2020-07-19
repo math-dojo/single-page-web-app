@@ -28,7 +28,7 @@ describe('QuestionService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('Given I call .getQuestionWithTitle, it: ', () => {
+  describe('.getQuestionWithTitle()', () => {
 
     it('should return a question dto if one with a matching title can be found', () => {
       // Given
@@ -103,7 +103,7 @@ describe('QuestionService', () => {
     });
   });
 
-  describe('Given I call .postQuestionToQuarantine, it: ', () => {
+  describe('.postQuestionToQuarantine()', () => {
 
     it('should return an observable of null if the question is submitted successfully', () => {
       // Given
