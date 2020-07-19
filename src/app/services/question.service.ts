@@ -169,7 +169,7 @@ export class QuestionService {
         }/question`, questionToPost)
         .pipe(
           catchError((err: HttpErrorResponse, caught) => {
-            throw new QuestionServiceError(err.message);
+            throw new QuestionServiceError(`${err.error}`);
           })
         );
     }
