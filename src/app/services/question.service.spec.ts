@@ -80,6 +80,7 @@ describe('QuestionService', () => {
       const questionNameToSearchFor = 'test-question';
       const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
       const errorStatusText = 'some error message';
+      const errorReasonFromServer = `the specified question ${questionNameToSearchFor} could not be found`;
       const statusCode = generateRandomHTTPErrorCodeExcluding([404]);
 
       // When
@@ -88,14 +89,14 @@ describe('QuestionService', () => {
       // Then
       questionSearchObservable.subscribe({
         next: () => fail('an error should have been thrown'),
-        error: checkErrorThrown(QuestionServiceError, new RegExp(errorStatusText))
+        error: checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
       });
 
       const req = httpTestingController.expectOne(`${
         environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
         }`);
       expect(req.request.method).toEqual('GET');
-      req.flush(`the specified question ${questionNameToSearchFor} could not be found`, {
+      req.flush(errorReasonFromServer, {
         status: statusCode,
         statusText: errorStatusText
       });

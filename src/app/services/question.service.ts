@@ -140,7 +140,7 @@ export class QuestionService {
             if (err.status === 404) {
               return of(null);
             }
-            throw new QuestionServiceError(err.message);
+            throw new QuestionServiceError(`${err.error}`);
           })
         );
     }
