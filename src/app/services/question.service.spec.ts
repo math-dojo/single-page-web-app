@@ -80,9 +80,7 @@ describe('QuestionService', () => {
       const questionNameToSearchFor = 'test-question';
       const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
       const errorStatusText = 'some error message';
-      const codesToExclude = new Set([404]);
-      const statusCodeChoices = [...Array((503 - 400) + 1).keys()].map(each => each + 400).filter(each => !(codesToExclude).has(each));
-      const statusCode = statusCodeChoices[Math.floor(Math.random() * statusCodeChoices.length)];
+      const statusCode = generateRandomHTTPErrorCodeExcluding([404]);
 
       // When
       const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
@@ -138,6 +136,16 @@ describe('QuestionService', () => {
 
     TestBed.resetTestingModule();
   });
+
+  function generateRandomHTTPErrorCodeExcluding(codesToExclude: number[] = []) {
+    const setOfCodesToExclude = new Set(codesToExclude);
+    const statusCodeChoices = [...Array((503 - 400) + 1).keys()]
+      .map(each => each + 400)
+      .filter(each => !(setOfCodesToExclude).has(each));
+    const statusCode = statusCodeChoices[Math.floor(Math.random() * statusCodeChoices.length)];
+
+    return statusCode;
+  }
 
   function checkErrorThrown<T>(expectedErrorType: GenericErrorType<T>, regexMatchForMessage: RegExp) {
     return (error: Error) => {
