@@ -173,5 +173,10 @@ export class QuestionService {
           })
         );
     }
+
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
+    return of('');
   }
 }
