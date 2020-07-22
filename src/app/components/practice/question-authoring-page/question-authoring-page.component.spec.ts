@@ -75,30 +75,46 @@ describe('QuestionAuthoringPageComponent', () => {
 
   it('should set the successfulFormSubmission property as true if submitted successfully', () => {
     // Given
-    expect(fixture.componentInstance.successfulFormSubmission)
-    .toBeUndefined('the successfulFormSubmission property was not initially undefined');
+    const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
+      next: (value) => expect(value)
+      .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
+      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+    });
+
     questionServiceStub.postQuestionToQuarantine.returns(of(''));
 
     // When
+    undefinedCheckSubscription.unsubscribe();
     fixture.componentInstance.onSubmit();
 
     // Then
-    expect(fixture.componentInstance.successfulFormSubmission).toBe(true);
+    fixture.componentInstance.successfulFormSubmission$.subscribe({
+      next: (value) => expect(value).toBe(true, `expected the successfulSubmissionForm status to be true but it was ${value}`),
+      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+    });
   });
 
   it('should set the successfulFormSubmission property as false if submission fails', () => {
     // Given
-    expect(fixture.componentInstance.successfulFormSubmission)
-      .toBeUndefined('the successfulFormSubmission property was not initially undefined');
-    questionServiceStub.postQuestionToQuarantine.throws(
-      throwError(new QuestionServiceError('some error cause'))
+    const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
+      next: (value) => expect(value)
+      .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
+      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+    });
+
+    questionServiceStub.postQuestionToQuarantine.callsFake(
+      () => throwError(new QuestionServiceError('some error cause'))
     );
 
     // When
+    undefinedCheckSubscription.unsubscribe();
     fixture.componentInstance.onSubmit();
 
     // Then
-    expect(fixture.componentInstance.successfulFormSubmission).toBe(false);
+    fixture.componentInstance.successfulFormSubmission$.subscribe({
+      next: (value) => expect(value).toBe(false, `expected the successfulSubmissionForm status to be false but it was ${value}`),
+      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+    });
   });
 
   describe('Input controls', () => {

@@ -3,11 +3,11 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionDto } from 'src/app/models/question-dto';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Topic } from 'src/app/models/topic';
 import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionTitleValidator } from './question-title.validator';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TopicDto } from 'src/app/models/topic-dto';
 
 
@@ -19,7 +19,10 @@ import { TopicDto } from 'src/app/models/topic-dto';
 })
 export class QuestionAuthoringPageComponent implements OnInit {
   private maxQuestionTitleLength = 64;
-  successfulFormSubmission: boolean | undefined = undefined;
+  successfulFormSubmission$: Observable<boolean | undefined> = new Observable(subscriber => {
+    subscriber.next(undefined);
+    subscriber.complete();
+  });
   difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
   topics$: Observable<TopicDto[]>;
@@ -67,24 +70,29 @@ export class QuestionAuthoringPageComponent implements OnInit {
   }
 
   onSubmit() {
-
-    /*     const question = new QuestionDto({
-          title: this.newQuestionForm.controls.title.value,
-          questionBody: this.newQuestionForm.controls.body.value,
-          sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
-          hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
-            .controls.hint1.value, this.newQuestionForm.controls.hint3.value],
-          answer: this.newQuestionForm.controls.answer.value,
-          successRate: 0,
-          difficulty: this.newQuestionForm.controls.difficulty.value,
-          parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
-          questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
-          this.newQuestionForm.controls.option2.value,
-          this.newQuestionForm.controls.option3.value,
-          this.newQuestionForm.controls.option4.value],
-          solved: false
-        });
-
+    const question = new QuestionDto({
+      title: this.newQuestionForm.controls.title.value,
+      questionBody: this.newQuestionForm.controls.body.value,
+      sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
+      hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
+        .controls.hint2.value, this.newQuestionForm.controls.hint3.value],
+      answer: this.newQuestionForm.controls.answer.value,
+      successRate: 0,
+      difficulty: this.newQuestionForm.controls.difficulty.value,
+      parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
+      questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
+      this.newQuestionForm.controls.option2.value,
+      this.newQuestionForm.controls.option3.value,
+      this.newQuestionForm.controls.option4.value]
+    });
+    this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
+      .pipe(
+        map((response) => true),
+        catchError((error) => {
+          return of(false);
+        })
+      );
+    /*
         this.validateOptions = this.customOptionsValidator(question.questionAnswerOptions);
         let notFound: boolean;
         this.questionService.getQuestionWithTitle(question.title).pipe(map(questions => notFound = questions.title === null));
