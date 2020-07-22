@@ -207,6 +207,25 @@ describe('QuestionAuthoringPageComponent', () => {
     });
   });
 
+  describe('Question Form', () => {
+    it('should be valid when title, topic, difficulty, body and answer are valid', () => {
+      expect(fixture.componentInstance.newQuestionForm.invalid).toBe(true);
+
+      fixture.componentInstance.newQuestionForm.controls.title.setValue('some-untaken-title');
+
+      fixture.componentInstance.newQuestionForm.controls.parentTopicTitle.setValue('some-existing-topic');
+
+      fixture.componentInstance.newQuestionForm.controls.difficulty.setValue(Difficulty.Difficult);
+
+      fixture.componentInstance.newQuestionForm.controls.body.setValue(' some stuff that will go in a question');
+
+      fixture.componentInstance.newQuestionForm.controls.answer.setValue(' some stuff that will go in an answer');
+
+      expect(fixture.componentInstance.newQuestionForm.valid).toBe(true);
+
+    });
+  });
+
 
   // TODO: Write test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
 
