@@ -8,6 +8,7 @@ import { Topic } from 'src/app/models/topic';
 import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionTitleValidator } from './question-title.validator';
 import { Observable } from 'rxjs';
+import { TopicDto } from 'src/app/models/topic-dto';
 
 
 
@@ -18,10 +19,10 @@ import { Observable } from 'rxjs';
 })
 export class QuestionAuthoringPageComponent implements OnInit {
   private maxQuestionTitleLength = 64;
-
+  successfulFormSubmission: boolean | undefined = undefined;
   difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
-  topics$: any;
+  topics$: Observable<TopicDto[]>;
 
   constructor(private questionService: QuestionService, private questionTitleValidator: QuestionTitleValidator) {
     /* Angular calls the async validator from some context where "this" does not point to

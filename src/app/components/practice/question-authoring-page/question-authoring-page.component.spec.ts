@@ -6,7 +6,8 @@ import { KatexModule } from 'ng-katex';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionAuthoringPageComponent } from './question-authoring-page.component';
@@ -15,6 +16,8 @@ import { MtdjHeaderComponent } from '../../mtdj-header/mtdj-header.component';
 import { TopicDto } from 'src/app/models/topic-dto';
 import { QuestionDto } from 'src/app/models/question-dto';
 import { QuestionTitleValidator } from './question-title.validator';
+import { Difficulty } from 'src/app/models/question_difficulty';
+import { QuestionServiceError } from 'src/app/services/question-service.error';
 
 
 describe('QuestionAuthoringPageComponent', () => {
@@ -68,6 +71,34 @@ describe('QuestionAuthoringPageComponent', () => {
     signupFormElement.triggerEventHandler('submit', null);
 
     expect(component.onSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  it('should set the successfulFormSubmission property as true if submitted successfully', () => {
+    // Given
+    expect(fixture.componentInstance.successfulFormSubmission)
+    .toBeUndefined('the successfulFormSubmission property was not initially undefined');
+    questionServiceStub.postQuestionToQuarantine.returns(of(''));
+
+    // When
+    fixture.componentInstance.onSubmit();
+
+    // Then
+    expect(fixture.componentInstance.successfulFormSubmission).toBe(true);
+  });
+
+  it('should set the successfulFormSubmission property as false if submission fails', () => {
+    // Given
+    expect(fixture.componentInstance.successfulFormSubmission)
+      .toBeUndefined('the successfulFormSubmission property was not initially undefined');
+    questionServiceStub.postQuestionToQuarantine.throws(
+      throwError(new QuestionServiceError('some error cause'))
+    );
+
+    // When
+    fixture.componentInstance.onSubmit();
+
+    // Then
+    expect(fixture.componentInstance.successfulFormSubmission).toBe(false);
   });
 
   describe('Input controls', () => {
@@ -227,7 +258,14 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
 
+  // TODO: Selection of topic from datalist allows anything. Write unit test to check it can only be from datalist
   // TODO: Write test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
+  /*
+   *  const difficultySelectElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-difficulty select'))
+        .nativeElement as HTMLSelectElement;
+      difficultySelectElement.selectedIndex = Math.floor(Math.random() * difficultySelectElement.length);
+      difficultySelectElement.dispatchEvent(new InputEvent('input'));
+   */
 
   afterEach(() => {
     TestBed.resetTestingModule();
