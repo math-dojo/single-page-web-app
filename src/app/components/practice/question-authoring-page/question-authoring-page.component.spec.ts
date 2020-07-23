@@ -62,61 +62,6 @@ describe('QuestionAuthoringPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call its onSubmit method when its form\'s submit event is triggered', () => {
-    spyOn(component, 'onSubmit');
-
-    const signupElement: DebugElement = fixture.debugElement;
-    const signupFormElement = signupElement.query(By.css('.mtdj__question-auth-input-container form'));
-
-    signupFormElement.triggerEventHandler('submit', null);
-
-    expect(component.onSubmit).toHaveBeenCalledTimes(1);
-  });
-
-  it('should set the successfulFormSubmission property as true if submitted successfully', () => {
-    // Given
-    const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
-      next: (value) => expect(value)
-      .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
-      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
-    });
-
-    questionServiceStub.postQuestionToQuarantine.returns(of(''));
-
-    // When
-    undefinedCheckSubscription.unsubscribe();
-    fixture.componentInstance.onSubmit();
-
-    // Then
-    fixture.componentInstance.successfulFormSubmission$.subscribe({
-      next: (value) => expect(value).toBe(true, `expected the successfulSubmissionForm status to be true but it was ${value}`),
-      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
-    });
-  });
-
-  it('should set the successfulFormSubmission property as false if submission fails', () => {
-    // Given
-    const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
-      next: (value) => expect(value)
-      .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
-      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
-    });
-
-    questionServiceStub.postQuestionToQuarantine.callsFake(
-      () => throwError(new QuestionServiceError('some error cause'))
-    );
-
-    // When
-    undefinedCheckSubscription.unsubscribe();
-    fixture.componentInstance.onSubmit();
-
-    // Then
-    fixture.componentInstance.successfulFormSubmission$.subscribe({
-      next: (value) => expect(value).toBe(false, `expected the successfulSubmissionForm status to be false but it was ${value}`),
-      error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
-    });
-  });
-
   describe('Input controls', () => {
     const parameters = [
       {
@@ -270,6 +215,63 @@ describe('QuestionAuthoringPageComponent', () => {
 
       expect(fixture.componentInstance.newQuestionForm.valid).toBe(true);
 
+    });
+  });
+
+  describe('Question Form Submission', () => {
+    it('should call its onSubmit method when its form\'s submit event is triggered', () => {
+      spyOn(component, 'onSubmit');
+
+      const signupElement: DebugElement = fixture.debugElement;
+      const signupFormElement = signupElement.query(By.css('.mtdj__question-auth-input-container form'));
+
+      signupFormElement.triggerEventHandler('submit', null);
+
+      expect(component.onSubmit).toHaveBeenCalledTimes(1);
+    });
+
+    it('should set the successfulFormSubmission property as true if submitted successfully', () => {
+      // Given
+      const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
+        next: (value) => expect(value)
+        .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
+        error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+      });
+
+      questionServiceStub.postQuestionToQuarantine.returns(of(''));
+
+      // When
+      undefinedCheckSubscription.unsubscribe();
+      fixture.componentInstance.onSubmit();
+
+      // Then
+      fixture.componentInstance.successfulFormSubmission$.subscribe({
+        next: (value) => expect(value).toBe(true, `expected the successfulSubmissionForm status to be true but it was ${value}`),
+        error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+      });
+    });
+
+    it('should set the successfulFormSubmission property as false if submission fails', () => {
+      // Given
+      const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
+        next: (value) => expect(value)
+        .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
+        error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+      });
+
+      questionServiceStub.postQuestionToQuarantine.callsFake(
+        () => throwError(new QuestionServiceError('some error cause'))
+      );
+
+      // When
+      undefinedCheckSubscription.unsubscribe();
+      fixture.componentInstance.onSubmit();
+
+      // Then
+      fixture.componentInstance.successfulFormSubmission$.subscribe({
+        next: (value) => expect(value).toBe(false, `expected the successfulSubmissionForm status to be false but it was ${value}`),
+        error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
+      });
     });
   });
 
