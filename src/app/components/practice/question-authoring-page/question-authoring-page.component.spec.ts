@@ -18,6 +18,7 @@ import { QuestionDto } from 'src/app/models/question-dto';
 import { QuestionTitleValidator } from './question-title.validator';
 import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionServiceError } from 'src/app/services/question-service.error';
+import { MathDojoError } from 'src/app/models/math-dojo.error';
 
 
 describe('QuestionAuthoringPageComponent', () => {
@@ -219,33 +220,39 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
   describe('Question Form Submission', () => {
-    it('should call its onSubmit method when its form\'s submit event is triggered', () => {
-      spyOn(component, 'onSubmit');
-
+    it('calling the submit handler when the form is not valid should throw an error', () => {
+      // Given
       const signupElement: DebugElement = fixture.debugElement;
       const signupFormElement = signupElement.query(By.css('.mtdj__question-auth-input-container form'));
 
+      expect(fixture.componentInstance.newQuestionForm.invalid).toBe(true, 'the question form was expected to be invalid but it was not');
+
+      // When
       signupFormElement.triggerEventHandler('submit', null);
 
-      expect(component.onSubmit).toHaveBeenCalledTimes(1);
+      // Then
+      expect(() => component.onSubmit()).toThrowError(MathDojoError, 'the form cannot be submitted when it is invalid');
     });
 
     it('should set the successfulFormSubmission property as true if submitted successfully', () => {
       // Given
-      const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
+      const page = new QuestionAuthoringTestPage(fixture);
+      const submitMethodSpy = spyOn(page.componentInstanceUnderTest, 'onSubmit').and.callThrough();
+      const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) => expect(value)
         .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
         error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
       });
-
       questionServiceStub.postQuestionToQuarantine.returns(of(''));
 
       // When
+      page.fillFormCorrectly();
       undefinedCheckSubscription.unsubscribe();
-      fixture.componentInstance.onSubmit();
+      page.raiseFormSubmitEvent();
 
       // Then
-      fixture.componentInstance.successfulFormSubmission$.subscribe({
+      expect(submitMethodSpy).toHaveBeenCalledTimes(1);
+      page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) => expect(value).toBe(true, `expected the successfulSubmissionForm status to be true but it was ${value}`),
         error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
       });
@@ -253,22 +260,25 @@ describe('QuestionAuthoringPageComponent', () => {
 
     it('should set the successfulFormSubmission property as false if submission fails', () => {
       // Given
-      const undefinedCheckSubscription = fixture.componentInstance.successfulFormSubmission$.subscribe({
+      const page = new QuestionAuthoringTestPage(fixture);
+      const submitMethodSpy = spyOn(page.componentInstanceUnderTest, 'onSubmit').and.callThrough();
+      const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) => expect(value)
         .toBeUndefined('the successfulFormSubmission property was not initially undefined'),
         error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
       });
-
       questionServiceStub.postQuestionToQuarantine.callsFake(
         () => throwError(new QuestionServiceError('some error cause'))
       );
 
       // When
+      page.fillFormCorrectly();
       undefinedCheckSubscription.unsubscribe();
-      fixture.componentInstance.onSubmit();
+      page.raiseFormSubmitEvent();
 
       // Then
-      fixture.componentInstance.successfulFormSubmission$.subscribe({
+      expect(submitMethodSpy).toHaveBeenCalledTimes(1);
+      page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) => expect(value).toBe(false, `expected the successfulSubmissionForm status to be false but it was ${value}`),
         error: (error) => fail(`an unexpected error was thrown: ${JSON.stringify(error)}`)
       });
@@ -290,3 +300,39 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
 });
+
+/**
+ * Test class containing utility methods for a number of operations on the page
+ */
+class QuestionAuthoringTestPage {
+  public readonly fixture: ComponentFixture<QuestionAuthoringPageComponent>;
+  public readonly componentInstanceUnderTest: QuestionAuthoringPageComponent;
+  private readonly questionAuthoringFormElement: DebugElement;
+
+  /**
+   * Creates an instance of the page from fixture under test
+   */
+  constructor(fixtureUnderTest: ComponentFixture<QuestionAuthoringPageComponent>) {
+    this.fixture = fixtureUnderTest;
+    this.componentInstanceUnderTest =  fixtureUnderTest.componentInstance;
+    this.questionAuthoringFormElement = fixtureUnderTest.debugElement.query(By.css('.mtdj__question-auth-input-container form'));
+  }
+
+  fillFormCorrectly() {
+    expect(this.componentInstanceUnderTest.newQuestionForm.invalid).toBe(true, 'the form was not initially empty');
+
+    this.componentInstanceUnderTest.newQuestionForm.controls.title.setValue('some-untaken-title');
+
+    this.componentInstanceUnderTest.newQuestionForm.controls.parentTopicTitle.setValue('some-existing-topic');
+
+    this.componentInstanceUnderTest.newQuestionForm.controls.difficulty.setValue(Difficulty.Difficult);
+
+    this.componentInstanceUnderTest.newQuestionForm.controls.body.setValue('some stuff that will go in a question');
+
+    this.componentInstanceUnderTest.newQuestionForm.controls.answer.setValue('some stuff that will go in an answer');
+  }
+
+  raiseFormSubmitEvent() {
+    this.questionAuthoringFormElement.triggerEventHandler('submit', null);
+  }
+}

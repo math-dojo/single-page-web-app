@@ -9,6 +9,7 @@ import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionTitleValidator } from './question-title.validator';
 import { Observable, of } from 'rxjs';
 import { TopicDto } from 'src/app/models/topic-dto';
+import { MathDojoError } from 'src/app/models/math-dojo.error';
 
 
 
@@ -70,28 +71,32 @@ export class QuestionAuthoringPageComponent implements OnInit {
   }
 
   onSubmit() {
-    const question = new QuestionDto({
-      title: this.newQuestionForm.controls.title.value,
-      questionBody: this.newQuestionForm.controls.body.value,
-      sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
-      hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
-        .controls.hint2.value, this.newQuestionForm.controls.hint3.value],
-      answer: this.newQuestionForm.controls.answer.value,
-      successRate: 0,
-      difficulty: this.newQuestionForm.controls.difficulty.value,
-      parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
-      questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
-      this.newQuestionForm.controls.option2.value,
-      this.newQuestionForm.controls.option3.value,
-      this.newQuestionForm.controls.option4.value]
-    });
-    this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
-      .pipe(
-        map((response) => true),
-        catchError((error) => {
-          return of(false);
-        })
-      );
+    if (this.newQuestionForm.valid) {
+      const question = new QuestionDto({
+        title: this.newQuestionForm.controls.title.value,
+        questionBody: this.newQuestionForm.controls.body.value,
+        sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
+        hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
+          .controls.hint2.value, this.newQuestionForm.controls.hint3.value],
+        answer: this.newQuestionForm.controls.answer.value,
+        successRate: 0,
+        difficulty: this.newQuestionForm.controls.difficulty.value,
+        parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
+        questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
+        this.newQuestionForm.controls.option2.value,
+        this.newQuestionForm.controls.option3.value,
+        this.newQuestionForm.controls.option4.value]
+      });
+      this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
+        .pipe(
+          map((response) => true),
+          catchError((error) => {
+            return of(false);
+          })
+        );
+    } else {
+      throw new MathDojoError('the form cannot be submitted when it is invalid');
+    }
     /*
         this.validateOptions = this.customOptionsValidator(question.questionAnswerOptions);
         let notFound: boolean;
