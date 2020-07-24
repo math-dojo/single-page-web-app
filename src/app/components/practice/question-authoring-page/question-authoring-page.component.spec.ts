@@ -227,9 +227,6 @@ describe('QuestionAuthoringPageComponent', () => {
 
       expect(fixture.componentInstance.newQuestionForm.invalid).toBe(true, 'the question form was expected to be invalid but it was not');
 
-      // When
-      signupFormElement.triggerEventHandler('submit', null);
-
       // Then
       expect(() => component.onSubmit()).toThrowError(MathDojoError, 'the form cannot be submitted when it is invalid');
     });
