@@ -26,7 +26,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
   });
   difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
-  topics$: Observable<TopicDto[]>;
+  topics$: Observable<Topic[]>;
 
   constructor(private questionService: QuestionService, private questionTitleValidator: QuestionTitleValidator) {
     /* Angular calls the async validator from some context where "this" does not point to
