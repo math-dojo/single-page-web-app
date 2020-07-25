@@ -421,10 +421,30 @@ describe('QuestionAuthoringPageComponent', () => {
       const page = new QuestionAuthoringTestPage(fixture);
       page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: false});
 
+      // When
       page.fixture.detectChanges();
 
+      // Then
       expect(page.successAlert).toBeNull('the page success alert can be seen');
       expect(page.errorAlert).toBeTruthy('the page error alert cannot be seen');
+    });
+
+    it('should display a different alert if the submission status changes', () => {
+      // Given
+      const page = new QuestionAuthoringTestPage(fixture);
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: false});
+      page.fixture.detectChanges();
+      expect(page.successAlert).toBeNull('the page success alert can be seen');
+      expect(page.errorAlert).toBeTruthy('the page error alert cannot be seen');
+
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: true});
+
+      // When
+      page.fixture.detectChanges();
+
+      // Then
+      expect(page.successAlert).toBeTruthy('the page success alert cannot be seen');
+      expect(page.errorAlert).toBeNull('the page error alert can be seen');
     });
   });
 
