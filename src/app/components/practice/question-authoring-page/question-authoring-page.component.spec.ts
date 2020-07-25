@@ -348,7 +348,7 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(submitMethodSpy).toHaveBeenCalledTimes(1);
       page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) =>
-          expect(value).toBe(
+          expect(value.status).toBe(
             true,
             `expected the successfulSubmissionForm status to be true but it was ${value}`
           ),
@@ -387,7 +387,7 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(submitMethodSpy).toHaveBeenCalledTimes(1);
       page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) =>
-          expect(value).toBe(
+          expect(value.status).toBe(
             false,
             `expected the successfulSubmissionForm status to be false but it was ${value}`
           ),
@@ -408,7 +408,7 @@ describe('QuestionAuthoringPageComponent', () => {
     it('should show only the success alert when the successfulFormSubmission$ is true', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      page.componentInstanceUnderTest.successfulFormSubmission$ = of(true);
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: true});
 
       page.fixture.detectChanges();
 
@@ -419,11 +419,11 @@ describe('QuestionAuthoringPageComponent', () => {
     it('should show only the failure alert when the successfulFormSubmission$ is false', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      page.componentInstanceUnderTest.successfulFormSubmission$ = of(false);
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: false});
 
       page.fixture.detectChanges();
 
-      expect(page.successAlert).toBeNull('the page success alert can  be seen');
+      expect(page.successAlert).toBeNull('the page success alert can be seen');
       expect(page.errorAlert).toBeTruthy('the page error alert cannot be seen');
     });
   });

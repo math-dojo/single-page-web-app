@@ -20,7 +20,7 @@ import { MathDojoError } from 'src/app/models/math-dojo.error';
 })
 export class QuestionAuthoringPageComponent implements OnInit {
   private maxQuestionTitleLength = 64;
-  successfulFormSubmission$: Observable<boolean | undefined>;
+  successfulFormSubmission$: Observable<{status: boolean} | undefined>;
   difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
   topics$: Observable<Topic[]>;
@@ -87,9 +87,9 @@ export class QuestionAuthoringPageComponent implements OnInit {
       });
       this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
         .pipe(
-          map((response) => true),
+          map((response) => ({status: true})),
           catchError((error) => {
-            return of(false);
+            return of({status: false});
           })
         );
     } else {
