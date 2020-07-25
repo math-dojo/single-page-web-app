@@ -87,7 +87,10 @@ export class QuestionAuthoringPageComponent implements OnInit {
       });
       this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
         .pipe(
-          map((response) => ({status: true})),
+          map((response) => {
+            this.newQuestionForm.reset();
+            return ({status: true});
+          }),
           catchError((error) => {
             return of({status: false});
           })
@@ -95,24 +98,6 @@ export class QuestionAuthoringPageComponent implements OnInit {
     } else {
       throw new MathDojoError('the form cannot be submitted when it is invalid');
     }
-    /*
-        this.validateOptions = this.customOptionsValidator(question.questionAnswerOptions);
-        let notFound: boolean;
-        this.questionService.getQuestionWithTitle(question.title).pipe(map(questions => notFound = questions.title === null));
-        if (notFound === true) {
-          this.questionExists = true;
-        }
-        if (this.validateOptions && !this.questionExists) {
-          // connect to azure queue store here
-          this.submitted = true;
-        } */
-
-    // add web security
   }
-
-  /*   customOptionsValidator(options: string[]) {
-      return !(options[0] !== '' && options[1] === '') && !(options[0] === '' &&
-        (options[1] !== '' || options[2] !== '' || options[3] !== ''));
-    } */
 
 }
