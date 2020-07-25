@@ -320,13 +320,14 @@ describe('QuestionAuthoringPageComponent', () => {
       );
     });
 
-    it('should set the successfulFormSubmission property as true if submitted successfully', () => {
+    it('should set the successfulFormSubmission property as true and reset the form if submitted successfully', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
       const submitMethodSpy = spyOn(
         page.componentInstanceUnderTest,
         'onSubmit'
       ).and.callThrough();
+      const formResetSpy = spyOn(page.componentInstanceUnderTest.newQuestionForm, 'reset').and.callThrough();
       const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
         {
           next: (value) =>
@@ -346,6 +347,7 @@ describe('QuestionAuthoringPageComponent', () => {
 
       // Then
       expect(submitMethodSpy).toHaveBeenCalledTimes(1);
+      expect(formResetSpy).toHaveBeenCalledTimes(1);
       page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) =>
           expect(value.status).toBe(
@@ -360,10 +362,8 @@ describe('QuestionAuthoringPageComponent', () => {
     it('should set the successfulFormSubmission property as false if submission fails', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      const submitMethodSpy = spyOn(
-        page.componentInstanceUnderTest,
-        'onSubmit'
-      ).and.callThrough();
+      const submitMethodSpy = spyOn(page.componentInstanceUnderTest, 'onSubmit').and.callThrough();
+      const formResetSpy = spyOn(page.componentInstanceUnderTest.newQuestionForm, 'reset').and.callThrough();
       const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
         {
           next: (value) =>
@@ -385,6 +385,7 @@ describe('QuestionAuthoringPageComponent', () => {
 
       // Then
       expect(submitMethodSpy).toHaveBeenCalledTimes(1);
+      expect(formResetSpy).toHaveBeenCalledTimes(0);
       page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
         next: (value) =>
           expect(value.status).toBe(
