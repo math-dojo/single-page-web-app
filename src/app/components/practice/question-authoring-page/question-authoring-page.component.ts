@@ -3,11 +3,11 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionDto } from 'src/app/models/question-dto';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, startWith } from 'rxjs/operators';
 import { Topic } from 'src/app/models/topic';
 import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionTitleValidator } from './question-title.validator';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { TopicDto } from 'src/app/models/topic-dto';
 import { MathDojoError } from 'src/app/models/math-dojo.error';
 
@@ -20,10 +20,7 @@ import { MathDojoError } from 'src/app/models/math-dojo.error';
 })
 export class QuestionAuthoringPageComponent implements OnInit {
   private maxQuestionTitleLength = 64;
-  successfulFormSubmission$: Observable<boolean | undefined> = new Observable(subscriber => {
-    subscriber.next(undefined);
-    subscriber.complete();
-  });
+  successfulFormSubmission$: Observable<boolean | undefined>;
   difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
   topics$: Observable<Topic[]>;
@@ -59,6 +56,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
       option4: new FormControl(''),
       answer: new FormControl('', Validators.required)
     });
+    this.successfulFormSubmission$ = of(undefined);
   }
 
   ngOnInit(): void {

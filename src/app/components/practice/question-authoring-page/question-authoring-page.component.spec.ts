@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ClarityModule } from '@clr/angular';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -6,7 +6,7 @@ import { KatexModule } from 'ng-katex';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
-import { of, throwError } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { QuestionService } from 'src/app/services/question.service';
@@ -403,6 +403,28 @@ describe('QuestionAuthoringPageComponent', () => {
       const page = new QuestionAuthoringTestPage(fixture);
       expect(page.successAlert).toBeNull('the page success alert can be seen');
       expect(page.errorAlert).toBeNull('the page error alert can be seen');
+    });
+
+    it('should show only the success alert when the successfulFormSubmission$ is true', () => {
+      // Given
+      const page = new QuestionAuthoringTestPage(fixture);
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of(true);
+
+      page.fixture.detectChanges();
+
+      expect(page.successAlert).toBeTruthy('the page success alert cannot be seen');
+      expect(page.errorAlert).toBeNull('the page error alert can be seen');
+    });
+
+    it('should show only the failure alert when the successfulFormSubmission$ is false', () => {
+      // Given
+      const page = new QuestionAuthoringTestPage(fixture);
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of(false);
+
+      page.fixture.detectChanges();
+
+      expect(page.successAlert).toBeNull('the page success alert can  be seen');
+      expect(page.errorAlert).toBeTruthy('the page error alert cannot be seen');
     });
   });
 
