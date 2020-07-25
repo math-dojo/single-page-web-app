@@ -1,13 +1,15 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
 import { ClarityModule } from '@clr/angular';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KatexModule } from 'ng-katex';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
-import { of, throwError, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
 
 import { QuestionService } from 'src/app/services/question.service';
 import { QuestionAuthoringPageComponent } from './question-authoring-page.component';
@@ -304,9 +306,6 @@ describe('QuestionAuthoringPageComponent', () => {
     it('calling the submit handler when the form is not valid should throw an error', () => {
       // Given
       const signupElement: DebugElement = fixture.debugElement;
-      const signupFormElement = signupElement.query(
-        By.css('.mtdj__question-auth-input-container form')
-      );
 
       expect(fixture.componentInstance.newQuestionForm.invalid).toBe(
         true,
@@ -327,7 +326,10 @@ describe('QuestionAuthoringPageComponent', () => {
         page.componentInstanceUnderTest,
         'onSubmit'
       ).and.callThrough();
-      const formResetSpy = spyOn(page.componentInstanceUnderTest.newQuestionForm, 'reset').and.callThrough();
+      const formResetSpy = spyOn(
+        page.componentInstanceUnderTest.newQuestionForm,
+        'reset'
+      ).and.callThrough();
       const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
         {
           next: (value) =>
@@ -347,13 +349,14 @@ describe('QuestionAuthoringPageComponent', () => {
 
       // Then
       expect(submitMethodSpy).toHaveBeenCalledTimes(1);
-      expect(formResetSpy).toHaveBeenCalledTimes(1);
       page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
-        next: (value) =>
+        next: (value) => {
           expect(value.status).toBe(
             true,
             `expected the successfulSubmissionForm status to be true but it was ${value}`
-          ),
+          );
+          expect(formResetSpy).toHaveBeenCalledTimes(1);
+        },
         error: (error) =>
           fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
       });
@@ -362,8 +365,14 @@ describe('QuestionAuthoringPageComponent', () => {
     it('should set the successfulFormSubmission property as false if submission fails', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      const submitMethodSpy = spyOn(page.componentInstanceUnderTest, 'onSubmit').and.callThrough();
-      const formResetSpy = spyOn(page.componentInstanceUnderTest.newQuestionForm, 'reset').and.callThrough();
+      const submitMethodSpy = spyOn(
+        page.componentInstanceUnderTest,
+        'onSubmit'
+      ).and.callThrough();
+      const formResetSpy = spyOn(
+        page.componentInstanceUnderTest.newQuestionForm,
+        'reset'
+      ).and.callThrough();
       const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
         {
           next: (value) =>
@@ -385,13 +394,14 @@ describe('QuestionAuthoringPageComponent', () => {
 
       // Then
       expect(submitMethodSpy).toHaveBeenCalledTimes(1);
-      expect(formResetSpy).toHaveBeenCalledTimes(0);
       page.componentInstanceUnderTest.successfulFormSubmission$.subscribe({
-        next: (value) =>
+        next: (value) => {
           expect(value.status).toBe(
             false,
             `expected the successfulSubmissionForm status to be false but it was ${value}`
-          ),
+          );
+          expect(formResetSpy).toHaveBeenCalledTimes(0);
+        },
         error: (error) =>
           fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
       });
@@ -409,18 +419,24 @@ describe('QuestionAuthoringPageComponent', () => {
     it('should show only the success alert when the successfulFormSubmission$ is true', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: true});
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({
+        status: true,
+      });
 
       page.fixture.detectChanges();
 
-      expect(page.successAlert).toBeTruthy('the page success alert cannot be seen');
+      expect(page.successAlert).toBeTruthy(
+        'the page success alert cannot be seen'
+      );
       expect(page.errorAlert).toBeNull('the page error alert can be seen');
     });
 
     it('should show only the failure alert when the successfulFormSubmission$ is false', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: false});
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({
+        status: false,
+      });
 
       // When
       page.fixture.detectChanges();
@@ -433,18 +449,24 @@ describe('QuestionAuthoringPageComponent', () => {
     it('should display a different alert if the submission status changes', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: false});
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({
+        status: false,
+      });
       page.fixture.detectChanges();
       expect(page.successAlert).toBeNull('the page success alert can be seen');
       expect(page.errorAlert).toBeTruthy('the page error alert cannot be seen');
 
-      page.componentInstanceUnderTest.successfulFormSubmission$ = of({status: true});
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({
+        status: true,
+      });
 
       // When
       page.fixture.detectChanges();
 
       // Then
-      expect(page.successAlert).toBeTruthy('the page success alert cannot be seen');
+      expect(page.successAlert).toBeTruthy(
+        'the page success alert cannot be seen'
+      );
       expect(page.errorAlert).toBeNull('the page error alert can be seen');
     });
   });
