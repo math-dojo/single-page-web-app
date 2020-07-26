@@ -69,7 +69,15 @@ export class QuestionAuthoringPageComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.newQuestionForm.valid) {
+    /**
+     * Angular seems to rerun async validaton when the submit event is fired .
+     * Therefore explicitly calling the only control known to have an
+     * async validator.
+     */
+    this.newQuestionForm.statusChanges.pipe(
+      first()
+    ).subscribe((observedStatus) => {
+      if (observedStatus === 'VALID') {
       const question = new QuestionDto({
         title: this.newQuestionForm.controls.title.value,
         questionBody: this.newQuestionForm.controls.body.value,
@@ -88,6 +96,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
       this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
         .pipe(
           map((response) => {
+
             this.newQuestionForm.reset();
             return ({status: true});
           }),
@@ -95,9 +104,10 @@ export class QuestionAuthoringPageComponent implements OnInit {
             return of({status: false});
           })
         );
-    } else {
+      } else if (observedStatus === 'INVALID') {
       throw new MathDojoError('the form cannot be submitted when it is invalid');
     }
+    });
   }
 
 }
