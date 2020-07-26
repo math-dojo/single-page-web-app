@@ -74,40 +74,47 @@ export class QuestionAuthoringPageComponent implements OnInit {
      * Therefore explicitly calling the only control known to have an
      * async validator.
      */
-    this.newQuestionForm.statusChanges.pipe(
-      first()
-    ).subscribe((observedStatus) => {
-      if (observedStatus === 'VALID') {
-      const question = new QuestionDto({
-        title: this.newQuestionForm.controls.title.value,
-        questionBody: this.newQuestionForm.controls.body.value,
-        sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
-        hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
-          .controls.hint2.value, this.newQuestionForm.controls.hint3.value],
-        answer: this.newQuestionForm.controls.answer.value,
-        successRate: 0,
-        difficulty: this.newQuestionForm.controls.difficulty.value,
-        parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
-        questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
-        this.newQuestionForm.controls.option2.value,
-        this.newQuestionForm.controls.option3.value,
-        this.newQuestionForm.controls.option4.value]
-      });
-      this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
-        .pipe(
-          map((response) => {
+    if (this.newQuestionForm.pending) {
+      this.newQuestionForm.statusChanges.pipe(
+        first()
+      ).subscribe((observedStatus) => {
+        if (observedStatus === 'VALID') {
+        const question = new QuestionDto({
+          title: this.newQuestionForm.controls.title.value,
+          questionBody: this.newQuestionForm.controls.body.value,
+          sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
+          hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
+            .controls.hint2.value, this.newQuestionForm.controls.hint3.value],
+          answer: this.newQuestionForm.controls.answer.value,
+          successRate: 0,
+          difficulty: this.newQuestionForm.controls.difficulty.value,
+          parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
+          questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
+          this.newQuestionForm.controls.option2.value,
+          this.newQuestionForm.controls.option3.value,
+          this.newQuestionForm.controls.option4.value]
+        });
+        this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
+          .pipe(
+            map((response) => {
 
-            this.newQuestionForm.reset();
-            return ({status: true});
-          }),
-          catchError((error) => {
-            return of({status: false});
-          })
-        );
-      } else if (observedStatus === 'INVALID') {
-      throw new MathDojoError('the form cannot be submitted when it is invalid');
+              this.newQuestionForm.reset();
+              return ({status: true});
+            }),
+            catchError((error) => {
+              return of({status: false});
+            })
+          );
+        } else if (observedStatus === 'INVALID') {
+        throw new MathDojoError('the form cannot be submitted when it is invalid');
+      }
+      });
+    } else {
+      if (this.newQuestionForm.invalid) {
+        throw new MathDojoError('the form cannot be submitted when it is invalid');
+      }
     }
-    });
+
   }
 
 }
