@@ -7,22 +7,6 @@
           class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
         >
           <form clrForm [formGroup]="newQuestionForm" (ngSubmit)="onSubmit()">
-            <clr-alerts *ngIf="successfulFormSubmission$ | async as successfulFormSubmission" >
-              <clr-alert [clrAlertType]="'success'" [clrAlertClosable]="true" *ngIf="successfulFormSubmission?.status === true">
-                <clr-alert-item>
-                  <span class="alert-text">
-                    The question was submitted successfully.
-                  </span>
-                </clr-alert-item>
-              </clr-alert>
-              <clr-alert [clrAlertType]="'danger'" [clrAlertClosable]="true" *ngIf="successfulFormSubmission?.status === false">
-                <clr-alert-item>
-                  <span class="alert-text">
-                    The question could not be submitted please try again later.
-                  </span>
-                </clr-alert-item>
-              </clr-alert>
-            </clr-alerts>
             <clr-tabs>
               <clr-tab>
                 <button clrTabLink id="link1">Write</button>
@@ -305,6 +289,22 @@
               </clr-tab>
             </clr-tabs>
 
+            <clr-alerts *ngIf="successfulFormSubmission$ | async as successfulFormSubmission" >
+              <clr-alert [clrAlertType]="'success'" [clrAlertClosable]="true" *ngIf="successfulFormSubmission?.status === true">
+                <clr-alert-item>
+                  <span class="alert-text">
+                    The question was submitted successfully.
+                  </span>
+                </clr-alert-item>
+              </clr-alert>
+              <clr-alert [clrAlertType]="'danger'" [clrAlertClosable]="true" *ngIf="successfulFormSubmission?.status === false">
+                <clr-alert-item>
+                  <span class="alert-text">
+                    The question could not be submitted please try again later.
+                  </span>
+                </clr-alert-item>
+              </clr-alert>
+            </clr-alerts>
             <button
               type="submit"
               class="btn btn-primary"
