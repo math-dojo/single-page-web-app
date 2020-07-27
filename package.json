@@ -16,7 +16,7 @@
     "start-mock-backends": "json-server --port 4201 --watch ./mock-backends/db.json",
     "serve-webapp": "ng serve",
     "start": "concurrently \"npm run start-mock-backends\" \"npm run serve-webapp\"",
-    "build": "ng build --prod",
+    "build": "ng build",
     "test": "ng test",
     "test-local": "ng test --browsers=Chrome --karmaConfig=karma.conf.local.js",
     "lint": "ng lint",
