@@ -140,7 +140,7 @@ export class QuestionService {
             if (err.status === 404) {
               return of(null);
             }
-            throw new QuestionServiceError(err.message);
+            throw new QuestionServiceError(`${err.error}`);
           })
         );
     }
@@ -159,5 +159,24 @@ export class QuestionService {
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
       solved: false
     }));
+  }
+
+
+  postQuestionToQuarantine(questionToPost: QuestionDto): Observable<string> {
+    if (environment.name === 'default') {
+      return this.http.post<string>(`${
+        environment.apis.questionQuarantineConsumerEndpoint
+        }/question`, questionToPost)
+        .pipe(
+          catchError((err: HttpErrorResponse, caught) => {
+            throw new QuestionServiceError(`${err.error}`);
+          })
+        );
+    }
+
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
+    return of('');
   }
 }

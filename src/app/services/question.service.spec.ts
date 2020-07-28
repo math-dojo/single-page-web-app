@@ -28,7 +28,7 @@ describe('QuestionService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('Given I call .getQuestionWithTitle, it: ', () => {
+  describe('.getQuestionWithTitle()', () => {
 
     it('should return a question dto if one with a matching title can be found', () => {
       // Given
@@ -80,17 +80,8 @@ describe('QuestionService', () => {
       const questionNameToSearchFor = 'test-question';
       const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
       const errorStatusText = 'some error message';
-      const codesToExclude = new Set([404]);
-      const statusCodeChoices = [...Array((503 - 400) + 1).keys()].map(each => each + 400).filter(each => !(codesToExclude).has(each));
-      const statusCode = statusCodeChoices[Math.floor(Math.random() * statusCodeChoices.length)];
-
-      const checkErrorThrown = <T>(expectedErrorType: GenericErrorType<T>, regexMatchForMessage: RegExp) => {
-        return (error: Error) => {
-          expect(error instanceof expectedErrorType).toBe(
-            true, `The provided error did not match the expected type ${expectedErrorType.name}`);
-          expect(error.message).toMatch(regexMatchForMessage, `the error message: ${error.message} did not match the expected format`);
-        };
-      };
+      const errorReasonFromServer = `the specified question ${questionNameToSearchFor} could not be found`;
+      const statusCode = generateRandomHTTPErrorCodeExcluding([404]);
 
       // When
       const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
@@ -98,14 +89,71 @@ describe('QuestionService', () => {
       // Then
       questionSearchObservable.subscribe({
         next: () => fail('an error should have been thrown'),
-        error: checkErrorThrown(QuestionServiceError, new RegExp(errorStatusText))
+        error: checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
       });
 
       const req = httpTestingController.expectOne(`${
         environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
         }`);
       expect(req.request.method).toEqual('GET');
-      req.flush(`the specified question ${questionNameToSearchFor} could not be found`, {
+      req.flush(errorReasonFromServer, {
+        status: statusCode,
+        statusText: errorStatusText
+      });
+    });
+  });
+
+  describe('.postQuestionToQuarantine()', () => {
+
+    it('should return an observable of null if the question is submitted successfully', () => {
+      // Given
+      const questionToSubmit = new QuestionDto({ title: 'some-title', parentTopicTitle: 'nonsense' });
+      const expectedResponseText = 'Successful submission';
+
+      // When
+      const questionSearchObservable = questionService.postQuestionToQuarantine(questionToSubmit);
+
+      // Then
+      questionSearchObservable.subscribe({
+        next: responseText => expect(responseText).toMatch(expectedResponseText),
+        error: fail
+      });
+
+      const req = httpTestingController.expectOne((foundRequest) => {
+        const regexOfExpectedUrl = new RegExp(`${
+          environment.apis.questionQuarantineConsumerEndpoint}/question`);
+        return ((foundRequest.method === 'POST') && regexOfExpectedUrl.test(foundRequest.url));
+      });
+      expect(req.request.method).toEqual('POST');
+      req.flush(expectedResponseText, {
+        status: 201,
+        statusText: 'Success'
+      });
+    });
+
+    it('should throw a QuestionServiceError if the question is submitted unsuccessfully', () => {
+      // Given
+      const questionToSubmit = new QuestionDto({ title: 'some-title', parentTopicTitle: 'nonsense' });
+      const errorStatusText = 'some generic error message';
+      const errorReasonFromServer = `the question with title ${questionToSubmit.title} could not be submitted`;
+      const statusCode = generateRandomHTTPErrorCodeExcluding([404]);
+
+      // When
+      const questionSearchObservable = questionService.postQuestionToQuarantine(questionToSubmit);
+
+      // Then
+      questionSearchObservable.subscribe({
+        next: () => fail('an error should have been thrown'),
+        error: checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
+      });
+
+      const req = httpTestingController.expectOne((foundRequest) => {
+        const regexOfExpectedUrl = new RegExp(`${
+          environment.apis.questionQuarantineConsumerEndpoint}/question`);
+        return ((foundRequest.method === 'POST') && regexOfExpectedUrl.test(foundRequest.url));
+      });
+      expect(req.request.method).toEqual('POST');
+      req.flush(errorReasonFromServer, {
         status: statusCode,
         statusText: errorStatusText
       });
@@ -117,4 +165,22 @@ describe('QuestionService', () => {
 
     TestBed.resetTestingModule();
   });
+
+  function generateRandomHTTPErrorCodeExcluding(codesToExclude: number[] = []) {
+    const setOfCodesToExclude = new Set(codesToExclude);
+    const statusCodeChoices = [...Array((503 - 400) + 1).keys()]
+      .map(each => each + 400)
+      .filter(each => !(setOfCodesToExclude).has(each));
+    const statusCode = statusCodeChoices[Math.floor(Math.random() * statusCodeChoices.length)];
+
+    return statusCode;
+  }
+
+  function checkErrorThrown<T>(expectedErrorType: GenericErrorType<T>, regexMatchForMessage: RegExp) {
+    return (error: Error) => {
+      expect(error instanceof expectedErrorType).toBe(
+        true, `The provided error did not match the expected type ${expectedErrorType.name}`);
+      expect(error.message).toMatch(regexMatchForMessage, `the error message: "${error.message}" did not match the expected format`);
+    };
+  }
 });
