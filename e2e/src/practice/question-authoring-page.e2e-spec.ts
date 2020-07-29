@@ -9,7 +9,14 @@ describe('Given I navigate to the Question Authoring Page', () => {
     page.navigateToFeatureRoot();
   });
 
-  it('should display at least 1 card containing a topic name', () => {
+  it('it should display a success alert and reset the form when I submit a valid form', () => {
+    expect(page.submissionErrorAlert.isPresent()).toBe(false, 'a page submission error alert could be seen on startup');
+    expect(page.submissionSuccessAlert.isPresent()).toBe(false, 'a page submission success alert could be seen on startup');
+
+
+  });
+
+  it('should display no alerts', () => {
 
   });
 
