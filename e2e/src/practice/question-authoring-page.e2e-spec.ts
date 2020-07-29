@@ -13,11 +13,13 @@ describe('Given I navigate to the Question Authoring Page', () => {
     expect(page.submissionErrorAlert.isPresent()).toBe(false, 'a page submission error alert could be seen on startup');
     expect(page.submissionSuccessAlert.isPresent()).toBe(false, 'a page submission success alert could be seen on startup');
 
+    page.fillFormCorrectly();
 
-  });
+    page.submitButton.click();
 
-  it('should display no alerts', () => {
-
+    expect(page.submissionErrorAlert.isPresent()).toBe(false, 'a page submission error alert could be seen on submit');
+    expect(page.submissionSuccessAlert.isPresent()).toBe(true, 'no submission success alert could be seen on submit');
+    expect(page.checkFormEmpty()).toBe(true, 'form was not empty');
   });
 
   afterEach(async () => {
