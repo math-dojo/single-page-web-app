@@ -26,12 +26,10 @@ export class QuestionAuthoringPageComponent implements OnInit {
   topics$: Observable<Topic[]>;
 
   constructor(private questionService: QuestionService, private questionTitleValidator: QuestionTitleValidator) {
-    /* Angular calls the async validator from some context where "this" does not point to
-     * the instance of the questionTitleValidator bound here. This needs to be done
-     * explicitly.
-     */
-    const boundValidatorFunction: (ctrl: AbstractControl) => Observable<ValidationErrors> = this
-      .questionTitleValidator.validate.bind(this.questionTitleValidator);
+
+  }
+
+  ngOnInit(): void {
     this.newQuestionForm = new FormGroup({
       title: new FormControl('', {
         validators: [
@@ -40,7 +38,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
         ],
         updateOn: 'blur',
         asyncValidators: [
-          boundValidatorFunction
+          this.questionTitleValidator.validate.bind(this.questionTitleValidator)
         ]
       }),
       body: new FormControl('', Validators.required),
@@ -57,9 +55,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
       answer: new FormControl('', Validators.required)
     });
     this.successfulFormSubmission$ = of(undefined);
-  }
 
-  ngOnInit(): void {
     const topicDtos$ = this.questionService.getTopics();
 
     this.topics$ = topicDtos$.pipe(
