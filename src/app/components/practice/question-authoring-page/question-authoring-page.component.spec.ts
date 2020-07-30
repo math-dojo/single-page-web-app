@@ -362,7 +362,7 @@ describe('QuestionAuthoringPageComponent', () => {
       });
     });
 
-    it('should set the successfulFormSubmission property as false if submission fails', () => {
+    it('should set the successfulFormSubmission property as false and not reset the form if submission fails', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
       const submitMethodSpy = spyOn(
@@ -470,15 +470,6 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(page.errorAlert).toBeNull('the page error alert can be seen');
     });
   });
-
-  // TODO: Selection of topic from datalist allows anything. Write unit test to check it can only be from datalist
-  // TODO: Write test case for select option: https://stackoverflow.com/questions/5678210/select-dropdown-menu-option-with-javascript
-  /*
-   *  const difficultySelectElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-difficulty select'))
-        .nativeElement as HTMLSelectElement;
-      difficultySelectElement.selectedIndex = Math.floor(Math.random() * difficultySelectElement.length);
-      difficultySelectElement.dispatchEvent(new InputEvent('input'));
-   */
 
   afterEach(() => {
     TestBed.resetTestingModule();
