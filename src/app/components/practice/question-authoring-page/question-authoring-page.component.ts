@@ -19,9 +19,15 @@ import { MathDojoError } from 'src/app/models/math-dojo.error';
   styleUrls: ['./question-authoring-page.component.scss']
 })
 export class QuestionAuthoringPageComponent implements OnInit {
-  private maxQuestionTitleLength = 64;
+  private readonly maxQuestionTitleLength = 64;
+  public readonly bodyPlaceholder = (
+  `You can write text, that contains expressions like this: $x ^ 2 + 5$ inside them. As you probably know.
+  You also can write expressions in display mode as follows: $$\\sum_{i=1}^n(x_i^2 - \\overline{x}^2)$$.
+  In first case you will need to use \\$expression\\$ and in the second one \\$\\$expression\\$\\$.
+  To escape the \\$ symbol it's mandatory to write as follows: \\\\$`);
+  public readonly optionPlaceholder = 'x^2';
+  public readonly difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   successfulFormSubmission$: Observable<{status: boolean} | undefined>;
-  difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
   topics$: Observable<Topic[]>;
 
