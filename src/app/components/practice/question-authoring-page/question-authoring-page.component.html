@@ -221,15 +221,27 @@
               </clr-tab>
             </clr-tabs>
 
-            <clr-alerts *ngIf="successfulFormSubmission$ | async as successfulFormSubmission" >
-              <clr-alert [clrAlertType]="'success'" [clrAlertClosable]="true" *ngIf="successfulFormSubmission?.status === true">
+            <clr-alerts
+              *ngIf="
+                successfulFormSubmission$ | async as successfulFormSubmission
+              "
+            >
+              <clr-alert
+                [clrAlertType]="'success'"
+                [clrAlertClosable]="true"
+                *ngIf="successfulFormSubmission?.status === true"
+              >
                 <clr-alert-item>
                   <span class="alert-text">
                     The question was submitted successfully.
                   </span>
                 </clr-alert-item>
               </clr-alert>
-              <clr-alert [clrAlertType]="'danger'" [clrAlertClosable]="true" *ngIf="successfulFormSubmission?.status === false">
+              <clr-alert
+                [clrAlertType]="'danger'"
+                [clrAlertClosable]="true"
+                *ngIf="successfulFormSubmission?.status === false"
+              >
                 <clr-alert-item>
                   <span class="alert-text">
                     The question could not be submitted please try again later.
