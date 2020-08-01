@@ -93,7 +93,7 @@ export class QuestionAuthoringPage extends Utils {
     ]).then(
       arrayOfStates => arrayOfStates.reduce(((cumulativeState, each) => cumulativeState && each), true)
       );
-    
+
   }
 
 }
