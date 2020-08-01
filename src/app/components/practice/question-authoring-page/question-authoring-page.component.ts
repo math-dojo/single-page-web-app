@@ -19,9 +19,15 @@ import { MathDojoError } from 'src/app/models/math-dojo.error';
   styleUrls: ['./question-authoring-page.component.scss']
 })
 export class QuestionAuthoringPageComponent implements OnInit {
-  private maxQuestionTitleLength = 64;
+  private readonly maxQuestionTitleLength = 64;
+  public readonly bodyPlaceholder = (
+  `You can write text, that contains expressions like this: $x ^ 2 + 5$ inside them. As you probably know.
+  You also can write expressions in display mode as follows: $$\\sum_{i=1}^n(x_i^2 - \\overline{x}^2)$$.
+  In first case you will need to use \\$expression\\$ and in the second one \\$\\$expression\\$\\$.
+  To escape the \\$ symbol it's mandatory to write as follows: \\\\$`);
+  public readonly optionPlaceholder = 'x^2';
+  public readonly difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   successfulFormSubmission$: Observable<{status: boolean} | undefined>;
-  difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
   newQuestionForm: FormGroup;
   topics$: Observable<Topic[]>;
 
@@ -75,32 +81,9 @@ export class QuestionAuthoringPageComponent implements OnInit {
         first()
       ).subscribe((observedStatus) => {
         if (observedStatus === 'VALID') {
-        const question = new QuestionDto({
-          title: this.newQuestionForm.controls.title.value,
-          questionBody: this.newQuestionForm.controls.body.value,
-          sampleAnswer: this.newQuestionForm.controls.sampleAnswer.value,
-          hints: [this.newQuestionForm.controls.hint1.value, this.newQuestionForm
-            .controls.hint2.value, this.newQuestionForm.controls.hint3.value],
-          answer: this.newQuestionForm.controls.answer.value,
-          successRate: 0,
-          difficulty: this.newQuestionForm.controls.difficulty.value,
-          parentTopicTitle: this.newQuestionForm.controls.parentTopicTitle.value,
-          questionAnswerOptions: [this.newQuestionForm.controls.option1.value,
-          this.newQuestionForm.controls.option2.value,
-          this.newQuestionForm.controls.option3.value,
-          this.newQuestionForm.controls.option4.value]
-        });
-        this.successfulFormSubmission$ = this.questionService.postQuestionToQuarantine(question)
-          .pipe(
-            map((response) => {
-
-              this.newQuestionForm.reset();
-              return ({status: true});
-            }),
-            catchError((error) => {
-              return of({status: false});
-            })
-          );
+        const question = this.createQuestionDtoFromForm(this.newQuestionForm);
+        this.successfulFormSubmission$ = this.quarantineQuestionAndResetForm(
+          { questionService: this.questionService, questionDto: question, formToReset: this.newQuestionForm });
         } else if (observedStatus === 'INVALID') {
         throw new MathDojoError('the form cannot be submitted when it is invalid');
       }
@@ -108,9 +91,57 @@ export class QuestionAuthoringPageComponent implements OnInit {
     } else {
       if (this.newQuestionForm.invalid) {
         throw new MathDojoError('the form cannot be submitted when it is invalid');
+      } else {
+        const question = this.createQuestionDtoFromForm(this.newQuestionForm);
+        this.successfulFormSubmission$ = this.quarantineQuestionAndResetForm(
+          { questionService: this.questionService, questionDto: question, formToReset: this.newQuestionForm });
       }
     }
 
+  }
+
+  private createQuestionDtoFromForm(formGroup: FormGroup): QuestionDto {
+    return new QuestionDto({
+      title: formGroup.controls.title.value,
+      questionBody: formGroup.controls.body.value,
+      sampleAnswer: formGroup.controls.sampleAnswer.value,
+      hints: [formGroup.controls.hint1.value, formGroup
+        .controls.hint2.value, formGroup.controls.hint3.value],
+      answer: formGroup.controls.answer.value,
+      successRate: 0,
+      difficulty: formGroup.controls.difficulty.value,
+      parentTopicTitle: formGroup.controls.parentTopicTitle.value,
+      questionAnswerOptions: [formGroup.controls.option1.value,
+      formGroup.controls.option2.value,
+      formGroup.controls.option3.value,
+      formGroup.controls.option4.value]
+    });
+  }
+
+  /**
+   * Posts a question to the quarantine and resets the form if this is successful.
+   * Returns an observable indicating whether the post was successful or not.
+   */
+  private quarantineQuestionAndResetForm({
+      questionService,
+      questionDto,
+      formToReset }:
+      { questionService: QuestionService;
+        questionDto: QuestionDto;
+        formToReset: FormGroup;
+    }): Observable<{status: boolean}> {
+    return questionService.postQuestionToQuarantine(questionDto)
+    .pipe(
+      map((response) => {
+        console.log(`successful response, ${JSON.stringify(response)}, from posting question to quarantine`);
+        formToReset.reset();
+        return ({status: true});
+      }),
+      catchError((error) => {
+        console.log(`unsuccessful response, ${JSON.stringify(error)}, from posting question to quarantine`);
+        return of({status: false});
+      })
+    );
   }
 
 }

@@ -29,7 +29,7 @@ describe('Given I navigate to the Question Authoring Page', () => {
      * for no other SEVERE errors, given the buffer can only be read once.
      */
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    const sanitisedLogs: logging.Entry[] = logs.filter((each) => 
+    const sanitisedLogs: logging.Entry[] = logs.filter((each) =>
       ! (/(.*)\/questions\/(.*) - Failed to load resource/.test(each.message)));
     expect(sanitisedLogs).not.toContain(jasmine.objectContaining({
       level: logging.Level.SEVERE,
