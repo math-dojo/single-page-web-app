@@ -2,6 +2,9 @@ import {
   async,
   ComponentFixture,
   TestBed,
+  fakeAsync,
+  tick,
+  flush,
 } from '@angular/core/testing';
 import { ClarityModule } from '@clr/angular';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -319,17 +322,10 @@ describe('QuestionAuthoringPageComponent', () => {
       );
     });
 
-    it('should set the successfulFormSubmission property as true and reset the form if submitted successfully', () => {
+    it('should set the successfulFormSubmission property as true and reset the form if submitted successfully', fakeAsync(() => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      const submitMethodSpy = spyOn(
-        page.componentInstanceUnderTest,
-        'onSubmit'
-      ).and.callThrough();
-      const formResetSpy = spyOn(
-        page.componentInstanceUnderTest.newQuestionForm,
-        'reset'
-      ).and.callThrough();
+      page.fixture.detectChanges();
       const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
         {
           next: (value) =>
@@ -340,11 +336,25 @@ describe('QuestionAuthoringPageComponent', () => {
             fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
         }
       );
+
+      tick();
+      page.fixture.detectChanges();
+      undefinedCheckSubscription.unsubscribe();
+
+      const submitMethodSpy = spyOn(
+        page.componentInstanceUnderTest,
+        'onSubmit'
+      ).and.callThrough();
+      const formResetSpy = spyOn(
+        page.componentInstanceUnderTest.newQuestionForm,
+        'reset'
+      ).and.callThrough();
       questionServiceStub.postQuestionToQuarantine.returns(of(''));
 
       // When
       page.fillFormCorrectly();
-      undefinedCheckSubscription.unsubscribe();
+      page.fixture.detectChanges();
+      tick();
       page.raiseFormSubmitEvent();
 
       // Then
@@ -360,19 +370,13 @@ describe('QuestionAuthoringPageComponent', () => {
         error: (error) =>
           fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
       });
-    });
+      flush();
+    }));
 
-    it('should set the successfulFormSubmission property as false and not reset the form if submission fails', () => {
+    it('should set the successfulFormSubmission property as false and not reset the form if submission fails', fakeAsync(() => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
-      const submitMethodSpy = spyOn(
-        page.componentInstanceUnderTest,
-        'onSubmit'
-      ).and.callThrough();
-      const formResetSpy = spyOn(
-        page.componentInstanceUnderTest.newQuestionForm,
-        'reset'
-      ).and.callThrough();
+      page.fixture.detectChanges();
       const undefinedCheckSubscription = page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
         {
           next: (value) =>
@@ -383,13 +387,28 @@ describe('QuestionAuthoringPageComponent', () => {
             fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
         }
       );
+
+      tick();
+      page.fixture.detectChanges();
+      undefinedCheckSubscription.unsubscribe();
+
+      const submitMethodSpy = spyOn(
+        page.componentInstanceUnderTest,
+        'onSubmit'
+      ).and.callThrough();
+      const formResetSpy = spyOn(
+        page.componentInstanceUnderTest.newQuestionForm,
+        'reset'
+      ).and.callThrough();
+
       questionServiceStub.postQuestionToQuarantine.callsFake(() =>
         throwError(new QuestionServiceError('some error cause'))
       );
 
       // When
       page.fillFormCorrectly();
-      undefinedCheckSubscription.unsubscribe();
+      page.fixture.detectChanges();
+      tick();
       page.raiseFormSubmitEvent();
 
       // Then
@@ -405,7 +424,8 @@ describe('QuestionAuthoringPageComponent', () => {
         error: (error) =>
           fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
       });
-    });
+      flush();
+    }));
   });
 
   describe('Alerts', () => {
