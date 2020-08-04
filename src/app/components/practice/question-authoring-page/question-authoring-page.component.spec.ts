@@ -466,6 +466,70 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(page.errorAlert).toBeTruthy('the page error alert cannot be seen');
     });
 
+    it('should reset the successfulFormSubmission$ observable when the error alert is closed', (done) => {
+      // Given
+      const page = new QuestionAuthoringTestPage(fixture);
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({
+        status: false,
+      });
+      page.fixture.detectChanges();
+      expect(page.successAlert).toBeNull('the page success alert can be seen');
+      expect(page.errorAlert).toBeTruthy('the page error alert cannot be seen');
+
+      // When
+      page.errorAlertCloseButton.triggerEventHandler('click', null);
+      page.fixture.detectChanges();
+
+      // Then
+      expect(page.successAlert).toBeNull('the page success alert can be seen');
+      expect(page.errorAlert).toBeNull('the page error alert can be seen');
+      page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
+        {
+          next: (value) => {
+            expect(value).toBeUndefined(
+              'the successfulFormSubmission property was not set to undefined'
+            );
+            done();
+          },
+          error: (error) =>
+            fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
+        }
+      );
+    });
+
+    it('should reset the successfulFormSubmission$ observable when the success alert is closed', (done) => {
+      // Given
+      const page = new QuestionAuthoringTestPage(fixture);
+      page.componentInstanceUnderTest.successfulFormSubmission$ = of({
+        status: true,
+      });
+      page.fixture.detectChanges();
+      expect(page.successAlert).toBeTruthy(
+        'the page success alert cannot be seen'
+      );
+      expect(page.errorAlert).toBeNull('the page error alert can be seen');
+
+      // When
+      page.successAlertCloseButton.triggerEventHandler('click', null);
+      page.fixture.detectChanges();
+
+      // Then
+      expect(page.successAlert).toBeNull('the page success alert can be seen');
+      expect(page.errorAlert).toBeNull('the page error alert can be seen');
+      page.componentInstanceUnderTest.successfulFormSubmission$.subscribe(
+        {
+          next: (value) => {
+            expect(value).toBeUndefined(
+              'the successfulFormSubmission property was not set to undefined'
+            );
+            done();
+          },
+          error: (error) =>
+            fail(`an unexpected error was thrown: ${JSON.stringify(error)}`),
+        }
+      );
+    });
+
     it('should display a different alert if the submission status changes', () => {
       // Given
       const page = new QuestionAuthoringTestPage(fixture);
@@ -557,6 +621,18 @@ class QuestionAuthoringTestPage {
   get errorAlert(): DebugElement {
     return this.fixture.debugElement.query(
       By.css('.mtdj__question-auth-input-container .alert.alert-danger')
+    );
+  }
+
+  get successAlertCloseButton(): DebugElement {
+    return this.successAlert.query(
+      By.css('button.close')
+    );
+  }
+
+  get errorAlertCloseButton(): DebugElement {
+    return this.errorAlert.query(
+      By.css('button.close')
     );
   }
 }
