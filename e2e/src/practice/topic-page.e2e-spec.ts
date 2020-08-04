@@ -31,6 +31,6 @@ describe('Given I navigate to the Topic Page', () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining({
       level: logging.Level.SEVERE,
-    } as logging.Entry));
+    } as logging.Entry), `the following logs were seen: ${JSON.stringify(logs)}`);
   });
 });

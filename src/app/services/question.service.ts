@@ -147,18 +147,13 @@ export class QuestionService {
     /* Return a prestashed response when deployed
      * until the question service api is ready
     */
-    return of(new QuestionDto({
-      title: questionTitle,
-      questionBody: 'When $a \\ne 0$, the solution of $$(ax^2 + bx + c = 0)$$ is $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
-      sampleAnswer: 'some sample answer',
-      hints: ['try this first', 'if this doesn\'t help, tough'],
-      answer: 'false',
-      successRate: 0.4,
-      difficulty: Difficulty.Easy,
-      parentTopicTitle: 'something-hard',
-      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
-      solved: false
-    }));
+    const [preExistingQuestion] = this.preStashedQuestions.filter(question => questionTitle === question.title);
+    if (preExistingQuestion) {
+      return of(preExistingQuestion);
+    } else {
+      return of(null);
+    }
+
   }
 
 

@@ -131,7 +131,7 @@ describe('QuestionService', () => {
       });
     });
 
-    it('should throw a QuestionServiceError if the question is submitted unsuccessfully', () => {
+    it('should throw a QuestionServiceError if the question is not submitted', () => {
       // Given
       const questionToSubmit = new QuestionDto({ title: 'some-title', parentTopicTitle: 'nonsense' });
       const errorStatusText = 'some generic error message';

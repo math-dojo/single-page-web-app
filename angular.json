@@ -82,7 +82,7 @@
                   "with": "src/environments/environment.nonprod.ts"
                 }
               ]
-            }            
+            }
           }
         },
         "serve": {
@@ -99,7 +99,7 @@
             },
             "nonproduction": {
               "browserTarget": "single-page-web-app:build:nonproduction"
-            }            
+            }
           }
         },
         "extract-i18n": {
@@ -153,5 +153,8 @@
       }
     }
   },
-  "defaultProject": "single-page-web-app"
+  "defaultProject": "single-page-web-app",
+  "cli": {
+    "analytics": "072483c5-b45c-46a9-a73b-59df793dba88"
+  }
 }
