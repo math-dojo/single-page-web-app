@@ -118,6 +118,10 @@ export class QuestionAuthoringPageComponent implements OnInit {
     });
   }
 
+  resetAlertStatus() {
+    this.successfulFormSubmission$ = of(undefined);
+  }
+
   /**
    * Posts a question to the quarantine and resets the form if this is successful.
    * Returns an observable indicating whether the post was successful or not.
