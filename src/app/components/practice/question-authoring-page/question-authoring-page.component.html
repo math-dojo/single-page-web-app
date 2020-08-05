@@ -230,6 +230,7 @@
                 [clrAlertType]="'success'"
                 [clrAlertClosable]="true"
                 *ngIf="successfulFormSubmission?.status === true"
+                (clrAlertClosedChange)="resetAlertStatus()"
               >
                 <clr-alert-item>
                   <span class="alert-text">
@@ -241,6 +242,7 @@
                 [clrAlertType]="'danger'"
                 [clrAlertClosable]="true"
                 *ngIf="successfulFormSubmission?.status === false"
+                (clrAlertClosedChange)="resetAlertStatus()"
               >
                 <clr-alert-item>
                   <span class="alert-text">
