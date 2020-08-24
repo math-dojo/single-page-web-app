@@ -6,155 +6,258 @@
         <div
           class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
         >
-          <form clrForm [formGroup]="newQuestionForm">
-            <clr-input-container>
-              <label>Question Title</label>
-              <input clrInput formControlName="title" required />
-            </clr-input-container>
-            <clr-datalist-container>
-              <label>Topic Title</label>
-              <input
-                formControlName="parentTopicTitle"
-                required
-                clrDatalistInput
-              />
-              <datalist *ngIf="topics$ | async as topics">
-                <option *ngFor="let topic of topics" [value]="topic.title"
-                  >{{ topic.formattedTitle }}
-                </option>
-              </datalist>
-            </clr-datalist-container>
+          <form clrForm [formGroup]="newQuestionForm" (ngSubmit)="onSubmit()">
+            <clr-tabs>
+              <clr-tab>
+                <button clrTabLink id="link1">Write</button>
+                <clr-tab-content id="content1" *clrIfActive="true">
+                  <clr-input-container id="mtdj__question-auth-input-title">
+                    <label>Question Title</label>
+                    <input clrInput formControlName="title" required />
+                    <clr-control-error *clrIfError="'required'"
+                      >This is a required field</clr-control-error
+                    >
+                    <clr-control-error *clrIfError="'maxlength'"
+                      >This has exceeded the max length of
+                      characters</clr-control-error
+                    >
+                    <clr-control-error *clrIfError="'titleAlreadyExists'">{{
+                      newQuestionForm.controls.title.errors.titleAlreadyExists
+                        .errorMessage
+                    }}</clr-control-error>
+                  </clr-input-container>
+                  <clr-datalist-container id="mtdj__question-auth-input-topic">
+                    <label>Topic Title</label>
+                    <input
+                      formControlName="parentTopicTitle"
+                      required
+                      clrDatalistInput
+                    />
+                    <datalist *ngIf="topics$ | async as topics">
+                      <option *ngFor="let topic of topics" [value]="topic.title"
+                        >{{ topic.formattedTitle }}
+                      </option>
+                    </datalist>
+                  </clr-datalist-container>
 
-            <clr-select-container>
-              <label>Difficulty</label>
-              <select clrSelect formControlName="difficulty">
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-              </select>
-            </clr-select-container>
+                  <clr-select-container
+                    id="mtdj__question-auth-input-difficulty"
+                  >
+                    <label>Difficulty</label>
+                    <select clrSelect formControlName="difficulty">
+                      <option *ngFor="let each of difficulty" [value]="each">{{
+                        each
+                      }}</option>
+                    </select>
+                  </clr-select-container>
 
-            <clr-textarea-container>
-              <label>Body</label>
-              <textarea clrTextarea formControlName="body" required></textarea>
-              <clr-control-helper
-                >Equations should be written in LaTex</clr-control-helper
+                  <clr-textarea-container id="mtdj__question-auth-input-body">
+                    <label>Body</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="body"
+                      required
+                      placeholder="{{bodyPlaceholder}}"
+                    ></textarea>
+                    <clr-control-helper
+                      >Equations should be written in LaTex</clr-control-helper
+                    >
+                  </clr-textarea-container>
+
+                  <clr-textarea-container
+                    id="mtdj__question-auth-input-sample_answer"
+                  >
+                    <label>Sample Answer</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="sampleAnswer"
+                    ></textarea>
+                    <clr-control-helper
+                      >An example of how to answer the question in a
+                      textbox</clr-control-helper
+                    >
+                  </clr-textarea-container>
+
+                  <clr-textarea-container id="mtdj__question-auth-input-answer">
+                    <label>Answer</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="answer"
+                      required
+                    ></textarea>
+                  </clr-textarea-container>
+
+                  <clr-input-container id="mtdj__question-auth-input-hint1">
+                    <label>Hint 1</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="hint1"
+                    />
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-hint2">
+                    <label>Hint 2</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="hint2"
+                    />
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-hint3">
+                    <label>Hint 3</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="hint3"
+                    />
+                  </clr-input-container>
+
+                  <clr-input-container id="mtdj__question-auth-input-option1">
+                    <label>Option 1</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option1"
+                      placeholder="{{optionPlaceholder}}"
+                    />
+                    <clr-control-helper
+                      >Equations should be written in LaTex</clr-control-helper
+                    >
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-option2">
+                    <label>Option 2</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option2"
+                    />
+                    <clr-control-helper
+                      >Equations should be written in LaTex</clr-control-helper
+                    >
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-option3">
+                    <label>Option 3</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option3"
+                    />
+                    <clr-control-helper
+                      >Equations should be written in LaTex</clr-control-helper
+                    >
+                  </clr-input-container>
+                  <clr-input-container id="mtdj__question-auth-input-option4">
+                    <label>Option 4</label>
+                    <input
+                      class=".mtdj__question-auth-input--long"
+                      clrInput
+                      formControlName="option4"
+                    />
+                    <clr-control-helper
+                      >Equations should be written in LaTex</clr-control-helper
+                    >
+                  </clr-input-container>
+                </clr-tab-content>
+              </clr-tab>
+              <clr-tab>
+                <button clrTabLink>Preview</button>
+                <clr-tab-content *clrIfActive>
+                  <div class="card">
+                    <div class="card-header">
+                        {{newQuestionForm.controls.title.value}}
+                    </div>
+                    <div class="card-block">
+                      <h4 class="card-title">Problem Description</h4>
+                      <ng-katex-paragraph
+                        [paragraph]="newQuestionForm.controls.body.value"
+                      ></ng-katex-paragraph>
+                    </div>
+                    <div class="card-block">
+                      <h4 class="card-title">Options</h4>
+                      <div class="clr-radio-wrapper">
+                        <input type="radio" id="radio1" name="radio-basic" value="option1" class="clr-radio">
+                        <label for="radio1"><ng-katex [equation]="newQuestionForm.controls.option1.value"></ng-katex></label>
+                      </div>
+                      <div class="clr-radio-wrapper" *ngIf="newQuestionForm.controls.option2.value">
+                        <input type="radio" id="radio1" name="radio-basic" value="option1" class="clr-radio">
+                        <label for="radio1"><ng-katex [equation]="newQuestionForm.controls.option2.value"></ng-katex></label>
+                      </div>
+                      <div class="clr-radio-wrapper" *ngIf="newQuestionForm.controls.option3.value">
+                        <input type="radio" id="radio1" name="radio-basic" value="option1" class="clr-radio">
+                        <label for="radio1"><ng-katex [equation]="newQuestionForm.controls.option3.value"></ng-katex></label>
+                      </div>
+                      <div class="clr-radio-wrapper" *ngIf="newQuestionForm.controls.option4.value">
+                        <input type="radio" id="radio1" name="radio-basic" value="option1" class="clr-radio" placeholder="">
+                        <label for="radio1"><ng-katex [equation]="newQuestionForm.controls.option4.value"></ng-katex></label>
+                      </div>
+                    </div>
+                    <div class="card-block">
+                      <h4 class="card-title">Hints</h4>
+                      <clr-accordion>
+                        <clr-accordion-panel>
+                          <clr-accordion-title>Hint 1</clr-accordion-title>
+                          <clr-accordion-content *clrIfExpanded>
+                            {{newQuestionForm.controls.hint1.value}}
+                          </clr-accordion-content>
+                        </clr-accordion-panel>
+
+                        <clr-accordion-panel>
+                          <clr-accordion-title>Hint 2</clr-accordion-title>
+                          <clr-accordion-content *clrIfExpanded>
+                            {{newQuestionForm.controls.hint2.value}}
+                          </clr-accordion-content>
+                        </clr-accordion-panel>
+
+                        <clr-accordion-panel>
+                          <clr-accordion-title>Hint 3</clr-accordion-title>
+                          <clr-accordion-content *clrIfExpanded>
+                            {{newQuestionForm.controls.hint3.value}}
+                          </clr-accordion-content>
+                        </clr-accordion-panel>
+                      </clr-accordion>
+                    </div>
+                  </div>
+                </clr-tab-content>
+              </clr-tab>
+            </clr-tabs>
+
+            <clr-alerts
+              *ngIf="
+                successfulFormSubmission$ | async as successfulFormSubmission
+              "
+            >
+              <clr-alert
+                [clrAlertType]="'success'"
+                [clrAlertClosable]="true"
+                *ngIf="successfulFormSubmission?.status === true"
+                (clrAlertClosedChange)="resetAlertStatus()"
               >
-            </clr-textarea-container>
-
-            <clr-textarea-container>
-              <label>Sample Answer</label>
-              <textarea clrTextarea formControlName="sampleAnswer"></textarea>
-              <clr-control-helper
-                >An example of how to answer the question in a
-                textbox</clr-control-helper
+                <clr-alert-item>
+                  <span class="alert-text">
+                    The question was submitted successfully.
+                  </span>
+                </clr-alert-item>
+              </clr-alert>
+              <clr-alert
+                [clrAlertType]="'danger'"
+                [clrAlertClosable]="true"
+                *ngIf="successfulFormSubmission?.status === false"
+                (clrAlertClosedChange)="resetAlertStatus()"
               >
-            </clr-textarea-container>
-
-            <clr-textarea-container>
-              <label>Answer</label>
-              <textarea
-                clrTextarea
-                formControlName="answer"
-                required
-              ></textarea>
-            </clr-textarea-container>
-
-            <clr-input-container>
-              <label>Hint 1</label>
-              <input
-                class=".mtdj__question-auth-input--long"
-                clrInput
-                formControlName="hint1"
-              />
-            </clr-input-container>
-            <clr-input-container>
-              <label>Hint 2</label>
-              <input
-                class=".mtdj__question-auth-input--long"
-                clrInput
-                formControlName="hint2"
-              />
-            </clr-input-container>
-            <clr-input-container>
-              <label>Hint 3</label>
-              <input
-                class=".mtdj__question-auth-input--long"
-                clrInput
-                formControlName="hint3"
-              />
-            </clr-input-container>
-
-            <clr-input-container>
-              <label>Option 1</label>
-              <input
-                class=".mtdj__question-auth-input--long"
-                clrInput
-                formControlName="option1"
-              />
-              <clr-control-helper
-                >Equations should be written in LaTex</clr-control-helper
-              >
-            </clr-input-container>
-            <clr-input-container>
-              <label>Option 2</label>
-              <input
-                class=".mtdj__question-auth-input--long"
-                clrInput
-                formControlName="option2"
-              />
-              <clr-control-helper
-                >Equations should be written in LaTex</clr-control-helper
-              >
-            </clr-input-container>
-            <clr-input-container>
-              <label>Option 3</label>
-              <input
-                class=".mtdj__question-auth-input--long"
-                clrInput
-                formControlName="option3"
-              />
-              <clr-control-helper
-                >Equations should be written in LaTex</clr-control-helper
-              >
-            </clr-input-container>
-            <clr-input-container>
-              <label>Option 4</label>
-              <input
-                class=".mtdj__question-auth-input--long"
-                clrInput
-                formControlName="option4"
-              />
-              <clr-control-helper
-                >Equations should be written in LaTex</clr-control-helper
-              >
-            </clr-input-container>
-
-            <button type="submit" class="btn btn-dark" (click)="onSubmit()">
+                <clr-alert-item>
+                  <span class="alert-text">
+                    The question could not be submitted please try again later.
+                  </span>
+                </clr-alert-item>
+              </clr-alert>
+            </clr-alerts>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!newQuestionForm.valid"
+            >
               Submit Question
             </button>
-            <clr-alert
-              *ngIf="!validateOptions"
-              clrAlertType="danger"
-              [clrAlertClosable]="false"
-            >
-              Please make sure there is more than one option and they are in
-              order.
-            </clr-alert>
-            <clr-alert
-              *ngIf="questionExists"
-              clrAlertType="danger"
-              [clrAlertClosable]="false"
-            >
-              A Question of that title already exists.
-            </clr-alert>
-            <clr-alert
-              *ngIf="submitted"
-              clrAlertType="success"
-              [clrAlertClosable]="false"
-            >
-              Question submission successful.
-            </clr-alert>
           </form>
         </div>
         <div

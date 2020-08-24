@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { TopicDto } from '../models/topic-dto';
 import { QuestionDto } from '../models/question-dto';
+import { Difficulty } from '../models/question_difficulty';
+import { QuestionServiceError } from './question-service.error';
 
 @Injectable({
   providedIn: 'root'
@@ -52,36 +55,36 @@ export class QuestionService {
       questionBody: 'When $a \\ne 0$, the solution of $$(ax^2 + bx + c = 0)$$ is $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
       sampleAnswer: '42',
       successRate: 0.42,
-      difficulty: 'easy',
+      difficulty: Difficulty.Easy,
       answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
-      solved : false
+      solved: false
     }),
     new QuestionDto({
       title: 'other-thing-to-try',
       questionBody: '$\\sum_{i=1}^nx_i$',
       sampleAnswer: '42',
       successRate: 0.817563,
-      difficulty: 'easy',
+      difficulty: Difficulty.Easy,
       answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
-      solved : false
+      solved: false
     }),
     new QuestionDto({
       title: 'final-on-the-list',
       questionBody: 'something quite complex',
       sampleAnswer: '42',
       successRate: 0.2,
-      difficulty: 'easy',
+      difficulty: Difficulty.Easy,
       answer: 'false',
       hints: ['try this', 'watch space odyssey'],
       parentTopicTitle: 'something-hard',
       questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
-      solved : false
+      solved: false
     })
   ];
 
@@ -89,7 +92,7 @@ export class QuestionService {
     if (environment.name === 'default') {
       return this.http.get<QuestionDto[]>(`${
         environment.apis.questionServiceConsumerEndpoint
-      }/topics/${topicTitle}/questions`);
+        }/topics/${topicTitle}/questions`);
     }
 
     /* Return a prestashed response when deployed
@@ -102,7 +105,7 @@ export class QuestionService {
     if (environment.name === 'default') {
       return this.http.get<TopicDto[]>(`${
         environment.apis.questionServiceConsumerEndpoint
-      }/topics`);
+        }/topics`);
     }
 
     /* Return a prestashed response when deployed
@@ -115,7 +118,7 @@ export class QuestionService {
     if (environment.name === 'default') {
       return this.http.get<TopicDto>(`${
         environment.apis.questionServiceConsumerEndpoint
-      }/topics/${topicTitle}`);
+        }/topics/${topicTitle}`);
     }
     /* Return a prestashed response when deployed
      * until the question service api is ready
@@ -127,26 +130,48 @@ export class QuestionService {
     }));
   }
 
-  getQuestionWithTitle(questionTitle: string): Observable<QuestionDto> {
+  getQuestionWithTitle(questionTitle: string): Observable<QuestionDto | null> {
     if (environment.name === 'default') {
       return this.http.get<QuestionDto>(`${
         environment.apis.questionServiceConsumerEndpoint
-      }/questions/${questionTitle}`);
+        }/questions/${questionTitle}`)
+        .pipe(
+          catchError((err: HttpErrorResponse, caught) => {
+            if (err.status === 404) {
+              return of(null);
+            }
+            throw new QuestionServiceError(`${err.error}`);
+          })
+        );
     }
     /* Return a prestashed response when deployed
      * until the question service api is ready
     */
-    return of(new QuestionDto({
-      title: questionTitle,
-      questionBody: 'When $a \\ne 0$, the solution of $$(ax^2 + bx + c = 0)$$ is $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
-      sampleAnswer: 'some sample answer',
-      hints: ['try this first', 'if this doesn\'t help, tough'],
-      answer: 'false',
-      successRate: 0.4,
-      difficulty: 'simple',
-      parentTopicTitle: 'something-hard',
-      questionAnswerOptions: ['choose me', 'me too', 'que no se te olvide que estoy'],
-      solved : false
-    }));
+    const [preExistingQuestion] = this.preStashedQuestions.filter(question => questionTitle === question.title);
+    if (preExistingQuestion) {
+      return of(preExistingQuestion);
+    } else {
+      return of(null);
+    }
+
+  }
+
+
+  postQuestionToQuarantine(questionToPost: QuestionDto): Observable<string> {
+    if (environment.name === 'default') {
+      return this.http.post<string>(`${
+        environment.apis.questionQuarantineConsumerEndpoint
+        }/question`, questionToPost)
+        .pipe(
+          catchError((err: HttpErrorResponse, caught) => {
+            throw new QuestionServiceError(`${err.error}`);
+          })
+        );
+    }
+
+    /* Return a prestashed response when deployed
+     * until the question service api is ready
+    */
+    return of('');
   }
 }
