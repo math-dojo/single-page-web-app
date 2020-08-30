@@ -33,7 +33,7 @@ export class AuthenticationService {
   }
 
   logout() {
-
+    this.authenticatedUserSubject.next(null);
   }
 
   get currentUser(): Observable<User> {

@@ -4,7 +4,6 @@ import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { UserPermission } from '../models/permissions';
-import { AssertionTools } from 'src/testing/assertion-tools';
 import { AuthenticationServiceError } from './authentication-service.error';
 
 describe('AuthenticationService', () => {
@@ -46,6 +45,22 @@ describe('AuthenticationService', () => {
     expect(() => authService.login(username, password)).toThrowError(AuthenticationServiceError,
       /supplied credentials are invalid/);
   });
+
+  it('should set the user observable to null when the user is logged out successfuly', async(() => {
+    const username = 'consumer';
+    const password = username;
+    authService.login(username, password);
+    const expectedPermission = UserPermission.CONSUMER;
+    authService.logout();
+    authService.currentUser.subscribe({
+      next: (value) => {
+        expect(value).toEqual(null);
+      },
+      error: (error) => {
+        fail(`the user did not match the expectation because: ${error.message}`);
+      }
+    });
+  }));
 
   afterEach(() => {
     TestBed.resetTestingModule();
