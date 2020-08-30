@@ -7,6 +7,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 import { QuestionAuthoringPageComponent } from './components/practice/question-authoring-page/question-authoring-page.component';
+import { LoginComponent } from './components/auth/login/login.component';
 
 
 
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'practice/topics/:topic', component: TopicPageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'auth/signup', component: SignupComponent },
-  { path: 'auth/login', component: SignupComponent },
+  { path: 'auth/login', component: LoginComponent },
   { path: 'auth', component: SignupComponent },
   { path: 'home', component: LandingPageComponent },
   { path: '', component: LandingPageComponent },
