@@ -1,16 +1,25 @@
 import { TestBed, async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { UserPermission } from '../models/permissions';
 import { AuthenticationServiceError } from './authentication-service.error';
+import { createStubInstance, SinonStubbedInstance } from 'sinon';
+import * as sinon from 'sinon';
 
 describe('AuthenticationService', () => {
   let authService: AuthenticationService;
+  let routerSpy: SinonStubbedInstance<Router>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    routerSpy = createStubInstance(Router);
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Router, useValue: routerSpy }
+      ]
+    });
     authService = TestBed.inject(AuthenticationService);
   });
 
@@ -46,7 +55,7 @@ describe('AuthenticationService', () => {
       /supplied credentials are invalid/);
   });
 
-  it('should set the user observable to null when the user is logged out successfuly', async(() => {
+  it('should set the user observable to null when the user is logged out successfully', async(() => {
     const username = 'consumer';
     const password = username;
     authService.login(username, password);
@@ -59,6 +68,21 @@ describe('AuthenticationService', () => {
       error: (error) => {
         fail(`the user did not match the expectation because: ${error.message}`);
       }
+    });
+  }));
+
+  it('should redirect the user to the /login page after a successful logout', async(() => {
+    const username = 'consumer';
+    const password = username;
+    authService.login(username, password);
+    const expectedPermission = UserPermission.CONSUMER;
+    authService.logout();
+    authService.currentUser.subscribe({
+      next: (value) => {
+        expect(value).toEqual(null);
+        expect(() => sinon.assert.calledOnceWithExactly(routerSpy.navigate, ['/login'])).not.toThrow();
+      },
+      error: fail
     });
   }));
 
