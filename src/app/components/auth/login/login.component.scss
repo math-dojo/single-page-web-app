@@ -1,0 +1,28 @@
+.login-wrapper .login .login-group .error.active.mtdj__remove_error {
+  display: none;
+}
+
+.mtdj__social-login {
+  flex-direction: column;
+  display: flex;
+}
+
+.mtdj__social-login-label {
+  margin: 24px 0;
+  text-align: center;
+}
+
+.btn-group.mtdj__social-login-icon {
+  justify-content: space-between;
+}
+
+.mtdj__social-login-icon .btn.mtdj__social-login-icon-btn {
+  margin: 0;
+  height: auto;
+  width: 48px;
+  padding: 0 0;
+}
+
+.mtdj__social-login-icon-btn .mtdj__social-login-icon-btn-logo {
+  height: 48px;
+}
