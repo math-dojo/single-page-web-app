@@ -12,12 +12,12 @@ export class User {
   constructor({
     name,
     profileImageLink = '',
-    permissions = new Set([UserPermission.Consumer]),
+    permissions = new Set([UserPermission.CONSUMER]),
     belongsToOrgWithId
   }: {
     name: string,
-    profileImageLink: string,
-    permissions: Set<UserPermission>,
+    profileImageLink?: string,
+    permissions?: Set<UserPermission>,
     belongsToOrgWithId: string
   }) {
     this.name = name;

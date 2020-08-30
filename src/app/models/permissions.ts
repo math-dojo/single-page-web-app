@@ -1,6 +1,6 @@
 export enum UserPermission {
-  Consumer = 'consumer',
-  Creator = 'creator',
-  OrgAdmin = 'org-admin',
-  GlobalAdmin = 'global-admin'
+  CONSUMER = 'consumer',
+  CREATOR = 'creator',
+  ORG_ADMIN = 'org_admin',
+  GLOBAL_ADMIN = 'global_admin'
 }
