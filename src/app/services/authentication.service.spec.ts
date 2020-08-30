@@ -4,6 +4,8 @@ import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { UserPermission } from '../models/permissions';
+import { AssertionTools } from 'src/testing/assertion-tools';
+import { AuthenticationServiceError } from './authentication-service.error';
 
 describe('AuthenticationService', () => {
   let authService: AuthenticationService;
@@ -37,6 +39,13 @@ describe('AuthenticationService', () => {
       }
     });
   }));
+
+  it('should throw an error user when login fails', () => {
+    const username = 'somebody';
+    const password = username;
+    expect(() => authService.login(username, password)).toThrowError(AuthenticationServiceError,
+      /supplied credentials are invalid/);
+  });
 
   afterEach(() => {
     TestBed.resetTestingModule();
