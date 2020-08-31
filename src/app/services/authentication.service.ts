@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserPermission } from '../models/permissions';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { UserPermission } from '../models/permissions';
 import { User } from '../models/user';
 import { AuthenticationServiceError } from './authentication-service.error';
 
@@ -36,7 +38,7 @@ export class AuthenticationService {
     this.authenticatedUserSubject.next(null);
   }
 
-  get currentUser(): Observable<User> {
+  get currentUser$(): Observable<User> {
     return this.authenticatedUserSubject.asObservable();
   }
 }

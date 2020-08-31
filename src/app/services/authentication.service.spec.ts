@@ -31,15 +31,15 @@ describe('AuthenticationService', () => {
   it('should return an observable user when login is successful', async(() => {
     const username = 'consumer';
     const password = username;
-    const returnedUser: Observable<User> = authService.login(username, password);
+    const returnedUser$: Observable<User> = authService.login(username, password);
     const expectedPermission = UserPermission.CONSUMER;
-    returnedUser.subscribe({
-      next: (value) => {
-        expect(value.name).toEqual(username);
-        expect(value.permissions.size).toEqual(1);
-        expect(value.permissions.has(expectedPermission))
+    returnedUser$.subscribe({
+      next: (returnedUser) => {
+        expect(returnedUser.name).toEqual(username);
+        expect(returnedUser.permissions.size).toEqual(1);
+        expect(returnedUser.permissions.has(expectedPermission))
           .withContext( `the permission contained, ${JSON.stringify(
-            Array.from(value.permissions.values()))}, did not matched the expected, ${expectedPermission} `)
+            Array.from(returnedUser.permissions.values()))}, did not matched the expected, ${expectedPermission} `)
           .toEqual(true);
       },
       error: (error) => {
@@ -61,9 +61,9 @@ describe('AuthenticationService', () => {
     authService.login(username, password);
     const expectedPermission = UserPermission.CONSUMER;
     authService.logout();
-    authService.currentUser.subscribe({
-      next: (value) => {
-        expect(value).toEqual(null);
+    authService.currentUser$.subscribe({
+      next: (currentUser) => {
+        expect(currentUser).toEqual(null);
       },
       error: (error) => {
         fail(`the user did not match the expectation because: ${error.message}`);
@@ -77,9 +77,9 @@ describe('AuthenticationService', () => {
     authService.login(username, password);
     const expectedPermission = UserPermission.CONSUMER;
     authService.logout();
-    authService.currentUser.subscribe({
-      next: (value) => {
-        expect(value).toEqual(null);
+    authService.currentUser$.subscribe({
+      next: (currentUser) => {
+        expect(currentUser).toEqual(null, `expected the current user to be null but it was not.`);
         expect(() => sinon.assert.calledOnceWithExactly(routerSpy.navigate, ['/login'])).not.toThrow();
       },
       error: fail
