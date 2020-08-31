@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserPermission } from '../models/permissions';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { UserPermission } from '../models/permissions';
@@ -18,7 +18,7 @@ export class AuthenticationService {
     throw new Error('Method not implemented.');
   }
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   login(username: string, password: string): Observable<User> {
     if ((username === password) && this.expectedCreds.has(username)) {
@@ -36,6 +36,7 @@ export class AuthenticationService {
 
   logout() {
     this.authenticatedUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   get currentUser$(): Observable<User> {
