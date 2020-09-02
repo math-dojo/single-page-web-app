@@ -5,6 +5,8 @@ import { SinonStubbedInstance, createStubInstance } from 'sinon';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ClarityModule } from '@clr/angular';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -15,9 +17,14 @@ describe('LoginComponent', () => {
     authServiceSpy = createStubInstance(AuthenticationService);
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      providers: [
-        { provide: AuthenticationService, useValue: authServiceSpy }
-      ]
+      imports: [ ClarityModule, ReactiveFormsModule ]
+    })
+    .overrideComponent(LoginComponent, {
+      set: {
+        providers: [
+          { provide: AuthenticationService, useValue: authServiceSpy }
+        ]
+      }
     })
     .compileComponents();
   }));
@@ -79,5 +86,6 @@ class LoginTestPage {
 
     inputFormElement.nativeElement.value = valueToEnter;
     inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
+    this.fixture.detectChanges();
   }
 }
