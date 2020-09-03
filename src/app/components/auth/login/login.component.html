@@ -1,7 +1,7 @@
 <div class="login-wrapper">
   <form
     class="login mtdj__signupform"
-    [formGroup]="userLoginForm"
+    [formGroup]="userLoginFormGroup"
     (ngSubmit)="onSubmit()"
   >
     <section class="title">
@@ -31,14 +31,14 @@
         />
       </clr-password-container>
       <div
-        class="error active"
-        [ngClass]="{ mtdj__remove_error: userLoginForm.valid }"
+        class="error active login-status"
+        [ngClass]="{ mtdj__remove_error: userLoginFormGroup.valid }"
       >
         Invalid user name or password
       </div>
       <button
         type="submit"
-        [disabled]="!userLoginForm.valid"
+        [disabled]="!userLoginFormGroup.valid"
         class="btn btn-primary"
       >
         Login
