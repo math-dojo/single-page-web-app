@@ -44,8 +44,8 @@ describe('LoginComponent', () => {
     page.fillUserNameInput('fizz');
     page.fillPasswordInput('buzz');
 
-    expect(page.componentInstanceUnderTest.userLoginForm.controls.username.value).toEqual('fizz');
-    expect(page.componentInstanceUnderTest.userLoginForm.controls.password.value).toEqual('buzz');
+    expect(page.componentInstanceUnderTest.userLoginFormGroup.controls.username.value).toEqual('fizz');
+    expect(page.componentInstanceUnderTest.userLoginFormGroup.controls.password.value).toEqual('buzz');
   });
 });
 /**

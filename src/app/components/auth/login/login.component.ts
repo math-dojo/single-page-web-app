@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,9 +9,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class LoginComponent {
 
-  userLoginForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+  userLoginFormGroup: FormGroup = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   });
 
   constructor(private authentiationService: AuthenticationService) {
@@ -20,7 +20,7 @@ export class LoginComponent {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.warn(this.userLoginForm.value);
+    console.warn(this.userLoginFormGroup.value);
     // this.signupNewUser(this.newUserSignupForm.value);
   }
 
