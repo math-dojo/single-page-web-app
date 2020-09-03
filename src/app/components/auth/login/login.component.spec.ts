@@ -1,20 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { ClarityModule } from '@clr/angular';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SinonStubbedInstance, createStubInstance } from 'sinon';
+import { of } from 'rxjs/internal/observable/of';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ClarityModule } from '@clr/angular';
-import { ReactiveFormsModule } from '@angular/forms';
+import { User } from 'src/app/models/user';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authServiceSpy: SinonStubbedInstance<AuthenticationService>;
+  let routerSpy: SinonStubbedInstance<Router>;
 
   beforeEach(async(() => {
     authServiceSpy = createStubInstance(AuthenticationService);
+    routerSpy = createStubInstance(Router);
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [ ClarityModule, ReactiveFormsModule ]
@@ -22,7 +27,8 @@ describe('LoginComponent', () => {
     .overrideComponent(LoginComponent, {
       set: {
         providers: [
-          { provide: AuthenticationService, useValue: authServiceSpy }
+          { provide: AuthenticationService, useValue: authServiceSpy },
+          { provide: Router, useValue: routerSpy }
         ]
       }
     })
@@ -52,6 +58,32 @@ describe('LoginComponent', () => {
     const page = new LoginTestPage(fixture);
     const errorAlert: DebugElement = page.errorAlert;
     expect(errorAlert).toBeNull('the error alert could be seen');
+  });
+
+  it('logging in with the correct credentials should redirect the user to the dashboard', () => {
+    // Given
+    const page = new LoginTestPage(fixture);
+    const username = 'consumer';
+    const password = username;
+    authServiceSpy.login.returns(of(new User({
+      name: username,
+      belongsToOrgWithId: 'default'
+    })));
+
+
+    // When
+    page.fillUserNameInput(username);
+    page.fillPasswordInput(password);
+    page.raiseFormSubmitEvent();
+
+    // Then
+    return page.fixture.whenStable().then(res => {
+      return Promise.all([
+        expect(routerSpy.navigate.calledOnceWithExactly(['/dashboard']))
+          .withContext(`the router did not navigate to the dashboard but had calls: ${routerSpy.navigate.getCalls()}\n`)
+          .toEqual(true)
+      ]);
+    });
   });
 });
 /**
@@ -99,5 +131,10 @@ class LoginTestPage {
     return this.fixture.debugElement.query(
       By.css('.login.mtdj__signupform .error.active.login-status')
     );
+  }
+
+  raiseFormSubmitEvent() {
+    this.loginFormElement.triggerEventHandler('submit', null);
+    this.fixture.detectChanges();
   }
 }
