@@ -47,6 +47,12 @@ describe('LoginComponent', () => {
     expect(page.componentInstanceUnderTest.userLoginFormGroup.controls.username.value).toEqual('fizz');
     expect(page.componentInstanceUnderTest.userLoginFormGroup.controls.password.value).toEqual('buzz');
   });
+
+  it('should not display the submission status when first loaded', () => {
+    const page = new LoginTestPage(fixture);
+    const errorAlert: DebugElement = page.errorAlert;
+    expect(errorAlert).toBeNull('the error alert could be seen');
+  });
 });
 /**
  * Test class containing utility methods for a number of operations on the page
@@ -87,5 +93,11 @@ class LoginTestPage {
     inputFormElement.nativeElement.value = valueToEnter;
     inputFormElement.nativeElement.dispatchEvent(new InputEvent('input'));
     this.fixture.detectChanges();
+  }
+
+  get errorAlert(): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css('.login.mtdj__signupform .error.active.login-status')
+    );
   }
 }
