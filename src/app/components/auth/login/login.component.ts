@@ -31,7 +31,7 @@ export class LoginComponent {
     ).pipe(first())
     .subscribe({
       next: user => user ? this.router.navigate(['/dashboard']) : throwError('the identified user was null'),
-      error: err => console.error(`an error, ${err.message} occured during login`)
+      error: err => console.error(`an error, "${err.message}" occured during login`)
     });
   }
 

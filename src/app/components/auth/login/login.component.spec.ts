@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SinonStubbedInstance, createStubInstance } from 'sinon';
 import { of } from 'rxjs/internal/observable/of';
+import { throwError } from 'rxjs';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -82,6 +83,31 @@ describe('LoginComponent', () => {
         expect(routerSpy.navigate.calledOnceWithExactly(['/dashboard']))
           .withContext(`the router did not navigate to the dashboard but had calls: ${routerSpy.navigate.getCalls()}\n`)
           .toEqual(true)
+      ]);
+    });
+  });
+
+  it('logging in with incorrect credentials should show the error alert', () => {
+    // Given
+    const page = new LoginTestPage(fixture);
+    const username = 'incorrect';
+    const password = username;
+    authServiceSpy.login.returns(throwError('some login error'));
+
+
+    // When
+    page.fillUserNameInput(username);
+    page.fillPasswordInput(password);
+    page.raiseFormSubmitEvent();
+
+    // Then
+    return page.fixture.whenStable().then(res => {
+      const errorAlert: DebugElement = page.errorAlert;
+      return Promise.all([
+        expect(routerSpy.navigate.notCalled)
+          .withContext(`the router should not have been called but had calls: ${routerSpy.navigate.getCalls()}\n`)
+          .toEqual(true),
+        expect(expect(errorAlert.nativeElement.value).toMatch(/Invalid user name or password/))
       ]);
     });
   });
