@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +17,22 @@ export class LoginComponent {
     password: new FormControl('', Validators.required)
   });
 
-  constructor(private authentiationService: AuthenticationService) {
+  constructor(
+    private authentiationService: AuthenticationService,
+    private router: Router
+  ) {
 
-   }
+  }
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.userLoginFormGroup.value);
-    // this.signupNewUser(this.newUserSignupForm.value);
+    this.authentiationService.login(
+      this.userLoginFormGroup.controls.username.value,
+      this.userLoginFormGroup.controls.password.value
+    ).pipe(first())
+    .subscribe({
+      next: user => user ? this.router.navigate(['/dashboard']) : throwError('the identified user was null'),
+      error: err => console.error(`an error, ${err.message} occured during login`)
+    });
   }
 
 
