@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { UserPermission } from '../models/permissions';
 import { User } from '../models/user';
@@ -30,7 +30,7 @@ export class AuthenticationService {
         }));
       return this.authenticatedUserSubject.asObservable();
     } else {
-      throw new AuthenticationServiceError(`the username, ${username}, or its supplied credentials are invalid`);
+      return throwError(new AuthenticationServiceError(`the username, ${username}, or its supplied credentials are invalid`));
     }
   }
 

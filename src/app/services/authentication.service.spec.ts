@@ -1,13 +1,14 @@
 import { TestBed, async } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { createStubInstance, SinonStubbedInstance } from 'sinon';
+
+import { AssertionTools } from 'src/testing/assertion-tools';
 
 import { AuthenticationService } from './authentication.service';
-import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { UserPermission } from '../models/permissions';
 import { AuthenticationServiceError } from './authentication-service.error';
-import { createStubInstance, SinonStubbedInstance } from 'sinon';
-import * as sinon from 'sinon';
 
 describe('AuthenticationService', () => {
   let authService: AuthenticationService;
@@ -48,12 +49,15 @@ describe('AuthenticationService', () => {
     });
   }));
 
-  it('should throw an error user when login fails', () => {
+  it('should return an observable authentication service error when login fails', async(() => {
     const username = 'somebody';
     const password = username;
-    expect(() => authService.login(username, password)).toThrowError(AuthenticationServiceError,
-      /supplied credentials are invalid/);
-  });
+
+    authService.login(username, password).subscribe({
+      next: user => fail(`expected to return an error observable but a user, ${user} was returned instead`),
+      error: AssertionTools.checkErrorThrown(AuthenticationServiceError, /supplied credentials are invalid/)
+    });
+  }));
 
   it('should set the user observable to null when the user is logged out successfully', async(() => {
     const username = 'consumer';
@@ -80,7 +84,9 @@ describe('AuthenticationService', () => {
     authService.currentUser$.subscribe({
       next: (currentUser) => {
         expect(currentUser).toEqual(null, `expected the current user to be null but it was not.`);
-        expect(() => sinon.assert.calledOnceWithExactly(routerSpy.navigate, ['/login'])).not.toThrow();
+        expect(routerSpy.navigate.calledOnceWithExactly(['/login']))
+        .withContext('the router was not called with the expected argument')
+        .toEqual(true);
       },
       error: fail
     });
