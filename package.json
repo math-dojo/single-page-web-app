@@ -22,7 +22,7 @@
     "lint": "ng lint",
     "e2e-local": "concurrently --kill-others --success first \"npm run start-mock-backends\" \"ng e2e\"",
     "e2e": "concurrently --kill-others --success first \"npm run start-mock-backends\" \"ng e2e --webdriverUpdate=false\"",
-    "postinstall": "ngcc"
+    "postinstall": "ngcc --tsconfig \"./tsconfig.app.json\" && ngcc --tsconfig \"./tsconfig.spec.json\""
   },
   "private": true,
   "dependencies": {
