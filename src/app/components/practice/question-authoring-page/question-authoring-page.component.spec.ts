@@ -234,6 +234,9 @@ describe('QuestionAuthoringPageComponent', () => {
         fixture.componentInstance.newQuestionForm.controls[controlName].errors
           .required
       ).toBeTruthy();
+      const errorDisplayElement: HTMLElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'))
+        .nativeElement;
+      expect(errorDisplayElement.textContent).toMatch(/is a required field/);
     });
 
     it('should show an error if the question title is already taken ', () => {
@@ -273,6 +276,10 @@ describe('QuestionAuthoringPageComponent', () => {
         fixture.componentInstance.newQuestionForm.controls[controlName].errors
           .titleAlreadyExists.errorMessage
       ).toMatch(`a question with title "${inputQuestionTitle}" already exists`);
+
+      const errorDisplayElement: HTMLElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'))
+      .nativeElement;
+      expect(errorDisplayElement.textContent).toMatch(/already exists/);
     });
   });
 
