@@ -204,10 +204,9 @@ describe('QuestionAuthoringPageComponent', () => {
           .maxlength
       ).toBeTruthy();
 
-      // TODO: #41 Test rendering of clarity validation error in unit tests
-      /*
-            const errorDisplayElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'));
-            expect(errorDisplayElement.nativeElement.value).toMatch(/is a required field/); */
+      const errorDisplayElement: HTMLElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'))
+      .nativeElement;
+      expect(errorDisplayElement.textContent).toMatch(/exceeded the max length/);
     });
 
     it('should show an error if the question title is empty', () => {
