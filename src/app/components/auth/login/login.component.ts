@@ -18,14 +18,14 @@ export class LoginComponent {
   });
 
   constructor(
-    private authentiationService: AuthenticationService,
+    private authenticationService: AuthenticationService,
     private router: Router
   ) {
 
   }
 
   onSubmit() {
-    this.authentiationService.login(
+    this.authenticationService.login(
       this.userLoginFormGroup.controls.username.value,
       this.userLoginFormGroup.controls.password.value
     ).pipe(first())
@@ -37,7 +37,7 @@ export class LoginComponent {
 
 
   private signupNewUser(newUser) {
-    this.authentiationService.signupNewUser(newUser);
+    this.authenticationService.signupNewUser(newUser);
   }
 
 }
