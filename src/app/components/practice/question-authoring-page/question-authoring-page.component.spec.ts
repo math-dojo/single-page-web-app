@@ -204,8 +204,12 @@ describe('QuestionAuthoringPageComponent', () => {
           .maxlength
       ).toBeTruthy();
 
-      const errorDisplayElement: HTMLElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'))
-      .nativeElement;
+      const errorElements: DebugElement[] = fixture.debugElement.queryAll(By.css('#mtdj__question-auth-input-title clr-control-error'));
+      const errorDisplayElement: HTMLElement = errorElements[0].nativeElement;
+
+      expect(errorElements.length)
+      .withContext(`expected to find only one error element but found ${errorElements.length}`)
+      .toEqual(1);
       expect(errorDisplayElement.textContent).toMatch(/exceeded the max length/);
     });
 
