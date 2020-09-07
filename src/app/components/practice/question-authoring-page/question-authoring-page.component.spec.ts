@@ -238,8 +238,12 @@ describe('QuestionAuthoringPageComponent', () => {
         fixture.componentInstance.newQuestionForm.controls[controlName].errors
           .required
       ).toBeTruthy();
-      const errorDisplayElement: HTMLElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'))
-        .nativeElement;
+      const errorElements: DebugElement[] = fixture.debugElement.queryAll(By.css('#mtdj__question-auth-input-title clr-control-error'));
+      const errorDisplayElement: HTMLElement = errorElements[0].nativeElement;
+
+      expect(errorElements.length)
+      .withContext(`expected to find only one error element but found ${errorElements.length}`)
+      .toEqual(1);
       expect(errorDisplayElement.textContent).toMatch(/is a required field/);
     });
 
@@ -281,8 +285,12 @@ describe('QuestionAuthoringPageComponent', () => {
           .titleAlreadyExists.errorMessage
       ).toMatch(`a question with title "${inputQuestionTitle}" already exists`);
 
-      const errorDisplayElement: HTMLElement = fixture.debugElement.query(By.css('#mtdj__question-auth-input-title clr-control-error'))
-      .nativeElement;
+      const errorElements: DebugElement[] = fixture.debugElement.queryAll(By.css('#mtdj__question-auth-input-title clr-control-error'));
+      const errorDisplayElement: HTMLElement = errorElements[0].nativeElement;
+
+      expect(errorElements.length)
+      .withContext(`expected to find only one error element but found ${errorElements.length}`)
+      .toEqual(1);
       expect(errorDisplayElement.textContent).toMatch(/already exists/);
     });
   });
