@@ -33,7 +33,7 @@ export class LoginComponent {
     .subscribe({
       next: user => user ? this.router.navigate(['/dashboard']) : throwError('the identified user was null'),
       error: err => {
-        console.error(`an error, "${err.message}" occured during login`);
+        console.error(`an error, "${err.message}"  occured during login`);
         this.privateLoginFailed = true;
       }
     });
