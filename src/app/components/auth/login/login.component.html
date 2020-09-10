@@ -33,7 +33,7 @@
       </clr-password-container>
       <div
         class="error active login-status"
-        *ngIf="(userLoginForm.submitted && !userLoginFormGroup.valid)"
+        *ngIf="(userLoginForm.submitted && loginFailed)"
       >
         Invalid user name or password
       </div>

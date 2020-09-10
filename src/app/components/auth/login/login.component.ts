@@ -12,6 +12,7 @@ import { throwError } from 'rxjs';
 })
 export class LoginComponent {
 
+  private privateLoginFailed: boolean;
   userLoginFormGroup: FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
@@ -31,8 +32,15 @@ export class LoginComponent {
     ).pipe(first())
     .subscribe({
       next: user => user ? this.router.navigate(['/dashboard']) : throwError('the identified user was null'),
-      error: err => console.error(`an error, "${err.message}" occured during login`)
+      error: err => {
+        console.error(`an error, "${err.message}" occured during login`);
+        this.privateLoginFailed = true;
+      }
     });
+  }
+
+  public get loginFailed(): boolean {
+    return this.privateLoginFailed;
   }
 
 
