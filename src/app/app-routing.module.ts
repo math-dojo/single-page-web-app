@@ -7,12 +7,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 import { QuestionAuthoringPageComponent } from './components/practice/question-authoring-page/question-authoring-page.component';
+import { QuestionAuthoringGuard} from './components/practice/question-authoring-page/question-authoring.guard';
 import { LoginComponent } from './components/auth/login/login.component';
 
 
 
 const routes: Routes = [
-  { path: 'practice/create', component: QuestionAuthoringPageComponent },
+  { path: 'practice/create', component: QuestionAuthoringPageComponent, canActivate: [QuestionAuthoringGuard] },
   { path: 'practice/questions/:question', component: QuestionPageComponent },
   { path: 'practice/topics/:topic', component: TopicPageComponent },
   { path: 'dashboard', component: DashboardComponent },
