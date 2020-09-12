@@ -29,7 +29,7 @@ describe('Given I navigate to the Login Page', () => {
     });
     page.submitSignUpForm();
     expect(page.getCurrentResourcePath()).toMatch(/\/auth\/login$/);
-    expect(page.getErrorAlertText).toMatch(/Invalid username or password/);
+    expect(page.getErrorAlertText()).toMatch(/Invalid username or password/);
   });
 
   afterEach(async () => {
