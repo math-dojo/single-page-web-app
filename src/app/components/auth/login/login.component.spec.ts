@@ -107,7 +107,7 @@ describe('LoginComponent', () => {
         expect(routerSpy.navigate.notCalled)
           .withContext(`the router should not have been called but had calls: ${routerSpy.navigate.getCalls()}\n`)
           .toEqual(true),
-        expect(expect(errorAlert.properties.innerText).toMatch(/Invalid user name or password/))
+        expect(expect(errorAlert.properties.innerText).toMatch(/Invalid username or password/))
       ]);
     });
   });
