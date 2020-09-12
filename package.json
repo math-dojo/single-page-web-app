@@ -21,7 +21,7 @@
     "test-local": "ng test --browsers=Chrome --karmaConfig=karma.conf.local.js",
     "lint": "ng lint",
     "e2e-local": "concurrently --kill-others --success first \"npm run start-mock-backends\" \"ng e2e\"",
-    "e2e": "concurrently --kill-others --success first \"npm run start-mock-backends\" \"ng e2e --webdriverUpdate=false\"",
+    "e2e": "concurrently --kill-others --success first \"npm run start-mock-backends\" \"ng e2e --webdriverUpdate=true\"",
     "postinstall": "ngcc --tsconfig \"./tsconfig.app.json\" && ngcc --tsconfig \"./tsconfig.spec.json\""
   },
   "private": true,
