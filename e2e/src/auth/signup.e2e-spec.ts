@@ -1,4 +1,4 @@
-import { AuthPage } from './auth-page.po';
+import { AuthPage } from './signup.po';
 import { browser, logging } from 'protractor';
 
 describe('Given I navigate to the Auth Page', () => {
