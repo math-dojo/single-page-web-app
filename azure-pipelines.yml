@@ -44,13 +44,12 @@ steps:
   displayName: 'run unit and integration tests'
 
 - script: |
-    ./node_modules/.bin/webdriver-manager update --versions.chrome=85.0.4183.38
-
-    echo Linking new Chrome location to expected in Protractor.js
 
     if not exist "C:\Program Files (x86)\Google" mkdir "C:\Program Files (x86)\Google"
     if not exist "C:\Program Files (x86)\Google\Chrome" mkdir "C:\Program Files (x86)\Google\Chrome"
     mklink /D "C:\Program Files (x86)\Google\Chrome\Application" "C:\Program Files\Google\Chrome\Application"
+
+    ./node_modules/.bin/webdriver-manager update --versions.chrome=85.0.4183.38
   displayName: 'add chrome driver to node directory'
   condition: |
     or(
