@@ -40,7 +40,10 @@ describe('Given I navigate to the Question Authoring Page', () => {
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(jasmine.objectContaining({
+    const severeLogCount = logs.filter(each => each.level === logging.Level.SEVERE).length;
+    expect(logs)
+    .withContext(`expected there to be no severe messages in logs but found, ${severeLogCount}`)
+    .not.toContain(jasmine.objectContaining({
       level: logging.Level.SEVERE,
     } as logging.Entry));
   });
