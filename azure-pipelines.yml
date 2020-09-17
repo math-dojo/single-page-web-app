@@ -58,6 +58,7 @@ steps:
       eq(variables['Build.SourceBranch'], 'refs/heads/master'),
       eq(variables['Build.SourceBranch'], 'refs/heads/develop')
     )
+  failOnStderr: true
 
 - script: |
     npm run-script e2e
