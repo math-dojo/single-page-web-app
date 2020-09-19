@@ -6,7 +6,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { QuestionDto } from '../models/question-dto';
 import { environment } from 'src/environments/environment';
 import { QuestionServiceError } from './question-service.error';
-import { GenericErrorType } from '../utilities/generic-error.type';
+import { AssertionTools } from '../../testing/assertion-tools';
 
 describe('QuestionService', () => {
   let httpClient: HttpClient;
@@ -89,7 +89,7 @@ describe('QuestionService', () => {
       // Then
       questionSearchObservable.subscribe({
         next: () => fail('an error should have been thrown'),
-        error: checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
+        error: AssertionTools.checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
       });
 
       const req = httpTestingController.expectOne(`${
@@ -144,7 +144,7 @@ describe('QuestionService', () => {
       // Then
       questionSearchObservable.subscribe({
         next: () => fail('an error should have been thrown'),
-        error: checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
+        error: AssertionTools.checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
       });
 
       const req = httpTestingController.expectOne((foundRequest) => {
@@ -174,13 +174,5 @@ describe('QuestionService', () => {
     const statusCode = statusCodeChoices[Math.floor(Math.random() * statusCodeChoices.length)];
 
     return statusCode;
-  }
-
-  function checkErrorThrown<T>(expectedErrorType: GenericErrorType<T>, regexMatchForMessage: RegExp) {
-    return (error: Error) => {
-      expect(error instanceof expectedErrorType).toBe(
-        true, `The provided error did not match the expected type ${expectedErrorType.name}`);
-      expect(error.message).toMatch(regexMatchForMessage, `the error message: "${error.message}" did not match the expected format`);
-    };
   }
 });

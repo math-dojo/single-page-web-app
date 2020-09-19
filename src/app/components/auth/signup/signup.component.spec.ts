@@ -1,22 +1,20 @@
 import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
-
-import { SignupComponent } from './signup.component';
-import { ClarityModule } from '@clr/angular';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationService } from '../../../services/authentication.service';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { createStubInstance } from 'sinon';
+
+import { ClarityModule } from '@clr/angular';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { SignupComponent } from './signup.component';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
 
-  class AuthenticationServiceSpy {
-    signupNewUser = jasmine.createSpy('signupNewUser')
-      .and.callFake(() => Promise.resolve('User made :)'));
-  }
-
-  let testAuthServiceSpy;
+  const testAuthServiceSpy = createStubInstance(AuthenticationService);
+  testAuthServiceSpy.signupNewUser.callsFake(() => Promise.resolve('User made :)'));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,7 +27,7 @@ describe('SignupComponent', () => {
       .overrideComponent(SignupComponent, {
         set: {
           providers: [
-            { provide: AuthenticationService, useClass: AuthenticationServiceSpy },
+            { provide: AuthenticationService, useValue: testAuthServiceSpy },
             { provide: ComponentFixtureAutoDetect, useValue: true }
           ]
         }
@@ -40,7 +38,6 @@ describe('SignupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
-    testAuthServiceSpy = fixture.debugElement.injector.get(AuthenticationService) as AuthenticationServiceSpy;
     fixture.detectChanges();
   });
 
@@ -67,7 +64,7 @@ describe('SignupComponent', () => {
 
     component.onSubmit();
 
-    expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
+    expect(testAuthServiceSpy.signupNewUser.callCount).toBe(1);
   });
 
   // TODO: Implement this kind of component test for the login or signup
@@ -80,7 +77,7 @@ describe('SignupComponent', () => {
 
     component.onSubmit();
 
-    expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
+    expect(testAuthServiceSpy.signupNewUser.callCount).toBe(1);
   });
 
   xit('should not route to the dashboard page if authentication response fails', () => {
@@ -91,7 +88,7 @@ describe('SignupComponent', () => {
 
     component.onSubmit();
 
-    expect(testAuthServiceSpy.signupNewUser.calls.count()).toBe(1);
+    expect(testAuthServiceSpy.signupNewUser.callCount).toBe(1);
   });
 
   afterEach(() => {
