@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AsyncValidator, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { map, catchError, first, take } from 'rxjs/operators';
+import { map, catchError, shareReplay } from 'rxjs/operators';
 import { QuestionService } from 'src/app/services/question.service';
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +12,7 @@ export class QuestionTitleValidator implements AsyncValidator {
     ctrl: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     return this.questionService.getQuestionWithTitle(ctrl.value).pipe(
-      first(),
+      shareReplay(1),
       map((questionServiceResponse) => {
         if (questionServiceResponse && (questionServiceResponse.title === ctrl.value)) {
           return this.createQuestionTitleValidationError(`a question with title "${ctrl.value}" already exists`);

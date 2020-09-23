@@ -36,7 +36,7 @@ export class AuthenticationService {
 
   logout() {
     this.authenticatedUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   get currentUser$(): Observable<User> {

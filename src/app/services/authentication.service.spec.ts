@@ -75,7 +75,7 @@ describe('AuthenticationService', () => {
     });
   }));
 
-  it('should redirect the user to the /login page after a successful logout', async(() => {
+  it('should redirect the user to the login page after a successful logout', async(() => {
     const username = 'consumer';
     const password = username;
     authService.login(username, password);
@@ -84,7 +84,7 @@ describe('AuthenticationService', () => {
     authService.currentUser$.subscribe({
       next: (currentUser) => {
         expect(currentUser).toEqual(null, `expected the current user to be null but it was not.`);
-        expect(routerSpy.navigate.calledOnceWithExactly(['/login']))
+        expect(routerSpy.navigate.calledOnceWithExactly(['/auth/login']))
         .withContext('the router was not called with the expected argument')
         .toEqual(true);
       },
