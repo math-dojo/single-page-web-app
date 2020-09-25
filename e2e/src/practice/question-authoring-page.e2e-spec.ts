@@ -1,12 +1,21 @@
 import { browser, logging } from 'protractor';
+import { LoginPage } from '../auth/login/login.po';
 import { QuestionAuthoringPage } from './question-authoring-page.po';
 
 describe('Given I navigate to the Question Authoring Page', () => {
   let page: QuestionAuthoringPage;
+  let loginPage: LoginPage;
 
   beforeEach(() => {
+    loginPage = new LoginPage();
+    loginPage.navigateToFeatureRoot();
+    loginPage.fillLoginFormWithData({
+      username: 'creator',
+      password: 'creator',
+    });
+    loginPage.submitSignUpForm();
     page = new QuestionAuthoringPage();
-    page.navigateToFeatureRoot();
+    page.navigateToFeatureRoot().click();
   });
 
   it('it should display a success alert and reset the form when I submit a valid form', async () => {
