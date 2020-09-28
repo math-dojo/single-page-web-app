@@ -160,6 +160,80 @@ describe('QuestionService', () => {
     });
   });
 
+  describe('.searchForQuestionBy()', () => {
+
+    it('should return an array of matching question dtos if one with a matching title can be found', () => {
+      // Given
+      const questionNameToSearchFor = 'test-question';
+      const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
+
+      // When
+      const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+
+      // Then
+      questionSearchObservable.subscribe({
+        next: returnedQuestionDto => expect(returnedQuestionDto.title).toEqual(questionNameToSearchFor),
+        error: fail
+      });
+
+      const req = httpTestingController.expectOne(`${
+        environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
+        }`);
+      expect(req.request.method).toEqual('GET');
+      req.flush(expectedQuestionDto);
+    });
+
+    it('should return an empty array if one with a matching title cannot be found ', () => {
+      // Given
+      const questionNameToSearchFor = 'test-question';
+      const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
+
+      // When
+      const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+
+      // Then
+      questionSearchObservable.subscribe({
+        next: response => expect(response).toBeNull('the returned object is not null'),
+        error: fail
+      });
+
+      const req = httpTestingController.expectOne(`${
+        environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
+        }`);
+      expect(req.request.method).toEqual('GET');
+      req.flush(`the specified question ${questionNameToSearchFor} could not be found`, {
+        status: 404,
+        statusText: 'not found'
+      });
+    });
+
+    it('should throw a QuestionServiceError if the service returns codes between 400 and 503', () => {
+      // Given
+      const questionNameToSearchFor = 'test-question';
+      const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
+      const errorStatusText = 'some error message';
+      const errorReasonFromServer = `the specified question ${questionNameToSearchFor} could not be found`;
+      const statusCode = generateRandomHTTPErrorCodeExcluding();
+
+      // When
+      const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+
+      // Then
+      questionSearchObservable.subscribe({
+        next: () => fail('an error should have been thrown'),
+        error: AssertionTools.checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
+      });
+
+      const req = httpTestingController.expectOne(`${
+        environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
+        }`);
+      expect(req.request.method).toEqual('GET');
+      req.flush(errorReasonFromServer, {
+        status: statusCode,
+        statusText: errorStatusText
+      });
+    });
+  });
   afterEach(() => {
     httpTestingController.verify();
 
