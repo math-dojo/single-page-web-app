@@ -179,8 +179,7 @@ describe('QuestionAuthoringPageComponent', () => {
       ).toBe(true);
     });
 
-    // TODO: Restore as part of #59
-    xit('should show an error if the question title is more than 64 chars', () => {
+    it('should show an error if the question title is more than 64 chars', () => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
         By.css('#mtdj__question-auth-input-title input')
@@ -214,9 +213,8 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(errorDisplayElement.textContent).toMatch(/exceeded the max length/);
     });
 
-    // TODO: Restore as part of #59
 
-    xit('should show an error if the question title is empty', () => {
+    it('should show an error if the question title is empty', () => {
       // Given
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
@@ -250,8 +248,7 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(errorDisplayElement.textContent).toMatch(/is a required field/);
     });
 
-    // TODO: Restore as part of #59
-    xit('should show an error if the question title is already taken ', () => {
+    it('should show an error if the question title is already taken ', () => {
       // Given
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
