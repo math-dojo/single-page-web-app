@@ -185,28 +185,27 @@ describe('QuestionService', () => {
       req.flush(expectedSearchResults);
     });
 
-    xit('should return an empty array if one with a matching title cannot be found ', () => {
+    it('should return an empty array if one with a matching title cannot be found', () => {
       // Given
       const questionNameToSearchFor = 'test-question';
-      const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
+      const expectedSearchResults = {questions: []};
 
       // When
-      const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+      const questionSearchObservable = questionService.searchForQuestionBy({title: questionNameToSearchFor});
 
       // Then
       questionSearchObservable.subscribe({
-        next: response => expect(response).toBeNull('the returned object is not null'),
+        next: returnedQuestionDtos => expect((returnedQuestionDtos.questions.length)).toEqual(0),
         error: fail
       });
 
-      const req = httpTestingController.expectOne(`${
-        environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
-        }`);
+      const req = httpTestingController.expectOne(request => (
+        request.url === `${
+          environment.apis.questionServiceConsumerEndpoint}/questions`
+        && request.params.has('title')
+      ), 'query parameters containing \'title\' and url to /question');
       expect(req.request.method).toEqual('GET');
-      req.flush(`the specified question ${questionNameToSearchFor} could not be found`, {
-        status: 404,
-        statusText: 'not found'
-      });
+      req.flush(expectedSearchResults);
     });
 
     xit('should throw a QuestionServiceError if the service returns codes between 400 and 503', () => {
