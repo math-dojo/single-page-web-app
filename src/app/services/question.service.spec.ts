@@ -180,7 +180,7 @@ describe('QuestionService', () => {
         request.url === `${
           environment.apis.questionServiceConsumerEndpoint}/questions`
         && request.params.has('title')
-      ));
+      ), 'query parameters containing \'title\' and url to /question');
       expect(req.request.method).toEqual('GET');
       req.flush(expectedSearchResults);
     });
