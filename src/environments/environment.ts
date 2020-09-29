@@ -12,10 +12,10 @@ export const environment = {
   get apis() {
     return {
       get questionServiceConsumerEndpoint() {
-        return 'http://localhost:4201';
+        return 'http://127.0.0.1:4201';
       },
       get questionQuarantineConsumerEndpoint() {
-        return 'http://localhost:4201';
+        return 'http://127.0.0.1:4201';
       }
     };
   }
