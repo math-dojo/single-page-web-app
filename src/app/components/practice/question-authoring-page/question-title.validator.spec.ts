@@ -58,7 +58,20 @@ describe('QuestionTitleValidator', () => {
     });
   });
 
-  pending('\ntest validator handles more than one search result in array');
+  it('test validator handles more than one search result in array', () => {
+    const testControl = new FormControl('an-existing-title');
+    questionServiceStub.searchForQuestionBy.returns(
+      of({questions: [
+        new QuestionDto({ title: `${testControl.value}-that-is-close`, parentTopicTitle: 'something' }),
+        new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })
+      ]}));
+
+    const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
+    validationResult.subscribe({
+      next: (result) => expect(result.titleAlreadyExists.errorMessage).toMatch(
+        `a question with title "${testControl.value}" already exists`),
+    });
+  });
 
   afterEach(() => {
     TestBed.resetTestingModule();

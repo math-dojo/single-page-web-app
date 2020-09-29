@@ -17,7 +17,9 @@ export class QuestionTitleValidator implements AsyncValidator {
       map((questionServiceResponse) => {
         if (questionServiceResponse
           && (questionServiceResponse.questions.length > 0)
-          && (questionServiceResponse.questions[0].title === titleToValidate)) {
+          && (
+            questionServiceResponse.questions.filter(each => each.title === titleToValidate).length >= 1
+            )) {
           return this.createQuestionTitleValidationError(`a question with title "${titleToValidate}" already exists`);
         }
         return null;
