@@ -11,11 +11,14 @@ export class QuestionTitleValidator implements AsyncValidator {
   validate(
     ctrl: AbstractControl
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    return this.questionService.getQuestionWithTitle(ctrl.value).pipe(
+    const titleToValidate = ctrl.value as string;
+    return this.questionService.searchForQuestionBy({title: titleToValidate}).pipe(
       shareReplay(1),
       map((questionServiceResponse) => {
-        if (questionServiceResponse && (questionServiceResponse.title === ctrl.value)) {
-          return this.createQuestionTitleValidationError(`a question with title "${ctrl.value}" already exists`);
+        if (questionServiceResponse
+          && (questionServiceResponse.questions.length > 0)
+          && (questionServiceResponse.questions[0].title === titleToValidate)) {
+          return this.createQuestionTitleValidationError(`a question with title "${titleToValidate}" already exists`);
         }
         return null;
       }),

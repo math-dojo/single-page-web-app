@@ -26,7 +26,7 @@ describe('QuestionTitleValidator', () => {
 
   it('should return null if the value in the control is not an existing question title', () => {
     const testControl = new FormControl('an-unknown-title');
-    questionServiceStub.getQuestionWithTitle.returns(of(null));
+    questionServiceStub.searchForQuestionBy.returns(of({questions: []}));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
@@ -36,8 +36,8 @@ describe('QuestionTitleValidator', () => {
 
   it('should return an object with a titleAlreadyExists property if the value in control is an existing question title', () => {
     const testControl = new FormControl('an-existing-title');
-    questionServiceStub.getQuestionWithTitle.returns(
-      of(new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })));
+    questionServiceStub.searchForQuestionBy.returns(
+      of({questions: [new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })]}));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
@@ -48,7 +48,7 @@ describe('QuestionTitleValidator', () => {
 
   it('should return an object with a titleAlreadyExists property if the query via QuestionService fails', () => {
     const testControl = new FormControl('an-existing-title');
-    questionServiceStub.getQuestionWithTitle.callsFake(() => throwError(new QuestionServiceError('some error')));
+    questionServiceStub.searchForQuestionBy.callsFake(() => throwError(new QuestionServiceError('some error')));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
@@ -57,6 +57,8 @@ describe('QuestionTitleValidator', () => {
       error: (error => fail(`the error, :${error.message} was unexpected`))
     });
   });
+
+  pending('\ntest validator handles more than one search result in array');
 
   afterEach(() => {
     TestBed.resetTestingModule();
