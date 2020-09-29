@@ -61,7 +61,7 @@ describe('QuestionAuthoringPageComponent', () => {
 
     // Setup all scenarios so that question title validation returns no errors
     // unless otherwise specified
-    questionServiceStub.getQuestionWithTitle.returns(of(null));
+    questionServiceStub.searchForQuestionBy.returns(of(null));
   });
 
   it('should create', () => {
@@ -255,13 +255,13 @@ describe('QuestionAuthoringPageComponent', () => {
         By.css('#mtdj__question-auth-input-title input')
       );
       const inputQuestionTitle = 'title-that-is-already-taken';
-      questionServiceStub.getQuestionWithTitle.returns(
-        of(
-          new QuestionDto({
+      questionServiceStub.searchForQuestionBy.returns(
+        of({
+          questions: [new QuestionDto({
             title: inputQuestionTitle,
             parentTopicTitle: 'something',
-          })
-        )
+          })]
+        })
       );
 
       // When
