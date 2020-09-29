@@ -61,7 +61,7 @@ describe('QuestionAuthoringPageComponent', () => {
 
     // Setup all scenarios so that question title validation returns no errors
     // unless otherwise specified
-    questionServiceStub.searchForQuestionBy.returns(of(null));
+    questionServiceStub.searchForQuestionBy.returns(of([]));
   });
 
   it('should create', () => {
@@ -256,12 +256,10 @@ describe('QuestionAuthoringPageComponent', () => {
       );
       const inputQuestionTitle = 'title-that-is-already-taken';
       questionServiceStub.searchForQuestionBy.returns(
-        of({
-          questions: [new QuestionDto({
-            title: inputQuestionTitle,
-            parentTopicTitle: 'something',
-          })]
-        })
+        of([new QuestionDto({
+          title: inputQuestionTitle,
+          parentTopicTitle: 'something',
+        })])
       );
 
       // When

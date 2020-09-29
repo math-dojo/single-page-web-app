@@ -178,7 +178,7 @@ export class QuestionService {
 
   searchForQuestionBy(
     { title, difficulty }: { title?: string; difficulty?: Difficulty }
-    ): Observable<{questions: QuestionDto[]}> {
+    ): Observable< QuestionDto[]> {
     let httpParams = new HttpParams();
 
     if (!title && !difficulty) {
@@ -194,7 +194,7 @@ export class QuestionService {
     }
 
     if (environment.name === 'default') {
-      return this.http.get<{questions: QuestionDto[]}>(`${
+      return this.http.get<QuestionDto[]>(`${
         environment.apis.questionQuarantineConsumerEndpoint
         }/questions`, {
           params: httpParams
@@ -210,9 +210,9 @@ export class QuestionService {
       * until the question service api is ready
       */
       if (/try/.test(title) || /final/.test(title)){
-        return of({questions: this.preStashedQuestions});
+        return of(this.preStashedQuestions);
       } else {
-        return of({questions: []});
+        return of([]);
       }
     }
   }

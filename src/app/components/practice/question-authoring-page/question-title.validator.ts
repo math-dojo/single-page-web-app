@@ -23,8 +23,8 @@ export class QuestionTitleValidator implements AsyncValidator {
         map((questionServiceResponse) => {
           if (
             questionServiceResponse &&
-            questionServiceResponse.questions.length > 0 &&
-            questionServiceResponse.questions.filter(
+            questionServiceResponse.length > 0 &&
+            questionServiceResponse.filter(
               (each) => each.title === titleToValidate
             ).length >= 1
           ) {

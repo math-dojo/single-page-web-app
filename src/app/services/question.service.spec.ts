@@ -172,7 +172,7 @@ describe('QuestionService', () => {
 
       // Then
       questionSearchObservable.subscribe({
-        next: returnedQuestionDtos => expect((returnedQuestionDtos.questions[0].title)).toEqual(questionNameToSearchFor),
+        next: returnedQuestionDtos => expect((returnedQuestionDtos[0].title)).toEqual(questionNameToSearchFor),
         error: fail
       });
 
@@ -188,14 +188,14 @@ describe('QuestionService', () => {
     it('should return an empty array if one with a matching title cannot be found', () => {
       // Given
       const questionNameToSearchFor = 'test-question';
-      const expectedSearchResults = {questions: []};
+      const expectedSearchResults = [];
 
       // When
       const questionSearchObservable = questionService.searchForQuestionBy({title: questionNameToSearchFor});
 
       // Then
       questionSearchObservable.subscribe({
-        next: returnedQuestionDtos => expect((returnedQuestionDtos.questions.length)).toEqual(0),
+        next: returnedQuestionDtos => expect((returnedQuestionDtos.length)).toEqual(0),
         error: fail
       });
 

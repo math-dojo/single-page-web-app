@@ -26,7 +26,7 @@ describe('QuestionTitleValidator', () => {
 
   it('should return null if the value in the control is not an existing question title', () => {
     const testControl = new FormControl('an-unknown-title');
-    questionServiceStub.searchForQuestionBy.returns(of({questions: []}));
+    questionServiceStub.searchForQuestionBy.returns(of([]));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
@@ -37,7 +37,7 @@ describe('QuestionTitleValidator', () => {
   it('should return an object with a titleAlreadyExists property if the value in control is an existing question title', () => {
     const testControl = new FormControl('an-existing-title');
     questionServiceStub.searchForQuestionBy.returns(
-      of({questions: [new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })]}));
+      of([new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })]));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
@@ -61,10 +61,10 @@ describe('QuestionTitleValidator', () => {
   it('test validator handles more than one search result in array', () => {
     const testControl = new FormControl('an-existing-title');
     questionServiceStub.searchForQuestionBy.returns(
-      of({questions: [
+      of([
         new QuestionDto({ title: `${testControl.value}-that-is-close`, parentTopicTitle: 'something' }),
         new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })
-      ]}));
+      ]));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
