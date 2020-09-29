@@ -208,16 +208,15 @@ describe('QuestionService', () => {
       req.flush(expectedSearchResults);
     });
 
-    xit('should throw a QuestionServiceError if the service returns codes between 400 and 503', () => {
+    it('should throw a QuestionServiceError if the service returns codes between 400 and 503', () => {
       // Given
       const questionNameToSearchFor = 'test-question';
-      const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
       const errorStatusText = 'some error message';
       const errorReasonFromServer = `the specified question ${questionNameToSearchFor} could not be found`;
       const statusCode = generateRandomHTTPErrorCodeExcluding();
 
       // When
-      const questionSearchObservable = questionService.getQuestionWithTitle(questionNameToSearchFor);
+      const questionSearchObservable = questionService.searchForQuestionBy({title: questionNameToSearchFor});
 
       // Then
       questionSearchObservable.subscribe({
@@ -225,9 +224,11 @@ describe('QuestionService', () => {
         error: AssertionTools.checkErrorThrown(QuestionServiceError, new RegExp(errorReasonFromServer))
       });
 
-      const req = httpTestingController.expectOne(`${
-        environment.apis.questionServiceConsumerEndpoint}/questions/${questionNameToSearchFor
-        }`);
+      const req = httpTestingController.expectOne(request => (
+        request.url === `${
+          environment.apis.questionServiceConsumerEndpoint}/questions`
+        && request.params.has('title')
+      ), 'query parameters containing \'title\' and url to /question');
       expect(req.request.method).toEqual('GET');
       req.flush(errorReasonFromServer, {
         status: statusCode,
