@@ -165,7 +165,7 @@ describe('QuestionService', () => {
     it('should return an array of matching question dtos if one with a matching title can be found', async(() => {
       // Given
       const questionNameToSearchFor = 'test-question';
-      const expectedSearchResults = {questions: [new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' })]};
+      const expectedSearchResults = [new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' })];
 
       // When
       const questionSearchObservable = questionService.searchForQuestionBy({title: questionNameToSearchFor});
