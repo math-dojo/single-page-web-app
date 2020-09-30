@@ -23,11 +23,6 @@ describe('MtdjHeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  // TODO: Are unit tests needed for this component?
-  // This test currently fails because it expects the header tag to be used
-  // inside a clr-main-container component. In the app the component meets this
-  // condition but in its unit tests it wouldn't.
-
   it('should create', () => {
     expect(component).toBeTruthy();
     const header = fixture.debugElement.query(
