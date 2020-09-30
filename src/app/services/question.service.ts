@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { TopicDto } from '../models/topic-dto';
@@ -173,5 +173,47 @@ export class QuestionService {
      * until the question service api is ready
     */
     return of('');
+  }
+
+
+  searchForQuestionBy(
+    { title, difficulty }: { title?: string; difficulty?: Difficulty }
+    ): Observable< QuestionDto[]> {
+    let httpParams = new HttpParams();
+
+    if (!title && !difficulty) {
+      throw new Error('at least 1 argument must be specified when searching for a question');
+    } else {
+      if (title) {
+        httpParams = httpParams.set('title', title);
+      }
+
+      if (difficulty) {
+        httpParams = httpParams.set('difficulty', difficulty);
+      }
+    }
+
+    if (environment.name === 'default') {
+      return this.http.get<QuestionDto[]>(`${
+        environment.apis.questionQuarantineConsumerEndpoint
+        }/questions`, {
+          params: httpParams
+        })
+        .pipe(
+          catchError((err: HttpErrorResponse, caught) => {
+            throw new QuestionServiceError(`${err.error}`);
+          })
+        );
+    } else {
+      /*
+      * Return a prestashed response when deployed
+      * until the question service api is ready
+      */
+      if (/try/.test(title) || /final/.test(title)){
+        return of(this.preStashedQuestions);
+      } else {
+        return of([]);
+      }
+    }
   }
 }

@@ -26,7 +26,7 @@ describe('QuestionTitleValidator', () => {
 
   it('should return null if the value in the control is not an existing question title', () => {
     const testControl = new FormControl('an-unknown-title');
-    questionServiceStub.getQuestionWithTitle.returns(of(null));
+    questionServiceStub.searchForQuestionBy.returns(of([]));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
@@ -36,8 +36,8 @@ describe('QuestionTitleValidator', () => {
 
   it('should return an object with a titleAlreadyExists property if the value in control is an existing question title', () => {
     const testControl = new FormControl('an-existing-title');
-    questionServiceStub.getQuestionWithTitle.returns(
-      of(new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })));
+    questionServiceStub.searchForQuestionBy.returns(
+      of([new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })]));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
@@ -48,13 +48,28 @@ describe('QuestionTitleValidator', () => {
 
   it('should return an object with a titleAlreadyExists property if the query via QuestionService fails', () => {
     const testControl = new FormControl('an-existing-title');
-    questionServiceStub.getQuestionWithTitle.callsFake(() => throwError(new QuestionServiceError('some error')));
+    questionServiceStub.searchForQuestionBy.callsFake(() => throwError(new QuestionServiceError('some error')));
 
     const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
     validationResult.subscribe({
       next: (result) => expect(result.titleAlreadyExists.errorMessage).toMatch(
         `the question title "${testControl.value}" could not be verified at this time, please try again later`),
       error: (error => fail(`the error, :${error.message} was unexpected`))
+    });
+  });
+
+  it('test validator handles more than one search result in array', () => {
+    const testControl = new FormControl('an-existing-title');
+    questionServiceStub.searchForQuestionBy.returns(
+      of([
+        new QuestionDto({ title: `${testControl.value}-that-is-close`, parentTopicTitle: 'something' }),
+        new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })
+      ]));
+
+    const validationResult = questionTitleValidator.validate(testControl) as Observable<ValidationErrors>;
+    validationResult.subscribe({
+      next: (result) => expect(result.titleAlreadyExists.errorMessage).toMatch(
+        `a question with title "${testControl.value}" already exists`),
     });
   });
 
