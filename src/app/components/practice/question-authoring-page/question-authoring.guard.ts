@@ -4,6 +4,7 @@
  import { AuthenticationService } from '../../../services/authentication.service';
  import { map } from 'rxjs/operators';
  import { Observable, of } from 'rxjs';
+ import { User } from 'src/app/models/user';
 
  @Injectable({
   providedIn: 'root'
@@ -16,8 +17,18 @@ export class QuestionAuthoringGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
     return this.authenticationService.currentUser$.pipe(map((user) => {
-        return ((user.permissions.
-        has(UserPermission.ORG_ADMIN) || user.permissions.has(UserPermission.CREATOR)));
+        return (this.permissionCheck(user));
     }));
   }
+
+  permissionCheck(user: User){
+    if ((user.permissions.
+      has(UserPermission.ORG_ADMIN) || user.permissions.has(UserPermission.CREATOR))) {
+      return true;
+    } else {
+      window.alert('Apply for contributor permissions to view this page');
+      return false;
+    }
+  }
 }
+
