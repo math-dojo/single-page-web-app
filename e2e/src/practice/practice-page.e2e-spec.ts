@@ -1,7 +1,7 @@
 import { PracticePage } from './practice-page.po';
 import { browser, logging } from 'protractor';
 
-describe('Given I navigate to the Dashboard Page', () => {
+describe('Given I navigate to the Practice Page', () => {
   let page: PracticePage;
 
   beforeEach(() => {
