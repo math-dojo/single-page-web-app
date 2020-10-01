@@ -41,7 +41,7 @@ exports.config = {
         const baseUrl = config["baseUrl"];
         if (/127\.0\.0\.0.1/.test(baseUrl) || /localhost/.test(baseUrl)) {
           console.info(`reaching out to the mock backend`);
-          return request({ baseURL: "http://localhost:4201" }).then(
+          return request({ url: "http://localhost:4201" }).then(
             (response) => {
               console.info(
                 `got a happy response ${response.status} from the backend`
