@@ -3,7 +3,7 @@
   <div class="content-container" id="primary">
     <div class="content-area">
       <div
-        class="clr-row mtdj__dashboard_topic_display"
+        class="clr-row mtdj__practice_topic_display"
         *ngIf="topics$ | async as topics"
       >
         <div
@@ -12,7 +12,7 @@
         >
           <a
             [routerLink]="['/practice/topics', topic.title]"
-            class="card clickable mtdj__dashboard_topic_card"
+            class="card clickable mtdj__practice_topic_card"
           >
             <div class="card-header">
               {{ topic.formattedTitle }}
@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <a routerLink="/practice/create"  routerLinkActive="active"  class="nav-link mtdj__dashboard_create_question"> Create Question
+  <a routerLink="/practice/create"  routerLinkActive="active"  class="nav-link mtdj__practice_create_question"> Create Question
   </a>
   <app-mtdg-footer></app-mtdg-footer>
 </clr-main-container>

@@ -4,7 +4,7 @@ import { Utils } from '../utils/utils.po';
 export class PracticePage extends Utils {
 
   getTopicCards() {
-    return element.all(by.css('.mtdj__dashboard_topic_display .mtdj__dashboard_topic_card'));
+    return element.all(by.css('.mtdj__practice_topic_display .mtdj__practice_topic_card'));
   }
 
   getNumberOfTopicCards() {
