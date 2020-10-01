@@ -1,44 +1,5 @@
 <clr-main-container class="main-container">
   <app-mtdj-header></app-mtdj-header>
-  <div class="content-container" id="primary">
-    <div class="content-area">
-      <div
-        class="clr-row mtdj__practice_topic_display"
-        *ngIf="topics$ | async as topics"
-      >
-        <div
-          class="clr-col-lg-4 clr-col-md-6 clr-col-sm-8 clr-col-12"
-          *ngFor="let topic of topics"
-        >
-          <a
-            [routerLink]="['/practice/topics', topic.title]"
-            class="card clickable mtdj__practice_topic_card"
-          >
-            <div class="card-header">
-              {{ topic.formattedTitle }}
-            </div>
-            <div class="card-block">
-              <p class="card-text">{{ topic.body }}</p>
-              <div class="progress-block">
-                <label>Progress</label>
-                <div class="progress success">
-                  <progress
-                    value="{{ topic.userProgress * 100 }}"
-                    max="100"
-                  ></progress>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <a class="btn btn-primary">Continue</a>
-            </div>
-          </a>
-        </div>
-      </div>
-        <a routerLink="/practice/create"  routerLinkActive="active"  class="btn btn-primary nav-link mtdj__dashboard_create_question"> Create Question
-        </a>
-    </div>
-
-  </div>
+  <router-outlet></router-outlet>
   <app-mtdg-footer></app-mtdg-footer>
 </clr-main-container>
