@@ -24,7 +24,7 @@ export class DashboardPage extends Utils {
   }
 
   navigateToFeatureRoot() {
-    this.navigateToPath('/dashboard');
+    this.navigateToPath('/practice');
   }
 
 }
