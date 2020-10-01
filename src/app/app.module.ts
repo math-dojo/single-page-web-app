@@ -18,7 +18,7 @@ import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.compon
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 import { QuestionAuthoringPageComponent } from './components/practice/question-authoring-page/question-authoring-page.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { PracticeHomeComponent } from './practice-home/practice-home.component';
+import { PracticeHomeComponent } from './components/practice/practice-home/practice-home.component';
 
 
 
