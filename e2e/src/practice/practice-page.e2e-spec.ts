@@ -1,11 +1,11 @@
-import { DashboardPage } from './dashboard-page.po';
+import { PracticePage } from './practice-page.po';
 import { browser, logging } from 'protractor';
 
 describe('Given I navigate to the Dashboard Page', () => {
-  let page: DashboardPage;
+  let page: PracticePage;
 
   beforeEach(() => {
-    page = new DashboardPage();
+    page = new PracticePage();
     page.navigateToFeatureRoot();
   });
 
