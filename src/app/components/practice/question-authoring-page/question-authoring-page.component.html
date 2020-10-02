@@ -1,6 +1,6 @@
 <div class="content-container" id="primary">
   <div class="content-area">
-    <div class="clr-row mtdj__question-auth-feature-area">
+    <div class="clr-row mtdj__question-auth-feature-area" *ngIf="userAllowedAccess$ | async as userAllowedAccess">
       <div
         class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
       >
@@ -309,6 +309,33 @@
       <div
         class="clr-col-lg-6 clr-col-12 mtdj__question-preview-container"
       ></div>
+    </div>
+    <div class="clr-row mtdj__question-auth-unauthorised-warning" *ngIf="userAllowedAccess$ | async | negate">
+      <div class="clr-col">
+        <span>1/3</span>
+      </div>
+      <div class="clr-col">
+        <div class="card">
+          <div class="card-header">
+              Header
+          </div>
+          <div class="card-block">
+              <div class="card-title">
+                  Block
+              </div>
+              <div class="card-text">
+                  ...
+              </div>
+          </div>
+          <div class="card-footer">
+              <button class="btn btn-sm btn-link">Footer Action 1</button>
+              <button class="btn btn-sm btn-link">Footer Action 2</button>
+          </div>
+      </div>
+      </div>
+      <div class="clr-col">
+        <span>1/3</span>
+      </div>
     </div>
   </div>
 </div>

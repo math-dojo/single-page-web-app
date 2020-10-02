@@ -19,6 +19,7 @@ import { QuestionPageComponent } from './components/practice/question-page/quest
 import { QuestionAuthoringPageComponent } from './components/practice/question-authoring-page/question-authoring-page.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { PracticeHomeComponent } from './components/practice/practice-home/practice-home.component';
+import { NegatePipe } from './negate.pipe';
 
 
 
@@ -35,7 +36,8 @@ import { PracticeHomeComponent } from './components/practice/practice-home/pract
     QuestionPageComponent,
     QuestionAuthoringPageComponent,
     LoginComponent,
-    PracticeHomeComponent
+    PracticeHomeComponent,
+    NegatePipe
   ],
   imports: [
     BrowserModule,

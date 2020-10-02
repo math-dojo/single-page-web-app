@@ -25,6 +25,7 @@ import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionServiceError } from 'src/app/services/question-service.error';
 import { MathDojoError } from 'src/app/models/math-dojo.error';
 import { QuestionAuthoringGuard } from './question-authoring.guard';
+import { NegatePipe } from 'src/app/negate.pipe';
 
 describe('QuestionAuthoringPageComponent', () => {
   let component: QuestionAuthoringPageComponent;
@@ -44,6 +45,7 @@ describe('QuestionAuthoringPageComponent', () => {
         QuestionAuthoringPageComponent,
         MtdgFooterComponent,
         MtdjHeaderComponent,
+        NegatePipe
       ],
       imports: [ClarityModule, ReactiveFormsModule, KatexModule],
     })
@@ -72,6 +74,16 @@ describe('QuestionAuthoringPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display only the error message if the user does not have permissions', async(() => {
+    // Given
+    questionAuthoringGuardStub.doesUserHavePermissions.returns(of(false));
+    const page = new QuestionAuthoringTestPage(TestBed.createComponent(QuestionAuthoringPageComponent));
+    page.fixture.detectChanges();
+
+    expect(page.unauthorisedFeatureAccessMessage).toBeTruthy('the unauthorised feature access message could not be seen');
+    expect(page.primaryFeatureArea).toBeNull('the primary feature area could be seen');
+  }));
 
   describe('Input controls', () => {
     const parameters = [
@@ -655,6 +667,18 @@ class QuestionAuthoringTestPage {
   get errorAlertCloseButton(): DebugElement {
     return this.errorAlert.query(
       By.css('button.close')
+    );
+  }
+
+  get unauthorisedFeatureAccessMessage(): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css('.clr-row.mtdj__question-auth-unauthorised-warning')
+    );
+  }
+
+  get primaryFeatureArea(): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css('.clr-row.mtdj__question-auth-feature-area')
     );
   }
 }
