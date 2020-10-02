@@ -24,17 +24,21 @@ import { QuestionTitleValidator } from './question-title.validator';
 import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionServiceError } from 'src/app/services/question-service.error';
 import { MathDojoError } from 'src/app/models/math-dojo.error';
+import { QuestionAuthoringGuard } from './question-authoring.guard';
 
 describe('QuestionAuthoringPageComponent', () => {
   let component: QuestionAuthoringPageComponent;
   let fixture: ComponentFixture<QuestionAuthoringPageComponent>;
   let questionServiceStub: SinonStubbedInstance<QuestionService>;
+  let questionAuthoringGuardStub: SinonStubbedInstance<QuestionAuthoringGuard>;
 
   beforeEach(async(() => {
     questionServiceStub = createStubInstance(QuestionService);
     questionServiceStub.getTopics.returns(
       of([TopicDto.createDtoWithNonEmptyFields()])
     );
+    questionAuthoringGuardStub = createStubInstance(QuestionAuthoringGuard);
+    questionAuthoringGuardStub.doesUserHavePermissions.returns(of(true));
     TestBed.configureTestingModule({
       declarations: [
         QuestionAuthoringPageComponent,
@@ -47,6 +51,7 @@ describe('QuestionAuthoringPageComponent', () => {
         set: {
           providers: [
             { provide: QuestionService, useValue: questionServiceStub },
+            { provide: QuestionAuthoringGuard, useValue: questionAuthoringGuardStub },
             { provide: QuestionTitleValidator },
           ],
         },

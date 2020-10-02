@@ -26,14 +26,18 @@ export class QuestionAuthoringPageComponent implements OnInit {
   In first case you will need to use \\$expression\\$ and in the second one \\$\\$expression\\$\\$.
   To escape the \\$ symbol it's mandatory to write as follows: \\\\$`);
   public readonly optionPlaceholder = 'x^2';
-  public readonly difficulty: Difficulty[] = Object.keys(Difficulty).map(each => each as Difficulty);
-  successfulFormSubmission$: Observable<{status: boolean} | undefined>;
+
+  // tslint:disable-next-line: variable-name
+  private _userAllowedAccess$: Observable<boolean>;
+  successfulFormSubmission$: Observable<{ status: boolean } | undefined>;
   newQuestionForm: FormGroup;
   topics$: Observable<Topic[]>;
 
-  constructor(private questionService: QuestionService, private questionTitleValidator: QuestionTitleValidator) {
-
-  }
+  constructor(
+    private questionService: QuestionService,
+    private questionTitleValidator: QuestionTitleValidator,
+    private questionAuthoringGuard: QuestionAuthoringGuard
+  ) {}
 
   ngOnInit(): void {
     this.newQuestionForm = new FormGroup({
@@ -65,9 +69,12 @@ export class QuestionAuthoringPageComponent implements OnInit {
     const topicDtos$ = this.questionService.getTopics();
 
     this.topics$ = topicDtos$.pipe(
-      map(topics => topics.map(
-        eachTopicDto => Topic.fromTopicDto(eachTopicDto)
-      )));
+      map((topics) =>
+        topics.map((eachTopicDto) => Topic.fromTopicDto(eachTopicDto))
+      )
+    );
+
+    this._userAllowedAccess$ = this.questionAuthoringGuard.doesUserHavePermissions();
   }
 
   onSubmit() {
@@ -148,4 +155,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
     );
   }
 
+  public get userAllowedAccess$(): Observable<boolean> {
+    return this._userAllowedAccess$;
+  }
 }
