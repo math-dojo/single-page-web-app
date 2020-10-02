@@ -25,7 +25,7 @@ import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionServiceError } from 'src/app/services/question-service.error';
 import { MathDojoError } from 'src/app/models/math-dojo.error';
 import { QuestionAuthoringGuard } from './question-authoring.guard';
-import { NegatePipe } from 'src/app/negate.pipe';
+import { NegatePipe } from 'src/app/utilities/negate.pipe';
 
 describe('QuestionAuthoringPageComponent', () => {
   let component: QuestionAuthoringPageComponent;
