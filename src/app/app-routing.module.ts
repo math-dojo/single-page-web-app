@@ -20,8 +20,7 @@ const routes: Routes = [
       { path: 'topics/:topic', component: TopicPageComponent },
       {
         path: 'create',
-        component: QuestionAuthoringPageComponent,
-        canActivate: [QuestionAuthoringGuard],
+        component: QuestionAuthoringPageComponent
       },
       { path: '', component: PracticeHomeComponent },
     ],
