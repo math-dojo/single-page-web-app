@@ -1,24 +1,21 @@
- import { Injectable } from '@angular/core';
- import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
- import { UserPermission } from '../../../models/permissions';
- import { AuthenticationService } from '../../../services/authentication.service';
- import { map } from 'rxjs/operators';
- import { Observable, of } from 'rxjs';
- import { User } from 'src/app/models/user';
+import { Injectable } from '@angular/core';
+import { UserPermission } from '../../../models/permissions';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { User } from 'src/app/models/user';
 
- @Injectable({
-  providedIn: 'root'
+@Injectable({
+  providedIn: 'root',
 })
-export class QuestionAuthoringGuard implements CanActivate {
-  constructor(
-    private authenticationService: AuthenticationService
-) { }
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> {
-    return this.authenticationService.currentUser$.pipe(map((user) => {
-        return (this.permissionCheck(user));
-    }));
+export class QuestionAuthoringGuard {
+  constructor(private authenticationService: AuthenticationService) {}
+  doesUserHavePermissions(): Observable<boolean> {
+    return this.authenticationService.currentUser$.pipe(
+      map((user) => {
+        return this.permissionCheck(user);
+      })
+    );
   }
 
   private permissionCheck(user: User) {

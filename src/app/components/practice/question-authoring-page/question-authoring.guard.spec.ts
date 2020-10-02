@@ -6,17 +6,17 @@ import { User } from '../../../models/user';
 import { UserPermission } from '../../../models/permissions';
 import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { createStubInstance, SinonStubbedInstance } from 'sinon';
 
 describe('QuestionAuthoringGuard', () => {
   let guard: QuestionAuthoringGuard;
   let authService: AuthenticationService;
-  const routeStateMock: any = { snapshot: {}, url: '' };
-  const routeMock: any = { snapshot: {} };
-  const routerMock = { navigate: jasmine.createSpy('navigate') };
+  let routerSpy: SinonStubbedInstance<Router>;
 
   beforeEach(() => {
+    routerSpy = createStubInstance(Router);
     TestBed.configureTestingModule({
-      providers: [QuestionAuthoringGuard, { provide: Router, useValue: routerMock }, ]
+      providers: [QuestionAuthoringGuard, { provide: Router, useValue: routerSpy }  ]
     });
     guard = TestBed.inject(QuestionAuthoringGuard);
     authService = TestBed.inject(AuthenticationService);
@@ -34,7 +34,7 @@ describe('QuestionAuthoringGuard', () => {
       belongsToOrgWithId: 'default'
     });
     spyOnProperty(authService, 'currentUser$').and.returnValue(of(user));
-    guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
+    guard.doesUserHavePermissions().subscribe((resp) => {
       expect(resp).toEqual(true);
     });
   }));
@@ -46,7 +46,7 @@ describe('QuestionAuthoringGuard', () => {
       belongsToOrgWithId: 'default'
     });
     spyOnProperty(authService, 'currentUser$').and.returnValue(of(user));
-    guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
+    guard.doesUserHavePermissions().subscribe((resp) => {
       expect(resp).toEqual(true);
     });
   }));
@@ -58,7 +58,7 @@ describe('QuestionAuthoringGuard', () => {
       belongsToOrgWithId: 'default'
     });
     spyOnProperty(authService, 'currentUser$').and.returnValue(of(user));
-    guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
+    guard.doesUserHavePermissions().subscribe((resp) => {
       expect(resp).toEqual(false);
     });
   }));
@@ -70,7 +70,7 @@ describe('QuestionAuthoringGuard', () => {
       belongsToOrgWithId: 'default'
     });
     spyOnProperty(authService, 'currentUser$').and.returnValue(of(user));
-    guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
+    guard.doesUserHavePermissions().subscribe((resp) => {
       expect(resp).toEqual(false);
     });
   }));
