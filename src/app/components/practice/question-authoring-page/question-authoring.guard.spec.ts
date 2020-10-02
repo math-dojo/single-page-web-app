@@ -74,17 +74,4 @@ describe('QuestionAuthoringGuard', () => {
       expect(resp).toEqual(false);
     });
   }));
-  it('should call alert', () => {
-    spyOn(window, 'alert');
-    const user = new User({
-      name: 'test',
-      permissions: new Set([UserPermission.CONSUMER]),
-      belongsToOrgWithId: 'default'
-    });
-    spyOnProperty(authService, 'currentUser$').and.returnValue(of(user));
-    guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
-      expect(window.alert).toHaveBeenCalledWith('Apply for contributor permissions to view this page');
-    });
-
- });
 });

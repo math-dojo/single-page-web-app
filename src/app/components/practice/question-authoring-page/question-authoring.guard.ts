@@ -21,14 +21,13 @@ export class QuestionAuthoringGuard implements CanActivate {
     }));
   }
 
-  permissionCheck(user: User){
-    if ((user.permissions.
-      has(UserPermission.ORG_ADMIN) || user.permissions.has(UserPermission.CREATOR))) {
+  private permissionCheck(user: User) {
+    if (
+      user.permissions.has(UserPermission.ORG_ADMIN) ||
+      user.permissions.has(UserPermission.CREATOR)
+    ) {
       return true;
-    } else {
-      window.alert('Apply for contributor permissions to view this page');
-      return false;
     }
+    return false;
   }
 }
-
