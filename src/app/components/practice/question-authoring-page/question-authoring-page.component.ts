@@ -14,6 +14,7 @@ import { QuestionTitleValidator } from './question-title.validator';
 import { Observable, of } from 'rxjs';
 import { MathDojoError } from 'src/app/models/math-dojo.error';
 import { QuestionAuthoringGuard } from './question-authoring.guard';
+import { ClrLoadingState } from '@clr/angular';
 
 @Component({
   selector: 'app-question-authoring-page',
@@ -36,6 +37,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
   successfulFormSubmission$: Observable<{ status: boolean } | undefined>;
   newQuestionForm: FormGroup;
   topics$: Observable<Topic[]>;
+  requestAccessBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
   constructor(
     private questionService: QuestionService,
@@ -189,5 +191,12 @@ export class QuestionAuthoringPageComponent implements OnInit {
 
   public get userAllowedAccess$(): Observable<boolean> {
     return this._userAllowedAccess$;
+  }
+
+  requestAccess() {
+    this.requestAccessBtnState = ClrLoadingState.LOADING;
+    // TODO: Request access logic
+    setTimeout(() => this.requestAccessBtnState = ClrLoadingState.SUCCESS, 1000);
+
   }
 }
