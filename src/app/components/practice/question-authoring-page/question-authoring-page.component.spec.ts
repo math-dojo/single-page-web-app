@@ -83,6 +83,7 @@ describe('QuestionAuthoringPageComponent', () => {
     page.fixture.detectChanges();
 
     expect(page.unauthorisedFeatureAccessMessage).toBeTruthy('the unauthorised feature access message could not be seen');
+    expect((page.unauthorisedFeatureAccessMessageText.nativeElement as HTMLElement).innerText).toBe('You need to be a contributor to create questions.');
     expect(page.primaryFeatureArea).toBeNull('the primary feature area could be seen');
   }));
 
@@ -675,6 +676,13 @@ class QuestionAuthoringTestPage {
     return this.fixture.debugElement.query(
       By.css('.clr-row.mtdj__question-auth-unauthorised-warning')
     );
+  }
+
+  get unauthorisedFeatureAccessMessageText(): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css('.clr-row.mtdj__question-auth-unauthorised-warning h4')
+    );
+
   }
 
   get primaryFeatureArea(): DebugElement {
