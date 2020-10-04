@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { KatexModule } from 'ng-katex';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
 import { of, throwError } from 'rxjs';
 
@@ -45,9 +46,9 @@ describe('QuestionAuthoringPageComponent', () => {
         QuestionAuthoringPageComponent,
         MtdgFooterComponent,
         MtdjHeaderComponent,
-        NegatePipe
+        NegatePipe,
       ],
-      imports: [ClarityModule, ReactiveFormsModule, KatexModule],
+      imports: [ClarityModule, ReactiveFormsModule, KatexModule, BrowserAnimationsModule ],
     })
       .overrideComponent(QuestionAuthoringPageComponent, {
         set: {
