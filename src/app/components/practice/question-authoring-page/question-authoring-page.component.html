@@ -1,6 +1,9 @@
 <div class="content-container" id="primary">
   <div class="content-area">
-    <div class="clr-row mtdj__question-auth-feature-area" *ngIf="userAllowedAccess$ | async as userAllowedAccess">
+    <div
+      class="clr-row mtdj__question-auth-feature-area"
+      *ngIf="userAllowedAccess$ | async as userAllowedAccess"
+    >
       <div
         class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
       >
@@ -310,30 +313,44 @@
         class="clr-col-lg-6 clr-col-12 mtdj__question-preview-container"
       ></div>
     </div>
-    <div class="clr-row mtdj__question-auth-unauthorised-warning" *ngIf="userAllowedAccess$ | async | negate">
+    <div
+      class="clr-row mtdj__question-auth-unauthorised-warning"
+      *ngIf="userAllowedAccess$ | async | negate"
+    >
+      <div class="clr-col"></div>
       <div class="clr-col">
-      </div>
-      <div class="clr-col">
-        <div class="card">
-          <div class="card-header">
-            <clr-icon shape="no-access" size="72" class="is-solid is-warning"></clr-icon>
+        <div class="clr-row">
+          <div class="clr-col mtdj__question-auth-unauthorised-warning-icon">
+            <clr-icon
+              shape="no-access"
+              size="72"
+              class="is-solid is-warning"
+            ></clr-icon>
           </div>
-          <div class="card-block">
-              <div class="card-title">
-                  You need to be a contributor to create questions.
-              </div>
-              <div class="card-text">
-                  Sorry you can't access this area yet but you can send a request to your admin instead.
-              </div>
+        </div>
+        <div class="clr-row">
+          <div class="clr-col">
+            <h4>You need to be a contributor to create questions.</h4>
+            <p>
+              Sorry you can't access this area yet but you can send a request to
+              your admin instead.
+            </p>
           </div>
-          <div class="card-footer">
-              <button [clrLoading]="requestAccessBtnState" class="btn btn-primary" (click)="requestAccess()">Request Access</button>
-              <a routerLink="../">Return to practice</a>
+        </div>
+        <div class="clr-row">
+          <div class="clr-col">
+            <button
+              [clrLoading]="requestAccessBtnState"
+              class="btn btn-primary"
+              (click)="requestAccess()"
+            >
+              Request Access
+            </button>
+            <a routerLink="../">Return to practice</a>
           </div>
+        </div>
       </div>
-      </div>
-      <div class="clr-col">
-      </div>
+      <div class="clr-col"></div>
     </div>
   </div>
 </div>

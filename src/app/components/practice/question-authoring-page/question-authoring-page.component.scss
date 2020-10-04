@@ -1,4 +1,13 @@
-.mtdj__question-auth-feature-area .mtdj__question-auth-input-container form textarea {
+.mtdj__question-auth-feature-area
+  .mtdj__question-auth-input-container
+  form
+  textarea {
   height: 5rem;
   width: 90%;
+}
+
+.mtdj__question-auth-unauthorised-warning
+  .mtdj__question-auth-unauthorised-warning-icon.clr-col {
+  justify-content: center;
+  display: flex;
 }
