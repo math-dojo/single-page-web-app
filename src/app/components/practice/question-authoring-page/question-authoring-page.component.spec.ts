@@ -158,7 +158,7 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
   describe('Question Title Validation', () => {
-    it('should allow a new question title that also meets the 64 chars length restriction', () => {
+    it('should allow a new question title that also meets the 64 chars length restriction', async(() => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
         By.css('#mtdj__question-auth-input-title input')
@@ -177,7 +177,7 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(
         fixture.componentInstance.newQuestionForm.controls[controlName].valid
       ).toBe(true);
-    });
+    }));
 
     it('should show an error if the question title is more than 64 chars', () => {
       const controlName = 'title';
@@ -248,7 +248,7 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(errorDisplayElement.textContent).toMatch(/is a required field/);
     });
 
-    it('should show an error if the question title is already taken ', () => {
+    it('should show an error if the question title is already taken ', async(() => {
       // Given
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
@@ -291,7 +291,7 @@ describe('QuestionAuthoringPageComponent', () => {
       .withContext(`expected to find only one error element but found ${errorElements.length}`)
       .toEqual(1);
       expect(errorDisplayElement.textContent).toMatch(/already exists/);
-    });
+    }));
   });
 
   describe('Question Form', () => {

@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 
 import { QuestionAuthoringGuard } from './question-authoring.guard';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -27,7 +27,7 @@ describe('QuestionAuthoringGuard', () => {
   });
 
 
-  it('should allow the org admin user to access authoring page', () => {
+  it('should allow the org admin user to access authoring page', async(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.ORG_ADMIN]),
@@ -37,9 +37,9 @@ describe('QuestionAuthoringGuard', () => {
     guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
       expect(resp).toEqual(true);
     });
-  });
+  }));
 
-  it('should allow creators user to access authoring page', () => {
+  it('should allow creators user to access authoring page', async(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.CREATOR]),
@@ -49,9 +49,9 @@ describe('QuestionAuthoringGuard', () => {
     guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
       expect(resp).toEqual(true);
     });
-  });
+  }));
 
-  it('should not allow consumers to access authoring page', () => {
+  it('should not allow consumers to access authoring page', async(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.CONSUMER]),
@@ -61,9 +61,9 @@ describe('QuestionAuthoringGuard', () => {
     guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
       expect(resp).toEqual(false);
     });
-  });
+  }));
 
-  it('should not allow global admin to access authoring page', () => {
+  it('should not allow global admin to access authoring page', async(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.GLOBAL_ADMIN]),
@@ -73,7 +73,7 @@ describe('QuestionAuthoringGuard', () => {
     guard.canActivate(routeMock, routeStateMock).subscribe((resp) => {
       expect(resp).toEqual(false);
     });
-  });
+  }));
   it('should call alert', () => {
     spyOn(window, 'alert');
     const user = new User({
