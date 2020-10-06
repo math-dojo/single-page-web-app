@@ -1,6 +1,19 @@
+<nav class="subnav mtdj__practice_subnav">
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/practice">Practice Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active mtdj__practice_create_question" routerLink="/practice/create">Create Questions</a>
+    </li>
+  </ul>
+</nav>
 <div class="content-container" id="primary">
   <div class="content-area">
-    <div class="clr-row mtdj__question-auth-feature-area">
+    <div
+      class="clr-row mtdj__question-auth-feature-area"
+      *ngIf="userAllowedAccess$ | async as userAllowedAccess"
+    >
       <div
         class="clr-col-lg-6 clr-col-sm-12 clr-col-md-12 mtdj__question-auth-input-container"
       >
@@ -309,6 +322,45 @@
       <div
         class="clr-col-lg-6 clr-col-12 mtdj__question-preview-container"
       ></div>
+    </div>
+    <div
+      class="clr-row mtdj__question-auth-unauthorised-warning"
+      *ngIf="userAllowedAccess$ | async | negate"
+    >
+      <div class="clr-col"></div>
+      <div class="clr-col">
+        <div class="clr-row">
+          <div class="clr-col mtdj__question-auth-unauthorised-warning-icon">
+            <clr-icon
+              shape="no-access"
+              size="72"
+              class="is-solid is-warning"
+            ></clr-icon>
+          </div>
+        </div>
+        <div class="clr-row">
+          <div class="clr-col">
+            <h4>You need to be a contributor to create questions.</h4>
+            <p>
+              Sorry you can't access this area yet but you can send a request to
+              your admin instead.
+            </p>
+          </div>
+        </div>
+        <div class="clr-row">
+          <div class="clr-col">
+            <button
+              [clrLoading]="requestAccessBtnState"
+              class="btn btn-primary"
+              (click)="requestAccess()"
+            >
+              Request Access
+            </button>
+            <a routerLink="../">Return to practice</a>
+          </div>
+        </div>
+      </div>
+      <div class="clr-col"></div>
     </div>
   </div>
 </div>
