@@ -1,10 +1,10 @@
 import { browser, by, element, ElementFinder, ElementArrayFinder } from 'protractor';
 import { Utils } from '../utils/utils.po';
 
-export class DashboardPage extends Utils {
+export class PracticePage extends Utils {
 
   getTopicCards() {
-    return element.all(by.css('.mtdj__dashboard_topic_display .mtdj__dashboard_topic_card'));
+    return element.all(by.css('.mtdj__practice_topic_display .mtdj__practice_topic_card'));
   }
 
   getNumberOfTopicCards() {
@@ -24,7 +24,7 @@ export class DashboardPage extends Utils {
   }
 
   navigateToFeatureRoot() {
-    this.navigateToPath('/dashboard');
+    this.navigateToPath('/practice');
   }
 
 }

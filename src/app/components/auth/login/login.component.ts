@@ -31,7 +31,7 @@ export class LoginComponent {
       this.userLoginFormGroup.controls.password.value
     ).pipe(first())
     .subscribe({
-      next: user => user ? this.router.navigate(['/dashboard']) : throwError('the identified user was null'),
+      next: user => user ? this.router.navigate(['/practice']) : throwError('the identified user was null'),
       error: err => {
         // TODO: #62 Replace with a call to the logging service.
         console.warn(`an error, "${err.message}" occured during login`);

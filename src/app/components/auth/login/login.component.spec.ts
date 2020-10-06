@@ -80,7 +80,7 @@ describe('LoginComponent', () => {
     // Then
     return page.fixture.whenStable().then(res => {
       return Promise.all([
-        expect(routerSpy.navigate.calledOnceWithExactly(['/dashboard']))
+        expect(routerSpy.navigate.calledOnceWithExactly(['/practice']))
           .withContext(`the router did not navigate to the dashboard but had calls: ${routerSpy.navigate.getCalls()}\n`)
           .toEqual(true)
       ]);

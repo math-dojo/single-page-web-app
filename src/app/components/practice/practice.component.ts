@@ -5,11 +5,11 @@ import { QuestionService } from 'src/app/services/question.service';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-practice',
+  templateUrl: './practice.component.html',
+  styleUrls: ['./practice.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class PracticeComponent implements OnInit {
 
   topics$: Observable<Topic[]>;
 

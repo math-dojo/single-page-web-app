@@ -11,13 +11,14 @@ import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PracticeComponent } from './components/practice/practice.component';
 import { TopicPageComponent } from './components/practice/topic-page/topic-page.component';
 import { MtdjHeaderComponent } from './components/mtdj-header/mtdj-header.component';
 import { MtdgFooterComponent } from './components/mtdg-footer/mtdg-footer.component';
 import { QuestionPageComponent } from './components/practice/question-page/question-page.component';
 import { QuestionAuthoringPageComponent } from './components/practice/question-authoring-page/question-authoring-page.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { PracticeHomeComponent } from './components/practice/practice-home/practice-home.component';
 
 
 
@@ -27,13 +28,14 @@ import { LoginComponent } from './components/auth/login/login.component';
     LandingPageComponent,
     SignupComponent,
     PagenotfoundComponent,
-    DashboardComponent,
+    PracticeComponent,
     TopicPageComponent,
     MtdjHeaderComponent,
     MtdgFooterComponent,
     QuestionPageComponent,
     QuestionAuthoringPageComponent,
-    LoginComponent
+    LoginComponent,
+    PracticeHomeComponent
   ],
   imports: [
     BrowserModule,

@@ -74,7 +74,7 @@ export class QuestionAuthoringPage extends Utils {
 
 
   navigateToFeatureRoot() {
-    return element.all(by.css('.mtdj__dashboard_create_question'));
+    return element.all(by.css('.mtdj__practice_create_question'));
   }
 
   fillFormCorrectly() {
