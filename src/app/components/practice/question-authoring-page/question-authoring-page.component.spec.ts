@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { KatexModule } from 'ng-katex';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
 import { of, throwError } from 'rxjs';
 
@@ -24,29 +25,37 @@ import { QuestionTitleValidator } from './question-title.validator';
 import { Difficulty } from 'src/app/models/question_difficulty';
 import { QuestionServiceError } from 'src/app/services/question-service.error';
 import { MathDojoError } from 'src/app/models/math-dojo.error';
+import { QuestionAuthoringGuard } from './question-authoring.guard';
+import { NegatePipe } from 'src/app/utilities/negate.pipe';
 
 describe('QuestionAuthoringPageComponent', () => {
   let component: QuestionAuthoringPageComponent;
   let fixture: ComponentFixture<QuestionAuthoringPageComponent>;
   let questionServiceStub: SinonStubbedInstance<QuestionService>;
+  let questionAuthoringGuardStub: SinonStubbedInstance<QuestionAuthoringGuard>;
 
   beforeEach(async(() => {
     questionServiceStub = createStubInstance(QuestionService);
     questionServiceStub.getTopics.returns(
       of([TopicDto.createDtoWithNonEmptyFields()])
     );
+    questionServiceStub.searchForQuestionBy.returns(of([]));
+    questionAuthoringGuardStub = createStubInstance(QuestionAuthoringGuard);
+    questionAuthoringGuardStub.doesUserHavePermissions.returns(of(true));
     TestBed.configureTestingModule({
       declarations: [
         QuestionAuthoringPageComponent,
         MtdgFooterComponent,
         MtdjHeaderComponent,
+        NegatePipe,
       ],
-      imports: [ClarityModule, ReactiveFormsModule, KatexModule],
+      imports: [ClarityModule, ReactiveFormsModule, KatexModule, BrowserAnimationsModule ],
     })
       .overrideComponent(QuestionAuthoringPageComponent, {
         set: {
           providers: [
             { provide: QuestionService, useValue: questionServiceStub },
+            { provide: QuestionAuthoringGuard, useValue: questionAuthoringGuardStub },
             { provide: QuestionTitleValidator },
           ],
         },
@@ -58,15 +67,27 @@ describe('QuestionAuthoringPageComponent', () => {
     fixture = TestBed.createComponent(QuestionAuthoringPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    // Setup all scenarios so that question title validation returns no errors
-    // unless otherwise specified
-    questionServiceStub.getQuestionWithTitle.returns(of(null));
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create and not show the unauthorized error message if the user has permissions', () => {
+    const page = new QuestionAuthoringTestPage(fixture);
+    page.fixture.detectChanges();
+    expect(page.componentInstanceUnderTest).toBeTruthy();
+
+    expect(page.primaryFeatureArea).toBeTruthy('the primary feature area could not be seen');
+    expect(page.unauthorisedFeatureAccessMessage).toBeNull('the unauthorised feature access message could be seen');
   });
+
+  it('should display only the error message if the user does not have permissions', async(() => {
+    // Given
+    questionAuthoringGuardStub.doesUserHavePermissions.returns(of(false));
+    const page = new QuestionAuthoringTestPage(TestBed.createComponent(QuestionAuthoringPageComponent));
+    page.fixture.detectChanges();
+
+    expect(page.unauthorisedFeatureAccessMessage).toBeTruthy('the unauthorised feature access message could not be seen');
+    expect((page.unauthorisedFeatureAccessMessageText.nativeElement as HTMLElement).innerText).toBe('You need to be a contributor to create questions.');
+    expect(page.primaryFeatureArea).toBeNull('the primary feature area could be seen');
+  }));
 
   describe('Input controls', () => {
     const parameters = [
@@ -158,7 +179,7 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
   describe('Question Title Validation', () => {
-    it('should allow a new question title that also meets the 64 chars length restriction', () => {
+    it('should allow a new question title that also meets the 64 chars length restriction', async(() => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
         By.css('#mtdj__question-auth-input-title input')
@@ -177,10 +198,9 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(
         fixture.componentInstance.newQuestionForm.controls[controlName].valid
       ).toBe(true);
-    });
+    }));
 
-    // TODO: Restore as part of #59
-    xit('should show an error if the question title is more than 64 chars', () => {
+    it('should show an error if the question title is more than 64 chars', () => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
         By.css('#mtdj__question-auth-input-title input')
@@ -214,9 +234,8 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(errorDisplayElement.textContent).toMatch(/exceeded the max length/);
     });
 
-    // TODO: Restore as part of #59
 
-    xit('should show an error if the question title is empty', () => {
+    it('should show an error if the question title is empty', () => {
       // Given
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
@@ -250,21 +269,18 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(errorDisplayElement.textContent).toMatch(/is a required field/);
     });
 
-    // TODO: Restore as part of #59
-    xit('should show an error if the question title is already taken ', () => {
+    it('should show an error if the question title is already taken ', async(() => {
       // Given
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
         By.css('#mtdj__question-auth-input-title input')
       );
       const inputQuestionTitle = 'title-that-is-already-taken';
-      questionServiceStub.getQuestionWithTitle.returns(
-        of(
-          new QuestionDto({
-            title: inputQuestionTitle,
-            parentTopicTitle: 'something',
-          })
-        )
+      questionServiceStub.searchForQuestionBy.returns(
+        of([new QuestionDto({
+          title: inputQuestionTitle,
+          parentTopicTitle: 'something',
+        })])
       );
 
       // When
@@ -296,7 +312,7 @@ describe('QuestionAuthoringPageComponent', () => {
       .withContext(`expected to find only one error element but found ${errorElements.length}`)
       .toEqual(1);
       expect(errorDisplayElement.textContent).toMatch(/already exists/);
-    });
+    }));
   });
 
   describe('Question Form', () => {
@@ -655,6 +671,25 @@ class QuestionAuthoringTestPage {
   get errorAlertCloseButton(): DebugElement {
     return this.errorAlert.query(
       By.css('button.close')
+    );
+  }
+
+  get unauthorisedFeatureAccessMessage(): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css('.clr-row.mtdj__question-auth-unauthorised-warning')
+    );
+  }
+
+  get unauthorisedFeatureAccessMessageText(): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css('.clr-row.mtdj__question-auth-unauthorised-warning h4')
+    );
+
+  }
+
+  get primaryFeatureArea(): DebugElement {
+    return this.fixture.debugElement.query(
+      By.css('.clr-row.mtdj__question-auth-feature-area')
     );
   }
 }

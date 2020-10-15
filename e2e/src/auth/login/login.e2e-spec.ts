@@ -13,13 +13,13 @@ describe('Given I navigate to the Login Page', () => {
     expect(page.getFormSubmitButtonText()).toMatch('LOGIN');
   });
 
-  it('should redirect a user who signs up correctly to /dashboard', () => {
+  it('should redirect a user who signs up correctly to /practice', () => {
     page.fillLoginFormWithData({
       username: 'consumer',
       password: 'consumer',
     });
     page.submitSignUpForm();
-    expect(page.getCurrentResourcePath()).toMatch(/\/dashboard$/);
+    expect(page.getCurrentResourcePath()).toMatch(/\/practice$/);
   });
 
   it('should not redirect a user who signs up incorrectly', () => {

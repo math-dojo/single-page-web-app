@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { UserPermission } from '../models/permissions';
 import { User } from '../models/user';
@@ -40,6 +41,6 @@ export class AuthenticationService {
   }
 
   get currentUser$(): Observable<User> {
-    return this.authenticatedUserSubject.asObservable();
+    return this.authenticatedUserSubject.asObservable().pipe(first());
   }
 }
