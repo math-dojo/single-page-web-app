@@ -1,5 +1,5 @@
 import { QuestionTitleValidator } from './question-title.validator';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { QuestionService } from 'src/app/services/question.service';
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
 import { FormControl, ValidationErrors } from '@angular/forms';
@@ -24,7 +24,7 @@ describe('QuestionTitleValidator', () => {
     // TestBed.inject(QuestionService);
   });
 
-  it('should return null if the value in the control is not an existing question title', async(() => {
+  it('should return null if the value in the control is not an existing question title', waitForAsync(() => {
     const testControl = new FormControl('an-unknown-title');
     questionServiceStub.searchForQuestionBy.returns(of([]));
 
@@ -34,7 +34,7 @@ describe('QuestionTitleValidator', () => {
     });
   }));
 
-  it('should return an object with a titleAlreadyExists property if the value in control is an existing question title', async(() => {
+  it('should return an object with a titleAlreadyExists property if the value in control is an existing question title', waitForAsync(() => {
     const testControl = new FormControl('an-existing-title');
     questionServiceStub.searchForQuestionBy.returns(
       of([new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })]));
@@ -46,7 +46,7 @@ describe('QuestionTitleValidator', () => {
     });
   }));
 
-  it('should return an object with a titleAlreadyExists property if the query via QuestionService fails', async(() => {
+  it('should return an object with a titleAlreadyExists property if the query via QuestionService fails', waitForAsync(() => {
     const testControl = new FormControl('an-existing-title');
     questionServiceStub.searchForQuestionBy.callsFake(() => throwError(new QuestionServiceError('some error')));
 
@@ -58,7 +58,7 @@ describe('QuestionTitleValidator', () => {
     });
   }));
 
-  it('test validator handles more than one search result in array', async(() => {
+  it('test validator handles more than one search result in array', waitForAsync(() => {
     const testControl = new FormControl('an-existing-title');
     questionServiceStub.searchForQuestionBy.returns(
       of([

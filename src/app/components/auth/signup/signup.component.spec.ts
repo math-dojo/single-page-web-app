@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
+import { ComponentFixture, TestBed, ComponentFixtureAutoDetect, waitForAsync } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { createStubInstance } from 'sinon';
@@ -16,7 +16,7 @@ describe('SignupComponent', () => {
   const testAuthServiceSpy = createStubInstance(AuthenticationService);
   testAuthServiceSpy.signupNewUser.callsFake(() => Promise.resolve('User made :)'));
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SignupComponent],
       imports: [

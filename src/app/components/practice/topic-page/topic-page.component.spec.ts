@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ClarityModule } from '@clr/angular';
 
@@ -14,7 +14,7 @@ describe('TopicPageComponent', () => {
   let component: TopicPageComponent;
   let fixture: ComponentFixture<TopicPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     const testActivatedRoute = new ActivatedRouteStub({ topic: 'some-topic-title' });
     TestBed.configureTestingModule({
       declarations: [TopicPageComponent, MtdgFooterComponent, MtdjHeaderComponent],

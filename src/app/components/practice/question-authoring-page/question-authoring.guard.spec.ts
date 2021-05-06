@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { QuestionAuthoringGuard } from './question-authoring.guard';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -27,7 +27,7 @@ describe('QuestionAuthoringGuard', () => {
   });
 
 
-  it('should allow the org admin user to access authoring page', async(() => {
+  it('should allow the org admin user to access authoring page', waitForAsync(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.ORG_ADMIN]),
@@ -39,7 +39,7 @@ describe('QuestionAuthoringGuard', () => {
     });
   }));
 
-  it('should allow creators user to access authoring page', async(() => {
+  it('should allow creators user to access authoring page', waitForAsync(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.CREATOR]),
@@ -51,7 +51,7 @@ describe('QuestionAuthoringGuard', () => {
     });
   }));
 
-  it('should not allow consumers to access authoring page', async(() => {
+  it('should not allow consumers to access authoring page', waitForAsync(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.CONSUMER]),
@@ -63,7 +63,7 @@ describe('QuestionAuthoringGuard', () => {
     });
   }));
 
-  it('should not allow global admin to access authoring page', async(() => {
+  it('should not allow global admin to access authoring page', waitForAsync(() => {
     const user = new User({
       name: 'test',
       permissions: new Set([UserPermission.GLOBAL_ADMIN]),

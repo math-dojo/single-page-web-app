@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
@@ -29,7 +29,7 @@ describe('AuthenticationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return an observable user when login is successful', async(() => {
+  it('should return an observable user when login is successful', waitForAsync(() => {
     const username = 'consumer';
     const password = username;
     const returnedUser$: Observable<User> = authService.login(username, password);
@@ -49,7 +49,7 @@ describe('AuthenticationService', () => {
     });
   }));
 
-  it('should return an observable authentication service error when login fails', async(() => {
+  it('should return an observable authentication service error when login fails', waitForAsync(() => {
     const username = 'somebody';
     const password = username;
 
@@ -59,7 +59,7 @@ describe('AuthenticationService', () => {
     });
   }));
 
-  it('should set the user observable to null when the user is logged out successfully', async(() => {
+  it('should set the user observable to null when the user is logged out successfully', waitForAsync(() => {
     const username = 'consumer';
     const password = username;
     authService.login(username, password);
@@ -75,7 +75,7 @@ describe('AuthenticationService', () => {
     });
   }));
 
-  it('should redirect the user to the login page after a successful logout', async(() => {
+  it('should redirect the user to the login page after a successful logout', waitForAsync(() => {
     const username = 'consumer';
     const password = username;
     authService.login(username, password);
