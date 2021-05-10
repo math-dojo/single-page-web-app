@@ -4,14 +4,14 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
-- develop
-- rl* # release branches to be built should be named rl[insertSemverHere]
-# - ft* # feature branches to be built should be named ft[insertGithubIssueNumberHere]
-- hf* # hotfix branches to be built should be named hf[insertGithubIssueNumberHere]
+  - master
+  - develop
+  - rl* # release branches to be built should be named rl[insertSemverHere]
+  # - ft* # feature branches to be built should be named ft[insertGithubIssueNumberHere]
+  - hf* # hotfix branches to be built should be named hf[insertGithubIssueNumberHere]
 
 pool:
-  vmImage: 'windows-2019'
+  vmImage: "windows-2019"
 
 variables:
   ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
@@ -30,74 +30,77 @@ variables:
     envName: "production"
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "10.x"
+    displayName: "Install Node.js"
 
-- script: |
-    npm install
-  displayName: 'Install dependencies'
+  - script: |
+      npm install
+    displayName: "Install dependencies"
 
-- script: |
-    npm test
-  displayName: 'run unit and integration tests'
+  - script: |
+      npm test
+    displayName: "run unit and integration tests"
 
-- script: |
+  - script: |
 
-    if not exist "C:\Program Files (x86)\Google" mkdir "C:\Program Files (x86)\Google"
-    if not exist "C:\Program Files (x86)\Google\Chrome" mkdir "C:\Program Files (x86)\Google\Chrome"
-    mklink /D "C:\Program Files (x86)\Google\Chrome\Application" "C:\Program Files\Google\Chrome\Application"
+      if not exist "C:\Program Files (x86)\Google" mkdir "C:\Program Files (x86)\Google"
+      if not exist "C:\Program Files (x86)\Google\Chrome" mkdir "C:\Program Files (x86)\Google\Chrome"
+      mklink /D "C:\Program Files (x86)\Google\Chrome\Application" "C:\Program Files\Google\Chrome\Application"
 
-    ./node_modules/.bin/webdriver-manager update --versions.chrome=85.0.4183.38
-  displayName: 'add chrome driver to node directory'
-  condition: |
-    or(
-      eq(variables['Build.Reason'], 'PullRequest'),
-      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
-      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
-    )
-  failOnStderr: true
+      $targetWebdriverUpdateVersion = (Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion
+      echo "Attempting to use Webdriver for Chrome v$targetWebdriverUpdateVersion"
 
-- script: |
-    npm run-script e2e
-  displayName: 'run end-to-end tests'
-  condition: |
-    or(
-      eq(variables['Build.Reason'], 'PullRequest'),
-      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
-      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
-    )
+      ./node_modules/.bin/webdriver-manager update --versions.chrome=$targetWebdriverUpdateVersion
+    displayName: "add chrome driver to node directory"
+    condition: |
+      or(
+        eq(variables['Build.Reason'], 'PullRequest'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+      )
+    failOnStderr: true
 
-- script: |
-    npm run-script lint
-  displayName: 'run linting'
-  condition: |
-    or(
-      eq(variables['Build.Reason'], 'PullRequest'),
-      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
-      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
-    )
+  - script: |
+      npm run-script e2e
+    displayName: "run end-to-end tests"
+    condition: |
+      or(
+        eq(variables['Build.Reason'], 'PullRequest'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+      )
 
-- script: |
-    npm run-script build -- --configuration=$(envName)
-  displayName: 'npm build'
+  - script: |
+      npm run-script lint
+    displayName: "run linting"
+    condition: |
+      or(
+        eq(variables['Build.Reason'], 'PullRequest'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+      )
 
-- task: CopyFiles@2
-  displayName: 'Copy Build Artifacts to Staging Directory'
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)/dist/single-page-web-app'
-    Contents: |
-      **
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - script: |
+      npm run-script build -- --configuration=$(envName)
+    displayName: "npm build"
 
-- task: AzureCLI@2
-  displayName: 'Create Container for Build Artefacts in Storage Account'
-  inputs:
-    azureSubscription: azure-ad-app-math-dojo-ui-pipeline
-    scriptType: ps
-    scriptLocation: inlineScript
-    inlineScript: |
+  - task: CopyFiles@2
+    displayName: "Copy Build Artifacts to Staging Directory"
+    inputs:
+      SourceFolder: "$(System.DefaultWorkingDirectory)/dist/single-page-web-app"
+      Contents: |
+        **
+      TargetFolder: "$(Build.ArtifactStagingDirectory)"
+
+  - task: AzureCLI@2
+    displayName: "Create Container for Build Artefacts in Storage Account"
+    inputs:
+      azureSubscription: azure-ad-app-math-dojo-ui-pipeline
+      scriptType: ps
+      scriptLocation: inlineScript
+      inlineScript: |
         $accountNameExists = az storage account check-name --name mathdojouibuild$(appName) --subscription 5594cd6c-b674-4323-8517-5e859a399468 | ConvertFrom-Json
         Write-Host "Does the account name exist for mathdojouibuild$(appName): $accountNameExists"
         If ($accountNameExists.nameAvailable) {
@@ -112,22 +115,22 @@ steps:
 
         az storage blob service-properties update --account-name mathdojouibuild$(appName) --static-website --index-document index.html --404-document index.html  --auth-mode login
 
-- task: AzureFileCopy@3
-  displayName: 'Copy Build Artifacts to Blob Storage'
-  inputs:
-    sourcePath: '$(Build.ArtifactStagingDirectory)'
-    azureSubscription: azure-ad-app-math-dojo-ui-pipeline
-    destination: AzureBlob
-    storage: 'mathdojouibuild$(appName)'
-    containerName: $web
-    copyFilesInParallel: true
-    cleanTargetBeforeCopy: true
+  - task: AzureFileCopy@3
+    displayName: "Copy Build Artifacts to Blob Storage"
+    inputs:
+      sourcePath: "$(Build.ArtifactStagingDirectory)"
+      azureSubscription: azure-ad-app-math-dojo-ui-pipeline
+      destination: AzureBlob
+      storage: "mathdojouibuild$(appName)"
+      containerName: $web
+      copyFilesInParallel: true
+      cleanTargetBeforeCopy: true
 
-- task: AzureCLI@2
-  displayName: 'Show url for stored blob contents'
-  inputs:
-    azureSubscription: azure-ad-app-math-dojo-ui-pipeline
-    scriptType: ps
-    scriptLocation: inlineScript
-    inlineScript: |
+  - task: AzureCLI@2
+    displayName: "Show url for stored blob contents"
+    inputs:
+      azureSubscription: azure-ad-app-math-dojo-ui-pipeline
+      scriptType: ps
+      scriptLocation: inlineScript
+      inlineScript: |
         az storage account show -n mathdojouibuild$(appName) -g math-dojo-hzprod-web-ui --query "primaryEndpoints.web" --output tsv
