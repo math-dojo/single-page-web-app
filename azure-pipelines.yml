@@ -50,9 +50,9 @@ steps:
       mklink /D "C:\Program Files (x86)\Google\Chrome\Application" "C:\Program Files\Google\Chrome\Application"
 
       echo "Getting webdriver for Chrome version"
-      pwsh -Command "echo v$(Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion"
+      pwsh -Command "echo $(Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion"
 
-      pwsh -Command "./node_modules/.bin/webdriver-manager update --versions.chrome=$(Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion"
+      pwsh -Command "./node_modules/.bin/webdriver-manager update --versions.chrome= $(Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion"
 
     displayName: "add chrome driver to node directory"
     condition: |
