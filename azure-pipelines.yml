@@ -49,11 +49,11 @@ steps:
       if not exist "C:\Program Files (x86)\Google\Chrome" mkdir "C:\Program Files (x86)\Google\Chrome"
       mklink /D "C:\Program Files (x86)\Google\Chrome\Application" "C:\Program Files\Google\Chrome\Application"
 
-      for /f %i in ('pwsh -Command "(Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion"') do set targetWebdriverUpdateVersion=%i
+      echo "Getting webdriver for Chrome version"
+      pwsh -Command "echo v$(Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion"
 
-      echo "Attempting to use Webdriver for Chrome v%targetWebdriverUpdateVersion%"
+      pwsh -Command "./node_modules/.bin/webdriver-manager update --versions.chrome=$(Get-Item 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe').VersionInfo.ProductVersion"
 
-      ./node_modules/.bin/webdriver-manager update --versions.chrome=%targetWebdriverUpdateVersion%
     displayName: "add chrome driver to node directory"
     condition: |
       or(
