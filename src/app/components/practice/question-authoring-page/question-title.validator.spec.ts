@@ -34,7 +34,9 @@ describe('QuestionTitleValidator', () => {
     });
   }));
 
-  it('should return an object with a titleAlreadyExists property if the value in control is an existing question title', waitForAsync(() => {
+  it(
+    'should return an object with a titleAlreadyExists property if the value in control is an existing question title',
+    waitForAsync(() => {
     const testControl = new FormControl('an-existing-title');
     questionServiceStub.searchForQuestionBy.returns(
       of([new QuestionDto({ title: testControl.value, parentTopicTitle: 'something' })]));

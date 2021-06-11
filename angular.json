@@ -131,15 +131,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         },
@@ -160,6 +156,7 @@
   },
   "defaultProject": "single-page-web-app",
   "cli": {
-    "analytics": "072483c5-b45c-46a9-a73b-59df793dba88"
+    "analytics": "072483c5-b45c-46a9-a73b-59df793dba88",
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }
