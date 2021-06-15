@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { QuestionService } from './question.service';
@@ -30,7 +30,7 @@ describe('QuestionService', () => {
 
   describe('.getQuestionWithTitle()', () => {
 
-    it('should return a question dto if one with a matching title can be found', async(() => {
+    it('should return a question dto if one with a matching title can be found', waitForAsync(() => {
       // Given
       const questionNameToSearchFor = 'test-question';
       const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
@@ -51,7 +51,7 @@ describe('QuestionService', () => {
       req.flush(expectedQuestionDto);
     }));
 
-    it('should return null if question could not be found, i.e. error was 404 ', async(() => {
+    it('should return null if question could not be found, i.e. error was 404 ', waitForAsync(() => {
       // Given
       const questionNameToSearchFor = 'test-question';
       const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
@@ -75,7 +75,7 @@ describe('QuestionService', () => {
       });
     }));
 
-    it('should throw a QuestionServiceError if the service returns codes between 400 and 503, excluding 404', async(() => {
+    it('should throw a QuestionServiceError if the service returns codes between 400 and 503, excluding 404', waitForAsync(() => {
       // Given
       const questionNameToSearchFor = 'test-question';
       const expectedQuestionDto = new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' });
@@ -105,7 +105,7 @@ describe('QuestionService', () => {
 
   describe('.postQuestionToQuarantine()', () => {
 
-    it('should return an observable of null if the question is submitted successfully', async(() => {
+    it('should return an observable of null if the question is submitted successfully', waitForAsync(() => {
       // Given
       const questionToSubmit = new QuestionDto({ title: 'some-title', parentTopicTitle: 'nonsense' });
       const expectedResponseText = 'Successful submission';
@@ -131,7 +131,7 @@ describe('QuestionService', () => {
       });
     }));
 
-    it('should throw a QuestionServiceError if the question is not submitted', async(() => {
+    it('should throw a QuestionServiceError if the question is not submitted', waitForAsync(() => {
       // Given
       const questionToSubmit = new QuestionDto({ title: 'some-title', parentTopicTitle: 'nonsense' });
       const errorStatusText = 'some generic error message';
@@ -162,7 +162,7 @@ describe('QuestionService', () => {
 
   describe('.searchForQuestionBy()', () => {
 
-    it('should return an array of matching question dtos if one with a matching title can be found', async(() => {
+    it('should return an array of matching question dtos if one with a matching title can be found', waitForAsync(() => {
       // Given
       const questionNameToSearchFor = 'test-question';
       const expectedSearchResults = [new QuestionDto({ title: questionNameToSearchFor, parentTopicTitle: 'nonsense' })];
@@ -185,7 +185,7 @@ describe('QuestionService', () => {
       req.flush(expectedSearchResults);
     }));
 
-    it('should return an empty array if one with a matching title cannot be found', async(() => {
+    it('should return an empty array if one with a matching title cannot be found', waitForAsync(() => {
       // Given
       const questionNameToSearchFor = 'test-question';
       const expectedSearchResults = [];
@@ -208,7 +208,7 @@ describe('QuestionService', () => {
       req.flush(expectedSearchResults);
     }));
 
-    it('should throw a QuestionServiceError if the service returns codes between 400 and 503', async(() => {
+    it('should throw a QuestionServiceError if the service returns codes between 400 and 503', waitForAsync(() => {
       // Given
       const questionNameToSearchFor = 'test-question';
       const errorStatusText = 'some error message';

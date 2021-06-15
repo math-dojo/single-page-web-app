@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ClarityModule } from '@clr/angular';
 import { QuestionService } from 'src/app/services/question.service';
@@ -12,7 +12,7 @@ describe('PracticeHomeComponent', () => {
   let component: PracticeHomeComponent;
   let fixture: ComponentFixture<PracticeHomeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PracticeHomeComponent, MtdgFooterComponent, MtdjHeaderComponent],
       imports: [ClarityModule, RouterTestingModule]

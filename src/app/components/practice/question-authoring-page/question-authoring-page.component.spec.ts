@@ -1,11 +1,4 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-  flush,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, flush, waitForAsync } from '@angular/core/testing';
 import { ClarityModule } from '@clr/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KatexModule } from 'ng-katex';
@@ -34,7 +27,7 @@ describe('QuestionAuthoringPageComponent', () => {
   let questionServiceStub: SinonStubbedInstance<QuestionService>;
   let questionAuthoringGuardStub: SinonStubbedInstance<QuestionAuthoringGuard>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     questionServiceStub = createStubInstance(QuestionService);
     questionServiceStub.getTopics.returns(
       of([TopicDto.createDtoWithNonEmptyFields()])
@@ -78,7 +71,7 @@ describe('QuestionAuthoringPageComponent', () => {
     expect(page.unauthorisedFeatureAccessMessage).toBeNull('the unauthorised feature access message could be seen');
   });
 
-  it('should display only the error message if the user does not have permissions', async(() => {
+  it('should display only the error message if the user does not have permissions', waitForAsync(() => {
     // Given
     questionAuthoringGuardStub.doesUserHavePermissions.returns(of(false));
     const page = new QuestionAuthoringTestPage(TestBed.createComponent(QuestionAuthoringPageComponent));
@@ -179,7 +172,7 @@ describe('QuestionAuthoringPageComponent', () => {
   });
 
   describe('Question Title Validation', () => {
-    it('should allow a new question title that also meets the 64 chars length restriction', async(() => {
+    it('should allow a new question title that also meets the 64 chars length restriction', waitForAsync(() => {
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(
         By.css('#mtdj__question-auth-input-title input')
@@ -269,7 +262,7 @@ describe('QuestionAuthoringPageComponent', () => {
       expect(errorDisplayElement.textContent).toMatch(/is a required field/);
     });
 
-    it('should show an error if the question title is already taken ', async(() => {
+    it('should show an error if the question title is already taken ', waitForAsync(() => {
       // Given
       const controlName = 'title';
       const inputFormElement = fixture.debugElement.query(

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 
@@ -16,7 +16,7 @@ describe('QuestionPageComponent', () => {
   let component: QuestionPageComponent;
   let fixture: ComponentFixture<QuestionPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     const testActivatedRoute = new ActivatedRouteStub({
       question: 'some-question-title'
     });
