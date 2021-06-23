@@ -32,7 +32,7 @@ export class QuestionAuthoringPageComponent implements OnInit {
     (each) => each as Difficulty
   );
 
-  // tslint:disable-next-line: variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   private _userAllowedAccess$: Observable<boolean>;
   successfulFormSubmission$: Observable<{ status: boolean } | undefined>;
   newQuestionForm: FormGroup;

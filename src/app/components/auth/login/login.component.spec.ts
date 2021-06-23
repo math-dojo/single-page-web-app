@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ClarityModule } from '@clr/angular';
@@ -18,7 +18,7 @@ describe('LoginComponent', () => {
   let authServiceSpy: SinonStubbedInstance<AuthenticationService>;
   let routerSpy: SinonStubbedInstance<Router>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     authServiceSpy = createStubInstance(AuthenticationService);
     routerSpy = createStubInstance(Router);
     TestBed.configureTestingModule({

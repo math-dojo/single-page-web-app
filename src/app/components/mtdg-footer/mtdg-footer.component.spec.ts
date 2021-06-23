@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ClarityModule } from '@clr/angular';
 
 import { MtdgFooterComponent } from './mtdg-footer.component';
@@ -7,7 +7,7 @@ describe('MtdgFooterComponent', () => {
   let component: MtdgFooterComponent;
   let fixture: ComponentFixture<MtdgFooterComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MtdgFooterComponent ],
       imports: [ClarityModule]
